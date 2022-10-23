@@ -1,0 +1,97 @@
+version: '3.4'
+
+
+services:
+  database:
+    image: postgres:11-alpine
+    ports:
+      - 5555:5432
+    environment:
+      POSTGRES_DB: database
+      POSTGRES_USER: database
+      POSTGRES_PASSWORD: database
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:alpine
+    logging:
+      driver: none
+
+  pgadmin:
+    image: dpage/pgadmin4
+    ports:
+      - 333:80
+    depends_on:
+      - database
+    volumes:
+      - "./pgadmin-servers.json:/pgadmin4/servers.json:ro"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+
+  pgbouncer:
+    image: pgbouncer/pgbouncer
+    ports:
+      - 6432:6432
+    env_file: .env.dev
+
+  backend:
+    tty: true
+    build:
+      context: ./backend
+      target: dev
+    env_file: .env.dev
+    volumes:
+      - ./backend/cw:/app/cw
+      # - ./backend/alembic:/app/alembic
+      - ./backend/development.ini:/app/development.ini
+      - ./files:/app/files
+
+  celery_worker:
+    image: "${PROJECT_NAME}_backend"
+    command: celery -A cw.celery worker --loglevel=info --autoscale=1
+    env_file: .env.dev
+    depends_on:
+      - backend
+    links:
+      - backend
+      - redis
+
+  nginx:
+    build:
+      context: ./nginx
+      target: dev
+    ports:
+      - "8000:8000"
+    logging:
+      driver: "local"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    depends_on:
+      - backend
+    volumes:
+      # - ./nginx/dev/html/index.html:/home/html/index.html:ro
+      - ./frontend/build:/home/html:ro
+      - ./files:/home/files:ro
+
+  frontend:
+    tty: true
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile-dev
+    volumes:
+      - ./frontend:/frontend:rw
+    ports:
+      - "3001:3000"
+
+  frontend_admin:
+    tty: true
+    build:
+      context: ./frontend_admin
+      dockerfile: Dockerfile-dev
+    volumes:
+      - ./frontend_admin:/frontend_admin:rw
+    ports:
+      - "3000:3000"

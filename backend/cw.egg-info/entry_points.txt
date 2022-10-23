@@ -1,0 +1,6 @@
+[console_scripts]
+clear_cw_db = cw.scripts.cleardb:main
+initialize_db = cw.scripts.initializedb:main
+
+[paste.app_factory]
+main = cw:main

@@ -1,0 +1,38 @@
+Metadata-Version: 2.1
+Name: cw
+Version: 1.0
+Summary: cw
+Home-page: 
+Author: 
+Author-email: 
+License: UNKNOWN
+Keywords: web wsgi bfg pylons pyramid
+Platform: UNKNOWN
+Classifier: Programming Language :: Python
+Classifier: Framework :: Pyramid
+Classifier: Topic :: Internet :: WWW/HTTP
+Classifier: Topic :: Internet :: WWW/HTTP :: WSGI :: Application
+Provides-Extra: testing
+
+cw README
+==================
+
+Getting Started
+---------------
+
+- cd <directory containing this file>
+
+- $VENV/bin/pip install -e .
+
+- $VENV/bin/initialize_cw_db development.ini
+
+- $VENV/bin/pserve development.ini
+
+
+
+0.0
+---
+
+-  Initial version
+
+
