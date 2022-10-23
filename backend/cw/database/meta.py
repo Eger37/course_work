@@ -16,11 +16,10 @@ from .models.subscriptable import Subscriptable
 
 from .models.user.meta import BaseUser
 
-
 INIT_META = [
-	BaseUser,
+    BaseUser,
 ]
 
 SERIALIZABLE_BASES = [
-	*INIT_META,
+    *INIT_META,
 ]

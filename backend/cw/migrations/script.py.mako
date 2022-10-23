@@ -16,23 +16,23 @@ ${imports if imports else ""}
 
 
 def upgrade():
-    schema_upgrades()
-    if context.get_x_argument(as_dictionary=True).get('data', None):
-        data_upgrades()
+schema_upgrades()
+if context.get_x_argument(as_dictionary=True).get('data', None):
+data_upgrades()
 
 def downgrade():
-    if context.get_x_argument(as_dictionary=True).get('data', None):
-        data_downgrades()
-    schema_downgrades()
+if context.get_x_argument(as_dictionary=True).get('data', None):
+data_downgrades()
+schema_downgrades()
 
 def schema_upgrades():
-    ${upgrades if upgrades else "pass"}
+${upgrades if upgrades else "pass"}
 
 def schema_downgrades():
-    ${downgrades if downgrades else "pass"}
+${downgrades if downgrades else "pass"}
 
 def data_upgrades():
-    pass
+pass
 
 def data_downgrades():
-    pass
+pass

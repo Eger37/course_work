@@ -2,8 +2,8 @@ import enum
 
 
 class UserRole(enum.EnumMeta):
-	admin = "admin"
+    admin = "admin"
 
-	psychologist = "psychologist"
+    psychologist = "psychologist"
 
-	client = "client"
+    client = "client"

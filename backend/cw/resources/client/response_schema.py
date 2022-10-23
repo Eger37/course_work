@@ -1,19 +1,19 @@
 import colander
 
 from .._shared.schema import (
-	ResponseUserBaseSchema,
+    ResponseUserBaseSchema,
 )
 
 
 class ResponseClientBaseSchema(ResponseUserBaseSchema):
-	pass
+    pass
 
 
 class ResponseBodyClientSchema(colander.MappingSchema):
-	body = ResponseUserBaseSchema()
+    body = ResponseUserBaseSchema()
 
 
 class ResponseBodyClientsSchema(colander.MappingSchema):
-	@colander.instantiate(name="body")
-	class BodyItemsClientSchema(colander.SequenceSchema):
-		client = ResponseUserBaseSchema()
+    @colander.instantiate(name="body")
+    class BodyItemsClientSchema(colander.SequenceSchema):
+        client = ResponseUserBaseSchema()

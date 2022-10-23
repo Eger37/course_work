@@ -40,21 +40,18 @@ class User(BaseUser):
 
 
 class Admin(User):
-
     __mapper_args__ = {
         'polymorphic_identity': UserType.admin,
     }
 
 
 class Manager(User):
-
     __mapper_args__ = {
         'polymorphic_identity': UserType.manager,
     }
 
 
 class Client(User):
-
     __mapper_args__ = {
         'polymorphic_identity': UserType.client,
     }

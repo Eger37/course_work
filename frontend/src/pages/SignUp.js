@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {NavLink} from "react-router-dom"
+import {authProvider} from "../api/authProvider";
 
 const theme = createTheme();
 
@@ -17,6 +18,12 @@ export default function SignUp() {
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
+        authProvider.signUp({
+            email: data.get('email'),
+            password: data.get('password'),
+            firstName: data.get('firstName'),
+            lastName: data.get('lastName'),
+        })
         console.log({
             email: data.get('email'),
             password: data.get('password'),

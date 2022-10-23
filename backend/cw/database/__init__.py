@@ -5,7 +5,6 @@ import zope.sqlalchemy
 
 from .models.user import *
 
-
 configure_mappers()
 
 

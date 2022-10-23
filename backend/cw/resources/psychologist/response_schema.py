@@ -1,9 +1,10 @@
 import colander
 
 from .._shared.schema import (
-	digits_only,
-	ResponseUserBaseSchema,
+    digits_only,
+    ResponseUserBaseSchema,
 )
+
 
 # class ManagerSchema(colander.MappingSchema):
 # 	id = colander.SchemaNode(colander.Integer())
@@ -17,16 +18,16 @@ from .._shared.schema import (
 # 	item = ManagerSchema()
 
 class ResponseManagerBaseSchema(ResponseUserBaseSchema):
-	pass
+    pass
 
 
 class ResponseBodyManagerSchema(colander.MappingSchema):
-	# body = ManagerSchema()
-	body = ResponseUserBaseSchema()
+    # body = ManagerSchema()
+    body = ResponseUserBaseSchema()
 
 
 class ResponseBodyManagersSchema(colander.MappingSchema):
-	@colander.instantiate(name="body")
-	class BodyItemsManagerSchema(colander.SequenceSchema):
-		# manager = ManagerSchema()
-		manager = ResponseUserBaseSchema()
+    @colander.instantiate(name="body")
+    class BodyItemsManagerSchema(colander.SequenceSchema):
+        # manager = ManagerSchema()
+        manager = ResponseUserBaseSchema()
