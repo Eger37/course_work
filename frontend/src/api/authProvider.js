@@ -1,5 +1,21 @@
 import {httpClient} from "./httpClient";
 
+export const _getPermissions = () => {
+    const rawPermissions = localStorage.getItem('permissions');
+    const permissions = JSON.parse(rawPermissions);
+    return permissions;
+};
+
+export const setPermissions = permissions => {
+    localStorage.setItem("permissions", JSON.stringify(permissions));
+};
+
+window.addEventListener('storage', (e) => {
+    if (e.key === "token" && e.oldValue !== e.newValue) {
+        window.location = window.location.origin;
+    }
+});
+
 export const authProvider = {
     login: ({email, password}) => {
         return httpClient("login", {
@@ -15,8 +31,11 @@ export const authProvider = {
                 })
                 return Promise.reject(res.status !== 200)
             } else {
-                window.location.replace("/");
-                localStorage.setItem("token", res.json.token);
+                res.json().then((data) => {
+                    localStorage.setItem("token", data.token);
+                    setPermissions(data.permissions);
+                    window.location.replace("/");
+                })
                 return Promise.resolve()
             }
         }).catch(function () {
@@ -47,22 +66,12 @@ export const authProvider = {
             console.log("error");
         });
     },
-    //     return httpClient("sign-up", {
-    //         method: 'POST',
-    //         body: JSON.stringify({
-    //             email: username, password: password,
-    //             first_name: firstName, last_name: lastName
-    //         }),
-    //     }).then(res => {
-    //         localStorage.setItem("token", res.json.token);
-    //     });
-    // },
     logout: (params, ...rest) => {
         localStorage.removeItem("token");
-        return Promise.resolve();
+        window.location.replace("/");
     },
     checkAuth: (params) => {
-        return localStorage.getItem('token') ? Promise.resolve() : Promise.reject();
+        return localStorage.getItem('token');
     },
     checkError: (error) => {
         if (error.status === 401) {

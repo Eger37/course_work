@@ -4,6 +4,7 @@ import SignIn from "../pages/SignIn";
 import Main from "../pages/Main";
 import {BrowserRouter, NavLink, Route} from "react-router-dom"
 import {Redirect} from "react-router-dom";
+import Test1 from "../pages/Tests/Test1";
 
 const App = () => {
     return (
@@ -11,6 +12,7 @@ const App = () => {
             <Route component={Main} exact={true} path={"/"}/>
             <Route component={SignUp} path={"/sign-up"}/>
             <Route component={SignIn} path={"/sign-in"}/>
+            <Route component={Test1} path={"/tests/1"}/>
         </BrowserRouter>
     )
 };

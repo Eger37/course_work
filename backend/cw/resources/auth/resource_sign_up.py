@@ -26,7 +26,6 @@ sign_up = Service(name="sign-up", description="Authorization", path="/sign-up", 
         '200': ResponseBodyClientSchema(description="Return OK response"),
     },
     renderer='json'
-
 )
 def auth_sign_up(request):
     print("\n\n\n\n")

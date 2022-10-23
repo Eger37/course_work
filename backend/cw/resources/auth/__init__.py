@@ -42,7 +42,8 @@ def login_test(request):
     validators=(colander_body_validator,),
     response_schemas={
         '200': ResponseBodyLoginSchema(description="Return OK response"),
-    }
+    },
+    renderer='json'
 )
 def auth_login(request):
     """Returns 'token', 'role' by email and password
