@@ -5,6 +5,7 @@ import testImg from "../../images/test.jpg";
 import TestInfo from "../../components/TestInfo";
 import {testsData} from "../../data/testsData";
 import {Route} from "react-router-dom";
+import CheckoutTest1 from "../../components/CheckoutTest1";
 
 const useStyles = makeStyles(() => ({}))
 
@@ -17,7 +18,7 @@ const Info = () => {
                    render={(props) => <TestInfo title={testData.title} about={testData.about}
                                                 page={testData.page + "/start"}/>}
             />
-
+            <CheckoutTest1/>
 
         </main>
     )
