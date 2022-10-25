@@ -85,8 +85,8 @@ class Test1Resource(object):
 
         text_result = gen_text_result(result)
         test = Test(
-            test_type_id=data["user_id"],
-            user_id=1,
+            test_type_id=1,
+            user_id=data["user_id"],
             result=text_result
         )
 
