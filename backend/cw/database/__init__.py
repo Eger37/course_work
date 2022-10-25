@@ -4,6 +4,7 @@ from sqlalchemy.orm import configure_mappers
 import zope.sqlalchemy
 
 from .models.user import *
+from .models.test import *
 
 configure_mappers()
 

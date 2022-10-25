@@ -15,9 +15,11 @@ from .models.subscriptable import Subscriptable
 # Base = declarative_base(metadata=metadata_user, cls=Subscriptable)
 
 from .models.user.meta import BaseUser
+from .models.test.meta import BaseTest
 
 INIT_META = [
     BaseUser,
+    BaseTest
 ]
 
 SERIALIZABLE_BASES = [
