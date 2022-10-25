@@ -7,8 +7,9 @@ class Test(BaseTest):
     __tablename__ = "test"
 
     id = Column(Integer(), primary_key=True)
-    test_id = Column(Integer())
+    test_type_id = Column(Integer())
+    user_id = Column(Integer())
     result = Column(String(), default=None)
 
     def __repr__(self):
-        return f"Port({self.id}, {self.test_id})"
+        return f"Port({self.id}, {self.test_type_id})"

@@ -7,7 +7,7 @@ from cornice.validators import (
     colander_body_validator,
 )
 
-from cw.database import User, Admin, Client, UserRole, Test
+from cw.database import UserRole, Test, Client
 
 from .schema import (
     CreateTest1Schema,
@@ -79,17 +79,25 @@ class Test1Resource(object):
 
     )
     def post(self):
-        test_data = {**self.request.validated}
+        data = {**self.request.validated}
 
-        result = generate_result(test_data["test_1_data"], test_data["answers"])
+        result = generate_result(data["test_1_data"], data["answers"])
 
         text_result = gen_text_result(result)
         test = Test(
-            test_id=1,
+            test_type_id=data["user_id"],
+            user_id=1,
             result=text_result
         )
 
         self.request.db.add(test)
         self.request.db.flush()
-
+        client = self.request.db.query(Client).get(data["user_id"], )
+        tests = client.tests
+        if tests:
+            tests = tests + [test.id]
+        else:
+            tests = [test.id]
+        client.tests = tests
+        self.request.db.flush()
         return {"result": result}
