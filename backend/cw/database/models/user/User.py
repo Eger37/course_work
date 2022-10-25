@@ -27,6 +27,7 @@ class User(BaseUser):
     type = Column(UserTypeType(), nullable=False)
 
     tests = Column(ARRAY(Integer), default=None)
+    anamnesisFromPsychologist = Column(String(), default=None)
 
 
     @property

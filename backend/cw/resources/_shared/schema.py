@@ -177,6 +177,7 @@ class UpdateUserBaseSchema(MappingSchema):
     last_name = SchemaNode(Str(), validator=colander.Length(max=128), missing=None)
     email = SchemaNode(Str(), missing=None)
     phone = SchemaNode(Str(), preparer=digits_only, missing=None)
+    anamnesisFromPsychologist = colander.SchemaNode(colander.String())
 
 
 class ResponseUserBaseSchema(UpdateUserBaseSchema):

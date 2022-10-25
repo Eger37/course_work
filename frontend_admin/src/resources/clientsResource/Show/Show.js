@@ -1,9 +1,8 @@
 import React from 'react';
 import {
     Show,
-    ReferenceField,
     SimpleShowLayout,
-    FunctionField,
+    TextField,
     useRedirect,
     TopToolbar,
     EditButton,
@@ -54,6 +53,7 @@ export const ClientsShow = ({permissions, hasShow, ...props}) => {
     return (
         <Show actions={<ActionsWithBackButton hasEdit={true}/>} {...props}>
             <SimpleShowLayout style={{paddingBottom: 8}}>
+                    <TextField source="anamnesisFromPsychologist" label={"Анамнез"}/>
                 <TestsField label="Tests" reference="user_tests" target="user_id"/>
             </SimpleShowLayout>
         </Show>
