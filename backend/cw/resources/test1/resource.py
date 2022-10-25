@@ -1,36 +1,20 @@
 from pyramid.security import (
-    authenticated_userid,
     Allow,
 )
 
 from cornice.resource import resource, view
 from cornice.validators import (
     colander_body_validator,
-    colander_path_validator,
-    colander_validator,
 )
 
-from sqlalchemy import func
-
-from cw.database import User, Admin, Client, UserRole, UserType
-from cw.modules.security import hash_password
+from cw.database import User, Admin, Client, UserRole, Test
 
 from .schema import (
     CreateTest1Schema,
 )
 
 from .response_schema import (
-    ResponseBodyClientSchema,
-    ResponseBodyClientsSchema,
-)
-
-from .._shared.query import (
-    apply_filter_sort_range_for_query,
-    generate_range,
-)
-
-from .._shared.schema import (
-    map_data_to_body_schema
+    ResponseTest1BaseSchema,
 )
 
 from cw.modules.cornice import negotiation_params
@@ -69,6 +53,10 @@ def generate_result(test_1_data, answers):
             "mood": {"score": mood_score, "description": get_level_result(mood_score)}, }
 
 
+def gen_text_result(result):
+    return f"самопочуття: {result['well_being']['description']}, активність: {result['activity']['description']}, настрій: {result['mood']['description']},"
+
+
 @resource(path="/tests/test1", collection_path="/tests/test1", description="Test 1 resource",
           tags=["test"], **negotiation_params)
 class Test1Resource(object):
@@ -84,7 +72,7 @@ class Test1Resource(object):
         schema=CreateTest1Schema(),
         validators=(colander_body_validator,),
         response_schemas={
-            '200': ResponseBodyClientSchema(description="return OK response")
+            '200': ResponseTest1BaseSchema(description="return OK response")
         },
         permission="create",
         renderer='json'
@@ -94,14 +82,14 @@ class Test1Resource(object):
         test_data = {**self.request.validated}
 
         result = generate_result(test_data["test_1_data"], test_data["answers"])
-        # manager_data["password"] = hash_password(manager_data["password"])
-        # user = Client(
-        #     **manager_data,
-        #     created_by=authenticated_userid(self.request)
-        # )
-        # self.request.db.add(user)
-        # self.request.db.flush()
-        #
-        # user = dict(user)
+
+        text_result = gen_text_result(result)
+        test = Test(
+            test_id=1,
+            result=text_result
+        )
+
+        self.request.db.add(test)
+        self.request.db.flush()
 
         return {"result": result}

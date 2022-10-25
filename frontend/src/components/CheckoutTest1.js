@@ -57,11 +57,12 @@ export default function CheckoutTest1() {
         } else {
             testsProvider.test1({userId: _getPermissions().id, test1Data: test1Data, answers: answers})
                 .then((data) => {
-                    console.log(data)
-                    alert(`Результат:\n
+                    if (data) {
+                        alert(`Результат:\n
                     Ваш рівень самопочуття ${data.result.well_being.description}\n
                     Ваш рівень активності ${data.result.activity.description}\n
                     Ваш рівень настрою ${data.result.mood.description}`)
+                    }
                 })
         }
     };
