@@ -2,8 +2,7 @@ import React from "react";
 import SignUp from "../pages/SignUp";
 import SignIn from "../pages/SignIn";
 import Main from "../pages/Main";
-import {BrowserRouter, NavLink, Route} from "react-router-dom"
-import {Redirect} from "react-router-dom";
+import {BrowserRouter, Route} from "react-router-dom"
 import Test1 from "../pages/Tests/Test1";
 
 const App = () => {

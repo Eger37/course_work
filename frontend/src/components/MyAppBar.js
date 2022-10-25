@@ -1,5 +1,5 @@
 import React from "react";
-import {AppBar, Button, Container, IconButton, Toolbar, Typography, Box} from "@mui/material"
+import {AppBar, Button, Container, Toolbar, Typography, Box} from "@mui/material"
 import {makeStyles} from "@mui/styles"
 import {NavLink} from "react-router-dom"
 import {authProvider} from "../api/authProvider";

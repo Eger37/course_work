@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, ForeignKey, Boolean, DateTime
+from sqlalchemy import Column, String, Integer, ForeignKey, Boolean, DateTime, ARRAY
 from sqlalchemy.dialects import postgresql
 from datetime import datetime
 
@@ -25,6 +25,9 @@ class User(BaseUser):
     is_blocked = Column(Boolean(), nullable=False, default=False)
 
     type = Column(UserTypeType(), nullable=False)
+
+    tests = Column(ARRAY(Integer), default=None)
+
 
     @property
     def is_manager(self):

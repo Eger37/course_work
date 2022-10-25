@@ -3,12 +3,11 @@ import {makeStyles} from "@mui/styles"
 import {Paper, Container, Grid, Typography, Button} from "@mui/material"
 import testImg from "../images/test.jpg";
 import {NavLink} from "react-router-dom";
-import Box from "@mui/material/Box";
 
 const useStyles = makeStyles(() => ({
     mainFeaturesPostContent: {
         position: "relative",
-        backgroundColor: "rgba(0,0,0,.4)",
+        backgroundColor: "rgba(0,0,0,.6)",
         padding: 8,
         marginTop: 16,
         marginBottom: 16

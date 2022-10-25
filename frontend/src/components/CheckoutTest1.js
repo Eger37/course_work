@@ -4,12 +4,13 @@ import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import {createTheme, ThemeProvider, styled} from '@mui/material/styles';
-import {FormControlLabel, MobileStepper, RadioGroup, useRadioGroup, Radio} from "@mui/material";
+import {createTheme, ThemeProvider} from '@mui/material/styles';
+import {FormControlLabel, MobileStepper, RadioGroup, Radio} from "@mui/material";
 import {KeyboardArrowLeft, KeyboardArrowRight} from "@mui/icons-material";
 import {test1Data} from "../data/testsData"
 import Grid from "@mui/material/Grid";
 import {testsProvider} from "../api/testsProvider";
+import {_getPermissions} from "../api/authProvider";
 
 const steps = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
 
@@ -54,7 +55,14 @@ export default function CheckoutTest1() {
         if (activeStep !== maxSteps - 1) {
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
         } else {
-            testsProvider.test1(test1Data, answers);
+            testsProvider.test1({userId: _getPermissions().id, test1Data: test1Data, answers: answers})
+                .then((data) => {
+                    console.log(data)
+                    alert(`Результат:\n
+                    Ваш рівень самопочуття ${data.result.well_being.description}\n
+                    Ваш рівень активності ${data.result.activity.description}\n
+                    Ваш рівень настрою ${data.result.mood.description}`)
+                })
         }
     };
 

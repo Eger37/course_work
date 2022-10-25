@@ -6,7 +6,7 @@ import testImg from "../images/test.jpg";
 const useStyles = makeStyles(() => ({
     mainFeaturesPostContent: {
         position: "relative",
-        backgroundColor: "rgba(0,0,0,.4)",
+        backgroundColor: "rgba(0,0,0,.6)",
         padding: 8,
         marginTop: 16,
         marginBottom: 16
@@ -34,7 +34,7 @@ const Info = () => {
                         <div className={classes.mainFeaturesPostContent}>
                             <Typography
                                 component={"h5"}
-                                color="grey">&nbsp;&nbsp;&nbsp;Психологічні тести створені для визначення та виявлення
+                                color="white">&nbsp;&nbsp;&nbsp;Психологічні тести створені для визначення та виявлення
                                 важливих якостей та можливих відхилень у психіці людини. Також вони допомагають
                                 розібратися зі своїми внутрішніми протиріччями. Але при цьому не слід забувати, що
                                 коректно інтерпретувати їхні результати може лише психолог. Тому якщо ви, пройшовши
