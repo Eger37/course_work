@@ -50,17 +50,21 @@ function TestInfo (props) {
                     </Grid>
                     <Grid item md={3}/>
                     <Grid item md={3}/>
-                    <Grid item md={6}>
-                        <Box mb={3}>
-                            <NavLink to={props.page}>
-                                <Button variant="contained"  size={"small"} color={"primary"}>
-                                    Скласти тест
-                                </Button>
-                            </NavLink>
-                        </Box>
+                    <Grid item md={6}
+                          container
+                          alignItems="center"
+                          direction="column"
+                          justifyContent="center">
+                        {/*<Box mb={3}>*/}
+                        {/*    <NavLink to={props.page}>*/}
+                        {/*        <Button variant="contained"  size={"small"} color={"primary"}>*/}
+                        {/*            Скласти тест*/}
+                        {/*        </Button>*/}
+                        {/*    </NavLink>*/}
+                        {/*</Box>*/}
                         <NavLink to={"/"}>
                             <Button variant="contained"  size={"small"} color={"primary"}>
-                                На головну строрінку
+                                На головну сторінку
                             </Button>
                         </NavLink>
                     </Grid>

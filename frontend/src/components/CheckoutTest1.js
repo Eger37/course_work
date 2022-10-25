@@ -1,44 +1,61 @@
 import * as React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import Toolbar from '@mui/material/Toolbar';
 import Paper from '@mui/material/Paper';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
-import {createTheme, ThemeProvider} from '@mui/material/styles';
-import {MobileStepper} from "@mui/material";
+import {createTheme, ThemeProvider, styled} from '@mui/material/styles';
+import {FormControlLabel, MobileStepper, RadioGroup, useRadioGroup, Radio} from "@mui/material";
 import {KeyboardArrowLeft, KeyboardArrowRight} from "@mui/icons-material";
+import {test1Data} from "../data/testsData"
+import Grid from "@mui/material/Grid";
+import {testsProvider} from "../api/testsProvider";
 
+const steps = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
 
-const steps = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
+function MyRadioGroup(props) {
+    let [value, setValue] = React.useState(0);
 
-function getStepContent(step) {
-    switch (step) {
-        case 0:
-            return <h1>fsf</h1>;
-        case 1:
-            return <h1>fsf</h1>;
-        case 2:
-            return <h1>fsf</h1>;
-        default:
-            throw new Error('Unknown step');
-    }
+    const handleChange = (event) => {
+        const copiedArray = Array.from(props.answers);
+        copiedArray[props.activeStep] = event.target.value;
+        props.setAnswers(copiedArray)
+        setValue(event.target.value);
+    };
+
+    const FormControlLabelArray = [
+        <FormControlLabel value={7} control={<Radio/>} label="3" labelPlacement="bottom"/>,
+        <FormControlLabel value={6} control={<Radio/>} label="2" labelPlacement="bottom"/>,
+        <FormControlLabel value={5} control={<Radio/>} label="1" labelPlacement="bottom"/>,
+        <FormControlLabel value={4} control={<Radio/>} label="0" labelPlacement="bottom"/>,
+        <FormControlLabel value={3} control={<Radio/>} label="1" labelPlacement="bottom"/>,
+        <FormControlLabel value={2} control={<Radio/>} label="2" labelPlacement="bottom"/>,
+        <FormControlLabel value={1} control={<Radio/>} label="3" labelPlacement="bottom"/>
+    ]
+    return (
+        <RadioGroup row
+                    name="use-radio-group" defaultValue={0}
+                    value={value}
+                    onChange={handleChange}
+                    alignItems="center">
+            {props.reverse ? FormControlLabelArray.reverse() : FormControlLabelArray}
+        </RadioGroup>
+    )
 }
 
 const theme = createTheme();
 
 export default function CheckoutTest1() {
     const [activeStep, setActiveStep] = React.useState(0);
+    const [answers, setAnswers] = React.useState(new Array(30));
     const maxSteps = steps.length;
 
-    const handleNext = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    const handleNextFinish = () => {
+        if (activeStep !== maxSteps - 1) {
+            setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        } else {
+            testsProvider.test1(test1Data, answers);
+        }
     };
 
     const handleBack = () => {
@@ -48,23 +65,36 @@ export default function CheckoutTest1() {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline/>
-            <Container component="main" maxWidth="sm" sx={{mb: 4}}>
-                <Paper variant="outlined" sx={{my: {xs: 3, md: 6}, p: {xs: 2, md: 3}}}> <Paper
-                    square
-                    elevation={0}
-                    sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        height: 50,
-                        pl: 2,
-                        bgcolor: 'background.default',
-                    }}
-                >
-                    <Typography>{steps[activeStep].label}</Typography>
-                </Paper>
-                    <Box sx={{height: 255, maxWidth: 400, width: '100%', p: 2}}>
-                        {steps[activeStep].description}
-                    </Box>
+            <Container component="main" maxWidth="md" sx={{mb: 4}}>
+                <Paper variant="outlined" sx={{my: {xs: 3, md: 6}, p: {xs: 2, md: 3}}}>
+                    <Grid container>
+                        <Grid item md={6}
+                              container
+                              alignItems="center"
+                              direction="column"
+                              justifyContent="center">
+                            <Typography>{test1Data[activeStep].left}</Typography></Grid>
+                        <Grid item md={6}
+                              container
+                              alignItems="center"
+                              direction="column"
+                              justifyContent="center">
+                            <Typography>{test1Data[activeStep].right}</Typography>
+                        </Grid>
+                        <Grid item md={12}
+                              container
+                              alignItems="center"
+                              direction="column"
+                              justifyContent="center">
+                            <MyRadioGroup
+                                activeStep={activeStep}
+                                answers={answers}
+                                setAnswers={setAnswers}
+                                reverse={test1Data[activeStep].reverse}
+                                key={activeStep}
+                            />
+                        </Grid>
+                    </Grid>
                     <MobileStepper
                         variant="text"
                         steps={maxSteps}
@@ -73,10 +103,9 @@ export default function CheckoutTest1() {
                         nextButton={
                             <Button
                                 size="small"
-                                onClick={handleNext}
-                                disabled={activeStep === maxSteps - 1}
-                            >
-                                Next
+                                onClick={handleNextFinish}
+                                disabled={!answers[activeStep]}
+                            >{(activeStep === maxSteps - 1) ? "Finish" : "Next"}
                                 {theme.direction === 'rtl' ? (
                                     <KeyboardArrowLeft/>
                                 ) : (

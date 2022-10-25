@@ -18,7 +18,7 @@ export const testsData = [
 
     }
 ]
-export const test1 = [
+export const test1Data = [
     {
         left: "Самопочуття добре",
         right: "Самопочуття погане",
