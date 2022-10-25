@@ -54,7 +54,7 @@ def generate_result(test_1_data, answers):
 
 
 def gen_text_result(result):
-    return f"самопочуття: {result['well_being']['description']}, активність: {result['activity']['description']}, настрій: {result['mood']['description']},"
+    return f"самопочуття: {result['well_being']['description']}, активність: {result['activity']['description']}, настрій: {result['mood']['description']}"
 
 
 @resource(path="/tests/test1", collection_path="/tests/test1", description="Test 1 resource",

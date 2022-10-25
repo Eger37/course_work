@@ -1,5 +1,17 @@
 import colander
 
 
+class TestBaseSchema(colander.MappingSchema):
+    test_type_id = colander.SchemaNode(colander.Int())
+    user_id = colander.SchemaNode(colander.Int())
+    result = colander.SchemaNode(colander.String())
+
+
+class TestSchema(TestBaseSchema):
+    id = colander.SchemaNode(colander.Int())
+
+
 class ResponseBodyUserTestsSchema(colander.MappingSchema):
-    pass
+    @colander.instantiate()
+    class body(colander.SequenceSchema):
+        item = TestSchema()

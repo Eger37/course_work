@@ -1,5 +1,5 @@
 import React from "react";
-import {List, Datagrid, TextField, EmailField, EditButton} from 'react-admin';
+import {List, Datagrid, TextField, EmailField, EditButton, ShowButton} from 'react-admin';
 
 import {ScrollingWrapper} from '../../../components/ScrollingWrapper';
 
@@ -22,6 +22,7 @@ export const ClientList = props => {
                     <TextField source="last_name"/>
                     <EmailField source="email"/>
                     <EditButton label=""/>
+                    <ShowButton label="show tests"/>
                 </Datagrid>
             </ScrollingWrapper>
         </List>

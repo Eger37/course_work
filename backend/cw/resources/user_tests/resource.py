@@ -10,10 +10,7 @@ from cornice.validators import (
     colander_validator,
 )
 
-from sqlalchemy import func
-
-from cw.database import User, Admin, Client, UserRole, UserType
-from cw.modules.security import hash_password
+from cw.database import User, Admin, Client, UserRole, Test
 
 from .schema import (
     GetUserTestsSchema,
@@ -23,40 +20,47 @@ from .response_schema import (
     ResponseBodyUserTestsSchema,
 )
 
+from .._shared.schema import (
+    map_data_to_body_schema
+)
 from .._shared.query import (
     apply_filter_sort_range_for_query,
     generate_range,
 )
-
-from .._shared.schema import (
-    map_data_to_body_schema
-)
-
 from cw.modules.cornice import negotiation_params
 
+from sqlalchemy import func
 
-@resource(path="/user_tests/{id}", description="Client resource", **negotiation_params)
+
+@resource(path="/user_tests", description="Client resource", **negotiation_params)
 class UserTestsResource(object):
     def __init__(self, request, context=None):
         self.request = request
 
     def __acl__(self):
         return [
-            (Allow, UserRole.psychologist, ("get", "create", "update",)),
+            (Allow, UserRole.psychologist, ("get",)),
+            (Allow, UserRole.client, ("get",)),
         ]
 
     @view(
         schema=GetUserTestsSchema(),
-        validators=(colander_path_validator,),
+        validators=(colander_validator,),
         response_schemas={
             '200': ResponseBodyUserTestsSchema(description="Return OK response"),
         },
         permission="get",
+        renderer='json'
     )
     def get(self):
-        path_data = self.request.validated
+        data = self.request.validated['querystring']
+        user_id = data["filter"]["user_id"]
 
-        user = self.request.db.query(User).get(path_data['id'])
-        user = dict(user)
+        tests = self.request.db.query(Test).filter(user_id == Test.user_id).all()
 
-        return map_data_to_body_schema(ResponseBodyUserTestsSchema, user)
+        if data.get("range"):
+            self.request.response.headers.add(
+                "Content-Range",
+                generate_range(data['range'], len(tests))
+            )
+        return map_data_to_body_schema(ResponseBodyUserTestsSchema, tests)
