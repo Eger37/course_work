@@ -1,7 +1,7 @@
 import React from 'react';
 import {
     Datagrid, TextField, FunctionField,
-    ReferenceManyField,
+    ReferenceManyField, DateField
 } from 'react-admin';
 import Paper from '@material-ui/core/Paper';
 
@@ -12,7 +12,7 @@ export const TestsDatagrid = (props) => {
         <Paper variant="outlined">
             <ScrollingWrapperInCard>
                 <Datagrid {...props}>
-
+                    <DateField source="created_at" />
                     <FunctionField source="test_type_id" label="назва тесту"
                                    render={record => {
                                        if (record.test_type_id === 1){
