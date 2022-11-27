@@ -4,3 +4,17 @@ postgres-data
 /frontend/node_modules
 /frontend_admin/node_modules
 /frontend/yarn-error.log
+/backend/cw/__pycache__/
+/backend/cw/database/__pycache__/
+/backend/cw/database/models/__pycache__/
+/backend/cw/database/models/test/__pycache__/
+/backend/cw/database/models/user/__pycache__/
+/backend/cw/migrations/__pycache__/
+/backend/cw/migrations/versions/__pycache__/
+/backend/cw/modules/__pycache__/
+/backend/cw/modules/renderers/__pycache__/
+/backend/cw/modules/renderers/negotiation/__pycache__/
+/backend/cw/modules/security/__pycache__/
+/backend/cw/scripts/__pycache__/
+/backend/cw/utils/__pycache__/
+/backend/cw/utils/data_to_db/__pycache__/
