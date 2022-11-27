@@ -49,7 +49,7 @@ services:
       - ./files:/app/files
 
   celery_worker:
-    image: "${PROJECT_NAME}_backend"
+    image: "${PROJECT_NAME}-backend"
     command: celery -A cw.celery worker --loglevel=info --autoscale=1
     env_file: .env.dev
     depends_on:
