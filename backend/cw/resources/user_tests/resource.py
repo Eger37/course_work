@@ -39,6 +39,7 @@ class UserTestsResource(object):
 
     def __acl__(self):
         return [
+            (Allow, UserRole.admin, ("get",)),
             (Allow, UserRole.psychologist, ("get",)),
             (Allow, UserRole.client, ("get",)),
         ]

@@ -49,7 +49,6 @@ export const ActionsWithBackButton = ({
 
 
 export const ClientsShow = ({permissions, hasShow, ...props}) => {
-    console.log(props)
     return (
         <Show actions={<ActionsWithBackButton hasEdit={true}/>} {...props}>
             <SimpleShowLayout style={{paddingBottom: 8}}>
