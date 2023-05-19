@@ -9,11 +9,9 @@ const Info = () => {
     return (
         <main>
             <Route exact={true} path={"/tests/1"}
-                   render={(props) => <TestInfo title={testData.title} about={testData.about}
-                                                page={testData.page + "/start"}/>}
+                   render={(props) => <TestInfo title={testData.title} about={testData.about}/>}
             />
             <CheckoutTest1/>
-
         </main>
     )
 };

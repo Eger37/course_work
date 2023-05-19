@@ -9,7 +9,7 @@ import {FormControlLabel, MobileStepper, RadioGroup, Radio} from "@mui/material"
 import {KeyboardArrowLeft, KeyboardArrowRight} from "@mui/icons-material";
 import {test1Data} from "../data/testsData"
 import Grid from "@mui/material/Grid";
-import {testsProvider} from "../api/testsProvider";
+import {postTest1} from "../api/testsProvider";
 import {_getPermissions} from "../api/authProvider";
 
 const steps = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
@@ -25,20 +25,20 @@ function MyRadioGroup(props) {
     };
 
     const FormControlLabelArray = [
-        <FormControlLabel value={7} control={<Radio/>} label="3" labelPlacement="bottom"/>,
-        <FormControlLabel value={6} control={<Radio/>} label="2" labelPlacement="bottom"/>,
-        <FormControlLabel value={5} control={<Radio/>} label="1" labelPlacement="bottom"/>,
-        <FormControlLabel value={4} control={<Radio/>} label="0" labelPlacement="bottom"/>,
-        <FormControlLabel value={3} control={<Radio/>} label="1" labelPlacement="bottom"/>,
-        <FormControlLabel value={2} control={<Radio/>} label="2" labelPlacement="bottom"/>,
-        <FormControlLabel value={1} control={<Radio/>} label="3" labelPlacement="bottom"/>
+        <FormControlLabel value={7} control={<Radio/>} label="3" labelPlacement="bottom" key={0}/>,
+        <FormControlLabel value={6} control={<Radio/>} label="2" labelPlacement="bottom" key={1}/>,
+        <FormControlLabel value={5} control={<Radio/>} label="1" labelPlacement="bottom" key={2}/>,
+        <FormControlLabel value={4} control={<Radio/>} label="0" labelPlacement="bottom" key={3}/>,
+        <FormControlLabel value={3} control={<Radio/>} label="1" labelPlacement="bottom" key={4}/>,
+        <FormControlLabel value={2} control={<Radio/>} label="2" labelPlacement="bottom" key={5}/>,
+        <FormControlLabel value={1} control={<Radio/>} label="3" labelPlacement="bottom" key={6}/>
     ]
     return (
         <RadioGroup row
                     name="use-radio-group" defaultValue={0}
                     value={value}
                     onChange={handleChange}
-                    alignItems="center">
+        >
             {props.reverse ? FormControlLabelArray.reverse() : FormControlLabelArray}
         </RadioGroup>
     )
@@ -55,15 +55,19 @@ export default function CheckoutTest1() {
         if (activeStep !== maxSteps - 1) {
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
         } else {
-            testsProvider.test1({userId: _getPermissions().id, test1Data: test1Data, answers: answers})
-                .then((data) => {
-                    if (data) {
-                        alert(`Результат:\n
-                    Ваш рівень самопочуття ${data.result.well_being.description}\n
-                    Ваш рівень активності ${data.result.activity.description}\n
-                    Ваш рівень настрою ${data.result.mood.description}`)
-                    }
-                })
+            postTest1({
+                userId: _getPermissions().id,
+                test1Data: test1Data,
+                answers: answers
+            })
+            .then((data) => {
+                if (data) {
+                    alert(`Результат:\n
+                Ваш рівень самопочуття ${data.result.well_being.description}\n
+                Ваш рівень активності ${data.result.activity.description}\n
+                Ваш рівень настрою ${data.result.mood.description}`)
+                }
+            })
         }
     };
 

@@ -19,7 +19,7 @@ const TestsContent = () => {
     return (<>
             <div content={classes.mainContent}>
                 <Container maxWidth={"sm"}>
-                    <Typography variant={"h3"} align={"center"} color={"textPrimary"} getterBottom>
+                    <Typography variant={"h3"} align={"center"} color={"textPrimary"}>
                         Тести
                     </Typography>
                 </Container>

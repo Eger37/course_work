@@ -54,13 +54,6 @@ function TestInfo (props) {
                           alignItems="center"
                           direction="column"
                           justifyContent="center">
-                        {/*<Box mb={3}>*/}
-                        {/*    <NavLink to={props.page}>*/}
-                        {/*        <Button variant="contained"  size={"small"} color={"primary"}>*/}
-                        {/*            Скласти тест*/}
-                        {/*        </Button>*/}
-                        {/*    </NavLink>*/}
-                        {/*</Box>*/}
                         <NavLink to={"/"}>
                             <Button variant="contained"  size={"small"} color={"primary"}>
                                 На головну сторінку
