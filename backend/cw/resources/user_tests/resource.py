@@ -10,7 +10,7 @@ from cornice.validators import (
     colander_validator,
 )
 
-from cw.database import User, Admin, Client, UserRole, Test
+from cw.database import User, Admin, Client, UserRole, CompletedTest
 
 from .schema import (
     GetUserTestsSchema,
@@ -57,7 +57,7 @@ class UserTestsResource(object):
         data = self.request.validated['querystring']
         user_id = data["filter"]["user_id"]
 
-        tests = self.request.db.query(Test).filter(user_id == Test.user_id).all()
+        tests = self.request.db.query(CompletedTest).filter(user_id == CompletedTest.user_id).all()
 
         if data.get("range"):
             self.request.response.headers.add(

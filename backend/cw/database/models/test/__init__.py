@@ -1,1 +1,1 @@
-from .Test import Test
+from .CompletedTest import CompletedTest
