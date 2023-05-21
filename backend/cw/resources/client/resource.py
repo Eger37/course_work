@@ -112,9 +112,7 @@ class ClientResource(object):
         body_data = self.request.validated["body"]
         path_data = self.request.validated["path"]
 
-        user = self.request.db.query(User).get(path_data["id"])
-
-        user.type = UserType.client
+        user = self.request.db.query(Client).get(path_data["id"])
 
         for key in body_data:
             if body_data[key] is None:
