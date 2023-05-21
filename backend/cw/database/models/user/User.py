@@ -1,5 +1,4 @@
 from sqlalchemy import Column, String, Integer, ForeignKey, Boolean, DateTime, ARRAY
-from sqlalchemy.dialects import postgresql
 from datetime import datetime
 
 from .meta import BaseUser
@@ -26,7 +25,6 @@ class User(BaseUser):
 
     type = Column(UserTypeType(), nullable=False)
 
-    tests = Column(ARRAY(Integer), default=None)
     anamnesisFromPsychologist = Column(String(), default=None)
 
 
