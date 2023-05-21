@@ -77,7 +77,7 @@ class ClientResource(object):
     def collection_get(self):
         data = self.request.validated['querystring']
         apply_range = True
-        if data["filter"].pop("no_range"):
+        if data["filter"].pop("no_range", None):
             apply_range = False
 
         filter_for_client = (User.type == UserType.client)  # noqa: E711

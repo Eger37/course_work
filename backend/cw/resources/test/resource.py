@@ -34,7 +34,7 @@ from .._shared.query import (
 from cw.modules.cornice import negotiation_params
 
 
-@resource(path="/test/{id}", collection_path="/tests", description="Test resource",
+@resource(path="/test/{id}", collection_path="/test", description="Test resource",
           tags=["test"], **negotiation_params)
 class TestResource(object):
     def __init__(self, request, context=None):
@@ -72,7 +72,7 @@ class TestResource(object):
     def collection_get(self):
         data = self.request.validated['querystring']
         apply_range = True
-        if data["filter"].pop("no_range"):
+        if data["filter"].pop("no_range", None):
             apply_range = False
 
         tests_query = self.request.db.query(Test)
