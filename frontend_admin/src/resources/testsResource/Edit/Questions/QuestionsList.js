@@ -11,15 +11,17 @@ import {ScrollingWrapperInCard} from '../../../../components/ScrollingWrapper';
 
 // import { StepsPopover } from './StepsPopover';
 // import { EditArticle } from './EditArticle';
-// import { AddQuestion } from './AddQuestion';
+import {AddQuestion} from './AddQuestion';
 // import { EditInDialogButton } from "@react-admin/ra-form-layout";
 
 
 export const QuestionsDatagrid = (props) => {
+    console.log("QuestionsDatagrid")
     console.log(props)
 
     if (!props.ids || !props.ids.length) {
-        return <div>lo</div>
+        return <AddQuestion test={props.test}/>
+
     }
 
     return (
@@ -28,7 +30,7 @@ export const QuestionsDatagrid = (props) => {
                 <Datagrid {...props}>
                     <TextField sortable={false} source="id" label="Number"/>
                     <TextField sortable={false} source="text" label="Question"/>
-                    {/*<FunctionField source="edit" render={record => <EditInDialogButton/>}/>*/}
+                    <FunctionField source="edit" render={record => <div/>}/>
 
                 </Datagrid>
 
@@ -36,7 +38,7 @@ export const QuestionsDatagrid = (props) => {
             <Box p={1} display="flex" alignItems="center" justifyContent="space-between" boxSizing="border-box">
                 <Box display="flex">
                     <Box display="flex" alignItems="flex-end">
-                        {/*<AddQuestion test={props.test} />*/}
+                        <AddQuestion test={props.test}/>
                     </Box>
                 </Box>
             </Box>

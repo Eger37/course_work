@@ -17,13 +17,15 @@ const SaveAndShowButton = withStyles(theme => ({
     redirect="show"
 />);
 
-export const SaveWithCancelToolbar = ({children, hasShow, ...props}) => {
-    return (
-        <Toolbar {...props} >
-            <SaveButton/>
-            {hasShow && <SaveAndShowButton/>}
-            <BackButton/>
-            {children}
-        </Toolbar>
+export const SaveWithCancelToolbar = ({children, hasShow, after, ...props}) => {
+    return (<React.Fragment>
+            <Toolbar {...props} >
+                <SaveButton/>
+                {hasShow && <SaveAndShowButton/>}
+                <BackButton/>
+            </Toolbar>
+            {React.cloneElement(after, props)}
+        </React.Fragment>
+
     );
 }

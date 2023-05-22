@@ -4,13 +4,12 @@ import {
 } from 'react-admin';
 
 import {GridForm, GridInput} from '../../../components/GridForm/';
-import {QuestionsField} from "./Questions";
 
 export const TestEditForm = props => (
     <GridForm {...props}>
         <GridInput sm={12} component={TextInput} source="title" validate={[required()]} autoFocus/>
         <GridInput sm={12} component={TextInput} source="subtitle" validate={[required()]}/>
         <GridInput sm={12} component={TextInput} source="description" multiline validate={[required()]}/>
-        <QuestionsField/>
     </GridForm>
 );
+
