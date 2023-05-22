@@ -94,4 +94,4 @@ services:
     volumes:
       - ./frontend_admin:/frontend_admin:rw
     ports:
-      - "3000:3000"
+      - "3002:3000"

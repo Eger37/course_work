@@ -11,4 +11,5 @@ export const adminResources = [
     <Resource {...psychologistsResource} name="psychologist"/>,
     <Resource {...testResource} name="test"/>,
     <Resource name="user_tests" intent={"registration"}/>,
+    <Resource name="question" intent={"registration"}/>,
 ];
