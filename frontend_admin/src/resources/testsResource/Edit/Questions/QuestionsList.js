@@ -26,11 +26,12 @@ export const QuestionsDatagrid = (props) => {
 
     return (
         <Paper variant="outlined">
+            <h2 align={"center"}>Questions</h2>
             <ScrollingWrapperInCard>
                 <Datagrid {...props}>
+                    <FunctionField source="edit" render={record => <div/>}/>
                     <TextField sortable={false} source="sequential_number" label="Sequential number"/>
                     <TextField sortable={false} source="text" label="Question"/>
-                    <FunctionField source="edit" render={record => <div/>}/>
 
                 </Datagrid>
 
@@ -49,7 +50,8 @@ export const QuestionsDatagrid = (props) => {
 
 export const QuestionsField = (props) => {
     return (
-        <ReferenceManyField reference={"question"} target="test_id" sort={{field: "sequential_number", order: "ASC"}} {...props}>
+        <ReferenceManyField reference={"question"} target="test_id"
+                            sort={{field: "sequential_number", order: "ASC"}} {...props}>
             <QuestionsDatagrid test={props.record}/>
         </ReferenceManyField>
     );
