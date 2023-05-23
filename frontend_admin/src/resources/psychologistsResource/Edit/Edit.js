@@ -9,7 +9,7 @@ import {PsychologistEditForm} from './EditForm';
 
 
 export const PsychologistEdit = (props) => (
-    <Edit {...props} undoable={false}>
+    <Edit {...props}>
         <SimpleForm submitOnEnter={false} toolbar={<SaveWithCancelWithPasswordChangeToolbar/>}>
             <PsychologistEditForm/>
         </SimpleForm>

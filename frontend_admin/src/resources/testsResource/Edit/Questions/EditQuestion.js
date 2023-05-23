@@ -56,7 +56,6 @@ export const EditQuestion = ({ question }) => {
                 <DialogTitle>Edit question {question.id}</DialogTitle>
 				<FormWithRedirect
 					record={question}
-					submitOnEnter={false}
 					component={DialogContent}
 					save={handleSubmit}
 					render={({ handleSubmitWithRedirect }) => (

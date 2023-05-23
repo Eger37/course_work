@@ -3,6 +3,7 @@ from pyramid.security import (
     Everyone
 )
 from sqlalchemy import func
+from pyramid.httpexceptions import HTTPNotFound
 
 from cornice.resource import resource, view
 from cornice.validators import (
@@ -23,7 +24,9 @@ from .schema import (
 )
 
 from .._shared.schema import (
-    map_data_to_body_schema
+    map_data_to_body_schema,
+    ResponseBodyEmptySchema,
+    GetItemByIdParamSchema
 )
 
 from .._shared.query import (
@@ -42,8 +45,8 @@ class QuestionResource(object):
 
     def __acl__(self):
         return [
-            (Allow, UserRole.admin, ("get", "create", "update",)),
-            (Allow, UserRole.psychologist, ("get", "create", "update",)),
+            (Allow, UserRole.admin, ("get", "create", "update", "delete",)),
+            (Allow, UserRole.psychologist, ("get", "create", "update", "delete",)),
             (Allow, Everyone, ("get",)),
         ]
 
@@ -58,6 +61,8 @@ class QuestionResource(object):
     def get(self):
         path_data = self.request.validated
         question = self.request.db.query(Question).get(path_data['id'])
+        if question is None:
+            raise HTTPNotFound(explanation="Question not found!")
         return map_data_to_body_schema(ResponseBodyQuestionSchema, dict(question))
 
     @view(
@@ -77,8 +82,9 @@ class QuestionResource(object):
 
         questions_query = self.request.db.query(Question)
         questions_count_query = self.request.db.query(func.count(Question.id))
-        questions_query, questions_count_query = apply_filter_sort_range_for_query(Question, questions_query, questions_count_query,
-                                                                           data=data, apply_range=apply_range)
+        questions_query, questions_count_query = apply_filter_sort_range_for_query(Question, questions_query,
+                                                                                   questions_count_query,
+                                                                                   data=data, apply_range=apply_range)
 
         questions = questions_query.all()
         questions_count = questions_count_query.scalar()
@@ -130,3 +136,19 @@ class QuestionResource(object):
         self.request.db.add(question)
         self.request.db.flush()
         return map_data_to_body_schema(ResponseBodyQuestionSchema, dict(question))
+
+
+    @view(
+        schema=GetItemByIdParamSchema(),
+        validators=(colander_path_validator,),
+        response_schemas={
+            '200': ResponseBodyEmptySchema(description="Return OK response")
+        },
+        permission="delete",
+        content_type="text/plain"
+    )
+    def delete(self):
+        self.request.db.query(Question).filter(Question.id == self.request.validated["id"]).delete()
+        self.request.db.flush()
+
+        return map_data_to_body_schema(ResponseBodyEmptySchema, "")

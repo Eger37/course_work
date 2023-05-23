@@ -9,7 +9,7 @@ import {QuestionsField} from "./Questions";
 
 
 export const TestEdit = (props) => (
-    <Edit {...props} undoable={false}>
+    <Edit {...props}>
         <SimpleForm submitOnEnter={false}
                     toolbar={<SaveWithCancelToolbar after={<QuestionsField/>}/>}>
             <TestEditForm/>

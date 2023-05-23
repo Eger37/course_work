@@ -12,6 +12,10 @@ const getOptions = (options = {}) => {
 
 export const httpClient = (url, options = {}) => {
     const _options = getOptions(options);
+    // _options.headers.set('Accept', "application/json");
+    // _options.headers.set("content-type", "json");
+    console.log("_options")
+    console.log(_options)
     return fetchUtils.fetchJson(url, _options);
 }
 
