@@ -9,6 +9,7 @@ class Question(BaseTest):
 
     id = Column(Integer(), primary_key=True)
     test_id = Column(Integer, ForeignKey(Test.id), nullable=False)
+    sequential_number = Column(Integer, nullable=False)
     text = Column(String(1024), nullable=False)
 
     def __repr__(self):
