@@ -39,6 +39,7 @@ export const AddQuestion = (props) => {
         approve({
             payload: {
                 data: {
+                    test_id: props.test.id,
                     ...values,
                 },
             }
