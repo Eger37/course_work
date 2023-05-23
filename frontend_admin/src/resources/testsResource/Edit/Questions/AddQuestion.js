@@ -52,7 +52,7 @@ export const AddQuestion = (props) => {
                     onClick={handleOpen}>
                 Add question
             </Button>
-            {open && <Dialog width="xl" open={open} onClose={handleClose} fullScreen={true}>
+            {open && <Dialog open={open} onClose={handleClose} fullScreen={true}>
                 <DialogTitle>Add question</DialogTitle>
                 <FormWithRedirect
                     submitOnEnter={false}
