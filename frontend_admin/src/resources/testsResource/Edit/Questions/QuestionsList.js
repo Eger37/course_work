@@ -12,6 +12,7 @@ import {ScrollingWrapperInCard} from '../../../../components/ScrollingWrapper';
 // import { StepsPopover } from './StepsPopover';
 // import { EditArticle } from './EditArticle';
 import {AddQuestion} from './AddQuestion';
+import {EditQuestion} from "./EditQuestion";
 // import { EditInDialogButton } from "@react-admin/ra-form-layout";
 
 
@@ -29,7 +30,7 @@ export const QuestionsDatagrid = (props) => {
             <h2 align={"center"}>Questions</h2>
             <ScrollingWrapperInCard>
                 <Datagrid {...props}>
-                    <FunctionField source="edit" render={record => <div/>}/>
+                    <FunctionField source="edit" render={record => <EditQuestion question={record}/>}/>
                     <TextField sortable={false} source="sequential_number" label="Sequential number"/>
                     <TextField sortable={false} source="text" label="Question"/>
 

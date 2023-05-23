@@ -27,7 +27,6 @@ class CreateQuestionSchema(colander.MappingSchema):
 
 
 class UpdateQuestionBaseSchema(colander.MappingSchema):
-    test_id = colander.SchemaNode(colander.Integer())
     text = colander.SchemaNode(colander.String())
     sequential_number = colander.SchemaNode(colander.Integer())
 
