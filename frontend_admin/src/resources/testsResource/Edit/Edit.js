@@ -5,13 +5,13 @@ import {
 
 import {SaveWithCancelToolbar} from "../../../components/toolbars/SaveWithCancelToolbar";
 import {TestEditForm} from "./EditForm";
-import {QuestionsField} from "./Questions";
+import {TestFieldsCombine} from "../Fields/TestFieldsCombine";
 
 
 export const TestEdit = (props) => (
     <Edit {...props}>
         <SimpleForm submitOnEnter={false}
-                    toolbar={<SaveWithCancelToolbar after={<QuestionsField/>}/>}>
+                    toolbar={<SaveWithCancelToolbar after={<TestFieldsCombine/>}/>}>
             <TestEditForm/>
         </SimpleForm>
     </Edit>

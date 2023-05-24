@@ -13,10 +13,6 @@ import {DeleteQuestion} from "./DeleteQuestion";
 
 
 export const QuestionsDatagrid = (props) => {
-    if (!props.ids || !props.ids.length) {
-        return <AddQuestion test={props.test}/>
-    }
-
     return (
         <Paper variant="outlined">
             <h2 align={"center"}>Questions</h2>

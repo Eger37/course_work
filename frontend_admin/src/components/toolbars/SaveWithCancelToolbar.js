@@ -2,7 +2,6 @@ import React from 'react';
 import {Toolbar, SaveButton} from 'react-admin';
 import RemoveRedEyeIcon from '@material-ui/icons/RemoveRedEye';
 import {withStyles} from "@material-ui/core/styles";
-
 import {BackButton} from './BackButton';
 
 const SaveAndShowButton = withStyles(theme => ({
@@ -24,7 +23,13 @@ export const SaveWithCancelToolbar = ({children, hasShow, after, ...props}) => {
                 {hasShow && <SaveAndShowButton/>}
                 <BackButton/>
             </Toolbar>
-            {React.cloneElement(after, props)}
+            {after &&
+                <React.Fragment>
+                    <br/>
+                    {React.cloneElement(after, props)}
+                </React.Fragment>
+            }
+
         </React.Fragment>
 
     );
