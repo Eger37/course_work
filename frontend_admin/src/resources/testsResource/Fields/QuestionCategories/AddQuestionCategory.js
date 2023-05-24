@@ -17,14 +17,14 @@ import {useSimpleModalToggle} from '../../../../components/dialogs/useSimpleModa
 import {useNotifyError} from '../../../../utils/notifiers/useNotifyError';
 
 
-export const AddQuestion = (props) => {
+export const AddQuestionCategory = (props) => {
     const refresh = useRefresh();
     const notifyError = useNotifyError();
     const {open, handleOpen, handleClose} = useSimpleModalToggle();
 
     const [approve, {loading}] = useMutation({
         type: 'create',
-        resource: 'question',
+        resource: 'question-category',
     }, {
         onSuccess: () => {
             handleClose();
@@ -50,10 +50,10 @@ export const AddQuestion = (props) => {
         <div style={{textAlign: "center"}}>
             <Button size="small" color="primary" variant="contained" startIcon={<AddIcon/>}
                     onClick={handleOpen}>
-                Add question
+                Add question category
             </Button>
             {open && <Dialog open={open} onClose={handleClose} fullScreen={true}>
-                <DialogTitle>Add question</DialogTitle>
+                <DialogTitle>Add question category</DialogTitle>
                 <FormWithRedirect
                     submitOnEnter={false}
                     component={DialogContent}
@@ -61,11 +61,9 @@ export const AddQuestion = (props) => {
                     render={({handleSubmitWithRedirect, form, record}) => (
                         <React.Fragment>
                             <GridForm>
-                                <GridInput xs={12} component={NumberInput} source="sequential_number"
-                                           label="Sequential number"/>
-                                <GridInput xs={12} component={TextInput} source="text" label="Question"
+                                <GridInput xs={12} component={TextInput} source="name" label="Category name" multiline/>
+                                <GridInput xs={12} component={TextInput} source="description" label="Description"
                                            multiline/>
-
                             </GridForm>
                             <DialogActions>
                                 <Button disabled={loading} onClick={handleClose} color="primary">

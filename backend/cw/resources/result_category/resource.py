@@ -37,7 +37,7 @@ from .._shared.query import (
 from cw.modules.cornice import negotiation_params
 
 
-@resource(path="/result-category/{id}", collection_path="/result-category", description="Result category resource",
+@resource(path="/question-category/{id}", collection_path="/question-category", description="Result category resource",
           tags=["result_category"], **negotiation_params)
 class ResultCategoryResource(object):
     def __init__(self, request, context=None):
