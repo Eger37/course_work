@@ -17,7 +17,6 @@ export const DeleteQuestionCategory = ({questionCategory}) => {
         type: 'delete',
         resource: 'question-category',
         payload: {id: questionCategory.id},
-        // headers: {Accept: "application/json", "content-type": "json"}
     }, {
         onSuccess: () => {
             notifyError("deleted");

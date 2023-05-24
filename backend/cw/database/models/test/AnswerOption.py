@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 
 from .meta import BaseTest
 from .Question import Question
-from .ResultCategory import ResultCategory
+from .QuestionCategory import QuestionCategory
 
 
 class AnswerOption(BaseTest):
@@ -10,7 +10,7 @@ class AnswerOption(BaseTest):
 
     id = Column(Integer(), primary_key=True)
     question_id = Column(Integer, ForeignKey(Question.id), nullable=False)
-    result_category_id = Column(Integer, ForeignKey(ResultCategory.id), nullable=False)
+    question_category_id = Column(Integer, ForeignKey(QuestionCategory.id), nullable=False)
     text = Column(String(256), nullable=False)
     score = Column(Integer(), nullable=False)
 

@@ -12,15 +12,15 @@ from cornice.validators import (
     colander_validator
 )
 
-from cw.database import UserRole, ResultCategory
+from cw.database import UserRole, QuestionCategory
 
 from .schema import (
-    GetResultCategorySchema,
-    ResponseBodyResultCategorySchema,
-    GetResultCategoriesSchema,
-    ResponseBodyResultCategoriesSchema,
-    UpdateResultCategorySchema,
-    CreateResultCategorySchema
+    GetQuestionCategorySchema,
+    ResponseBodyQuestionCategorySchema,
+    GetQuestionCategoriesSchema,
+    ResponseBodyQuestionCategoriesSchema,
+    UpdateQuestionCategorySchema,
+    CreateQuestionCategorySchema
 )
 
 from .._shared.schema import (
@@ -38,8 +38,8 @@ from cw.modules.cornice import negotiation_params
 
 
 @resource(path="/question-category/{id}", collection_path="/question-category", description="Result category resource",
-          tags=["result_category"], **negotiation_params)
-class ResultCategoryResource(object):
+          tags=["question_category"], **negotiation_params)
+class QuestionCategoryResource(object):
     def __init__(self, request, context=None):
         self.request = request
 
@@ -51,25 +51,25 @@ class ResultCategoryResource(object):
         ]
 
     @view(
-        schema=GetResultCategorySchema(),
+        schema=GetQuestionCategorySchema(),
         validators=(colander_path_validator,),
         response_schemas={
-            '200': ResponseBodyResultCategorySchema(description="Return OK response"),
+            '200': ResponseBodyQuestionCategorySchema(description="Return OK response"),
         },
         permission="get",
     )
     def get(self):
         path_data = self.request.validated
-        result_category = self.request.db.query(ResultCategory).get(path_data['id'])
-        if result_category is None:
+        question_category = self.request.db.query(QuestionCategory).get(path_data['id'])
+        if question_category is None:
             raise HTTPNotFound(explanation="Result category not found!")
-        return map_data_to_body_schema(ResponseBodyResultCategorySchema, dict(result_category))
+        return map_data_to_body_schema(ResponseBodyQuestionCategorySchema, dict(question_category))
 
     @view(
-        schema=GetResultCategoriesSchema(),
+        schema=GetQuestionCategoriesSchema(),
         validators=(colander_validator,),
         response_schemas={
-            '200': ResponseBodyResultCategoriesSchema(description="Return OK response"),
+            '200': ResponseBodyQuestionCategoriesSchema(description="Return OK response"),
         },
         permission="get",
         renderer='json'
@@ -80,16 +80,16 @@ class ResultCategoryResource(object):
         if data["filter"].pop("no_range", None):
             apply_range = False
 
-        questions_query = self.request.db.query(ResultCategory)
-        questions_count_query = self.request.db.query(func.count(ResultCategory.id))
-        questions_query, questions_count_query = apply_filter_sort_range_for_query(ResultCategory, questions_query,
+        questions_query = self.request.db.query(QuestionCategory)
+        questions_count_query = self.request.db.query(func.count(QuestionCategory.id))
+        questions_query, questions_count_query = apply_filter_sort_range_for_query(QuestionCategory, questions_query,
                                                                                    questions_count_query,
                                                                                    data=data, apply_range=apply_range)
 
-        result_categories = questions_query.all()
+        question_categories = questions_query.all()
         questions_count = questions_count_query.scalar()
 
-        result_categories = [dict(result_category) for result_category in result_categories]
+        question_categories = [dict(question_category) for question_category in question_categories]
 
         if data.get("range"):
             self.request.response.headers.add(
@@ -97,13 +97,13 @@ class ResultCategoryResource(object):
                 generate_range(data["range"] if apply_range else False, questions_count)
             )
 
-        return map_data_to_body_schema(ResponseBodyResultCategoriesSchema, result_categories)
+        return map_data_to_body_schema(ResponseBodyQuestionCategoriesSchema, question_categories)
 
     @view(
-        schema=UpdateResultCategorySchema(),
+        schema=UpdateQuestionCategorySchema(),
         validators=(colander_validator,),
         response_schemas={
-            '200': ResponseBodyResultCategorySchema(description="return OK response")
+            '200': ResponseBodyQuestionCategorySchema(description="return OK response")
         },
         permission="update",
     )
@@ -111,31 +111,31 @@ class ResultCategoryResource(object):
         body_data = self.request.validated["body"]
         path_data = self.request.validated["path"]
 
-        result_category = self.request.db.query(ResultCategory).get(path_data["id"])
+        question_category = self.request.db.query(QuestionCategory).get(path_data["id"])
 
         for key in body_data:
             if body_data[key] is None:
                 continue
-            setattr(result_category, key, body_data[key])
+            setattr(question_category, key, body_data[key])
 
         self.request.db.flush()
 
-        return map_data_to_body_schema(ResponseBodyResultCategorySchema, dict(result_category))
+        return map_data_to_body_schema(ResponseBodyQuestionCategorySchema, dict(question_category))
 
     @view(
-        schema=CreateResultCategorySchema(),
+        schema=CreateQuestionCategorySchema(),
         validators=(colander_body_validator,),
         response_schemas={
-            '200': ResponseBodyResultCategorySchema(description="return OK response")
+            '200': ResponseBodyQuestionCategorySchema(description="return OK response")
         },
         permission="create",
     )
     def collection_post(self):
         data = {**self.request.validated}
-        result_category = ResultCategory(**data)
-        self.request.db.add(result_category)
+        question_category = QuestionCategory(**data)
+        self.request.db.add(question_category)
         self.request.db.flush()
-        return map_data_to_body_schema(ResponseBodyResultCategorySchema, dict(result_category))
+        return map_data_to_body_schema(ResponseBodyQuestionCategorySchema, dict(question_category))
 
 
     @view(
@@ -148,7 +148,7 @@ class ResultCategoryResource(object):
         content_type="text/plain"
     )
     def delete(self):
-        self.request.db.query(ResultCategory).filter(ResultCategory.id == self.request.validated["id"]).delete()
+        self.request.db.query(QuestionCategory).filter(QuestionCategory.id == self.request.validated["id"]).delete()
         self.request.db.flush()
 
         return map_data_to_body_schema(ResponseBodyEmptySchema, "")

@@ -1,5 +1,5 @@
 from .Test import Test
-from .ResultCategory import ResultCategory
+from .QuestionCategory import QuestionCategory
 from .Question import Question
 from .AnswerOption import AnswerOption
 from .ResultGrade import ResultGrade

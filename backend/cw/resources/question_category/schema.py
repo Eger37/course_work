@@ -5,11 +5,11 @@ from .._shared.schema import (
 )
 
 
-class GetResultCategorySchema(colander.MappingSchema):
+class GetQuestionCategorySchema(colander.MappingSchema):
     id = colander.SchemaNode(colander.Integer())
 
 
-GetResultCategoriesSchema = GetCollectionBaseSchema(
+GetQuestionCategoriesSchema = GetCollectionBaseSchema(
     sort_fields=["id", "test_id", "text", "sequential_number"],
     filter_fields=[
         ("id", colander.List),
@@ -20,34 +20,34 @@ GetResultCategoriesSchema = GetCollectionBaseSchema(
 )
 
 
-class CreateResultCategorySchema(colander.MappingSchema):
+class CreateQuestionCategorySchema(colander.MappingSchema):
     test_id = colander.SchemaNode(colander.Integer())
     text = colander.SchemaNode(colander.String())
     sequential_number = colander.SchemaNode(colander.Integer())
 
 
-class UpdateResultCategoryBaseSchema(colander.MappingSchema):
+class UpdateQuestionCategoryBaseSchema(colander.MappingSchema):
     text = colander.SchemaNode(colander.String())
     sequential_number = colander.SchemaNode(colander.Integer())
 
 
-class UpdateResultCategorySchema(colander.MappingSchema):
-    body = UpdateResultCategoryBaseSchema()
-    path = GetResultCategorySchema()
+class UpdateQuestionCategorySchema(colander.MappingSchema):
+    body = UpdateQuestionCategoryBaseSchema()
+    path = GetQuestionCategorySchema()
 
 
-class ResponseResultCategoryBaseSchema(colander.MappingSchema):
+class ResponseQuestionCategoryBaseSchema(colander.MappingSchema):
     id = colander.SchemaNode(colander.Integer())
     test_id = colander.SchemaNode(colander.Integer())
     sequential_number = colander.SchemaNode(colander.Integer())
     text = colander.SchemaNode(colander.String())
 
 
-class ResponseBodyResultCategorySchema(colander.MappingSchema):
-    body = ResponseResultCategoryBaseSchema()
+class ResponseBodyQuestionCategorySchema(colander.MappingSchema):
+    body = ResponseQuestionCategoryBaseSchema()
 
 
-class ResponseBodyResultCategoriesSchema(colander.MappingSchema):
+class ResponseBodyQuestionCategoriesSchema(colander.MappingSchema):
     @colander.instantiate(name="body")
-    class BodyItemsResultCategorySchema(colander.SequenceSchema):
-        result_category = ResponseResultCategoryBaseSchema()
+    class BodyItemsQuestionCategorySchema(colander.SequenceSchema):
+        question_category = ResponseQuestionCategoryBaseSchema()
