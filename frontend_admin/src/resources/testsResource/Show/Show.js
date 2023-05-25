@@ -14,6 +14,8 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 
+import {TestFieldsCombine} from "../Fields/TestFieldsCombine";
+
 export const ActionsWithBackButton = ({
                                           basePath,
                                           data,
@@ -50,9 +52,11 @@ export const TestShow = ({permissions, hasShow, ...props}) => {
     return (
         <Show actions={<ActionsWithBackButton hasEdit={true}/>} {...props}>
             <SimpleShowLayout style={{paddingBottom: 8}}>
-                    <TextField source="title" label={"Title"}/>
-                    <TextField source="subtitle" label={"Subtitle"}/>
-                    <TextField source="description" label={"Description"}/>
+                <TextField source="title" label={"Title"}/>
+                <TextField source="subtitle" label={"Subtitle"}/>
+                <TextField source="description" label={"Description"}/>
+                <br/>
+                <TestFieldsCombine/>
             </SimpleShowLayout>
         </Show>
     );
