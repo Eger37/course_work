@@ -22,7 +22,7 @@ export const QuestionCategoriesDatagrid = (props) => {
                     <FunctionField label={"Delete"} render={record => <DeleteQuestionCategory questionCategory={record}/>}/>
 
                     <TextField sortable={false} source="name" label="Category name"/>
-                    <TextField sortable={false} source="description" label="Description"/>
+                    <TextField sortable={false} source="question_category_description" label="Description"/>
                 </Datagrid>
 
             </ScrollingWrapperInCard>

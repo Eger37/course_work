@@ -63,7 +63,11 @@ class QuestionCategoryResource(object):
         question_category = self.request.db.query(QuestionCategory).get(path_data['id'])
         if question_category is None:
             raise HTTPNotFound(explanation="Result category not found!")
-        return map_data_to_body_schema(ResponseBodyQuestionCategorySchema, dict(question_category))
+        # TODO I added a question_category_description crutch for
+        #  the QuestionCategory resource, because there were problems with a conflict of context react admin.
+        return map_data_to_body_schema(ResponseBodyQuestionCategorySchema,
+                                       dict(question_category,
+                                            question_category_description=question_category.description))
 
     @view(
         schema=GetQuestionCategoriesSchema(),
@@ -89,7 +93,8 @@ class QuestionCategoryResource(object):
         question_categories = questions_query.all()
         questions_count = questions_count_query.scalar()
 
-        question_categories = [dict(question_category) for question_category in question_categories]
+        question_categories = [dict(question_category, question_category_description=question_category.description) for
+                               question_category in question_categories]
 
         if data.get("range"):
             self.request.response.headers.add(
@@ -120,7 +125,9 @@ class QuestionCategoryResource(object):
 
         self.request.db.flush()
 
-        return map_data_to_body_schema(ResponseBodyQuestionCategorySchema, dict(question_category))
+        return map_data_to_body_schema(ResponseBodyQuestionCategorySchema,
+                                       dict(question_category,
+                                            question_category_description=question_category.description))
 
     @view(
         schema=CreateQuestionCategorySchema(),
@@ -132,11 +139,15 @@ class QuestionCategoryResource(object):
     )
     def collection_post(self):
         data = {**self.request.validated}
+        description = data.pop("question_category_description")
+        data["description"] = description
         question_category = QuestionCategory(**data)
         self.request.db.add(question_category)
         self.request.db.flush()
-        return map_data_to_body_schema(ResponseBodyQuestionCategorySchema, dict(question_category))
 
+        return map_data_to_body_schema(ResponseBodyQuestionCategorySchema,
+                                       dict(question_category,
+                                            question_category_description=question_category.description))
 
     @view(
         schema=GetItemByIdParamSchema(),

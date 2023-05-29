@@ -1,8 +1,7 @@
 import React from 'react';
 
 import {
-    useMutation, useRefresh,
-    TextInput, FormWithRedirect, NumberInput,
+    useMutation, useRefresh, TextInput, FormWithRedirect
 } from 'react-admin';
 import AddIcon from '@material-ui/icons/Add';
 
@@ -23,14 +22,12 @@ export const AddQuestionCategory = (props) => {
     const {open, handleOpen, handleClose} = useSimpleModalToggle();
 
     const [approve, {loading}] = useMutation({
-        type: 'create',
-        resource: 'question-category',
+        type: 'create', resource: 'question-category',
     }, {
         onSuccess: () => {
             handleClose();
             refresh();
-        },
-        onFailure: (error) => {
+        }, onFailure: (error) => {
             notifyError(error);
         }
     });
@@ -39,15 +36,13 @@ export const AddQuestionCategory = (props) => {
         approve({
             payload: {
                 data: {
-                    test_id: props.test.id,
-                    ...values,
+                    test_id: props.test.id, ...values,
                 },
             }
         })
     }
 
-    return (
-        <div style={{textAlign: "center"}}>
+    return (<div style={{textAlign: "center"}}>
             <Button size="small" color="primary" variant="contained" startIcon={<AddIcon/>}
                     onClick={handleOpen}>
                 Add question category
@@ -62,7 +57,8 @@ export const AddQuestionCategory = (props) => {
                         <React.Fragment>
                             <GridForm>
                                 <GridInput xs={12} component={TextInput} source="name" label="Category name" multiline/>
-                                <GridInput xs={12} component={TextInput} source="description" label="Description"
+                                <GridInput xs={12} component={TextInput} source="question_category_description"
+                                           label="Description"
                                            multiline/>
                             </GridForm>
                             <DialogActions>
@@ -73,10 +69,8 @@ export const AddQuestionCategory = (props) => {
                                     Add
                                 </Button>
                             </DialogActions>
-                        </React.Fragment>
-                    )}
+                        </React.Fragment>)}
                 />
             </Dialog>}
-        </div>
-    );
+        </div>);
 };

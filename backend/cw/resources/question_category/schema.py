@@ -10,20 +10,20 @@ class GetQuestionCategorySchema(colander.MappingSchema):
 
 
 GetQuestionCategoriesSchema = GetCollectionBaseSchema(
-    sort_fields=["id", "test_id", "text", "sequential_number"],
+    sort_fields=["id", "test_id", "name", "question_category_description"],
     filter_fields=[
         ("id", colander.List),
         ("test_id", colander.Integer),
-        ("sequential_number", colander.Integer),
-        "text",
+        "name",
+        "question_category_description",
     ],
 )
 
 
 class CreateQuestionCategorySchema(colander.MappingSchema):
     test_id = colander.SchemaNode(colander.Integer())
-    text = colander.SchemaNode(colander.String())
-    sequential_number = colander.SchemaNode(colander.Integer())
+    name = colander.SchemaNode(colander.String(), required=True)
+    question_category_description = colander.SchemaNode(colander.String(), missing=None)
 
 
 class UpdateQuestionCategoryBaseSchema(colander.MappingSchema):
@@ -39,8 +39,8 @@ class UpdateQuestionCategorySchema(colander.MappingSchema):
 class ResponseQuestionCategoryBaseSchema(colander.MappingSchema):
     id = colander.SchemaNode(colander.Integer())
     test_id = colander.SchemaNode(colander.Integer())
-    sequential_number = colander.SchemaNode(colander.Integer())
-    text = colander.SchemaNode(colander.String())
+    name = colander.SchemaNode(colander.String())
+    question_category_description = colander.SchemaNode(colander.String())
 
 
 class ResponseBodyQuestionCategorySchema(colander.MappingSchema):
