@@ -12,15 +12,15 @@ from cornice.validators import (
     colander_validator
 )
 
-from cw.database import UserRole, ResultGrade
+from cw.database import UserRole, ResultOption
 
 from .schema import (
-    GetResultGradeSchema,
-    ResponseBodyResultGradeSchema,
-    GetResultGradesSchema,
-    ResponseBodyResultGradesSchema,
-    UpdateResultGradeSchema,
-    CreateResultGradeSchema
+    GetResultOptionSchema,
+    ResponseBodyResultOptionSchema,
+    GetResultOptionsSchema,
+    ResponseBodyResultOptionsSchema,
+    UpdateResultOptionSchema,
+    CreateResultOptionSchema
 )
 
 from .._shared.schema import (
@@ -37,9 +37,9 @@ from .._shared.query import (
 from cw.modules.cornice import negotiation_params
 
 
-@resource(path="/result-grade/{id}", collection_path="/result-grade", description="Result grade resource",
-          tags=["result_grade"], **negotiation_params)
-class ResultGradeResource(object):
+@resource(path="/result-option/{id}", collection_path="/result-option", description="Result option resource",
+          tags=["result_option"], **negotiation_params)
+class ResultOptionResource(object):
     def __init__(self, request, context=None):
         self.request = request
 
@@ -51,25 +51,25 @@ class ResultGradeResource(object):
         ]
 
     @view(
-        schema=GetResultGradeSchema(),
+        schema=GetResultOptionSchema(),
         validators=(colander_path_validator,),
         response_schemas={
-            '200': ResponseBodyResultGradeSchema(description="Return OK response"),
+            '200': ResponseBodyResultOptionSchema(description="Return OK response"),
         },
         permission="get",
     )
     def get(self):
         path_data = self.request.validated
-        result_grade = self.request.db.query(ResultGrade).get(path_data['id'])
-        if result_grade is None:
-            raise HTTPNotFound(explanation="Result grade not found!")
-        return map_data_to_body_schema(ResponseBodyResultGradeSchema, dict(result_grade))
+        result_option = self.request.db.query(ResultOption).get(path_data['id'])
+        if result_option is None:
+            raise HTTPNotFound(explanation="Result option not found!")
+        return map_data_to_body_schema(ResponseBodyResultOptionSchema, dict(result_option))
 
     @view(
-        schema=GetResultGradesSchema(),
+        schema=GetResultOptionsSchema(),
         validators=(colander_validator,),
         response_schemas={
-            '200': ResponseBodyResultGradesSchema(description="Return OK response"),
+            '200': ResponseBodyResultOptionsSchema(description="Return OK response"),
         },
         permission="get",
         renderer='json'
@@ -80,30 +80,30 @@ class ResultGradeResource(object):
         if data["filter"].pop("no_range", None):
             apply_range = False
 
-        result_grades_query = self.request.db.query(ResultGrade)
-        result_grades_count_query = self.request.db.query(func.count(ResultGrade.id))
-        result_grades_query, result_grades_count_query = apply_filter_sort_range_for_query(ResultGrade, result_grades_query,
-                                                                                   result_grades_count_query,
+        result_options_query = self.request.db.query(ResultOption)
+        result_options_count_query = self.request.db.query(func.count(ResultOption.id))
+        result_options_query, result_options_count_query = apply_filter_sort_range_for_query(ResultOption, result_options_query,
+                                                                                   result_options_count_query,
                                                                                    data=data, apply_range=apply_range)
 
-        result_grades = result_grades_query.all()
-        result_grades_count = result_grades_count_query.scalar()
+        result_options = result_options_query.all()
+        result_options_count = result_options_count_query.scalar()
 
-        result_grades = [dict(result_grade) for result_grade in result_grades]
+        result_options = [dict(result_option) for result_option in result_options]
 
         if data.get("range"):
             self.request.response.headers.add(
                 "Content-Range",
-                generate_range(data["range"] if apply_range else False, result_grades_count)
+                generate_range(data["range"] if apply_range else False, result_options_count)
             )
 
-        return map_data_to_body_schema(ResponseBodyResultGradesSchema, result_grades)
+        return map_data_to_body_schema(ResponseBodyResultOptionsSchema, result_options)
 
     @view(
-        schema=UpdateResultGradeSchema(),
+        schema=UpdateResultOptionSchema(),
         validators=(colander_validator,),
         response_schemas={
-            '200': ResponseBodyResultGradeSchema(description="return OK response")
+            '200': ResponseBodyResultOptionSchema(description="return OK response")
         },
         permission="update",
     )
@@ -111,31 +111,31 @@ class ResultGradeResource(object):
         body_data = self.request.validated["body"]
         path_data = self.request.validated["path"]
 
-        result_grade = self.request.db.query(ResultGrade).get(path_data["id"])
+        result_option = self.request.db.query(ResultOption).get(path_data["id"])
 
         for key in body_data:
             if body_data[key] is None:
                 continue
-            setattr(result_grade, key, body_data[key])
+            setattr(result_option, key, body_data[key])
 
         self.request.db.flush()
 
-        return map_data_to_body_schema(ResponseBodyResultGradeSchema, dict(result_grade))
+        return map_data_to_body_schema(ResponseBodyResultOptionSchema, dict(result_option))
 
     @view(
-        schema=CreateResultGradeSchema(),
+        schema=CreateResultOptionSchema(),
         validators=(colander_body_validator,),
         response_schemas={
-            '200': ResponseBodyResultGradeSchema(description="return OK response")
+            '200': ResponseBodyResultOptionSchema(description="return OK response")
         },
         permission="create",
     )
     def collection_post(self):
         data = {**self.request.validated}
-        result_grade = ResultGrade(**data)
-        self.request.db.add(result_grade)
+        result_option = ResultOption(**data)
+        self.request.db.add(result_option)
         self.request.db.flush()
-        return map_data_to_body_schema(ResponseBodyResultGradeSchema, dict(result_grade))
+        return map_data_to_body_schema(ResponseBodyResultOptionSchema, dict(result_option))
 
 
     @view(
@@ -148,7 +148,7 @@ class ResultGradeResource(object):
         content_type="text/plain"
     )
     def delete(self):
-        self.request.db.query(ResultGrade).filter(ResultGrade.id == self.request.validated["id"]).delete()
+        self.request.db.query(ResultOption).filter(ResultOption.id == self.request.validated["id"]).delete()
         self.request.db.flush()
 
         return map_data_to_body_schema(ResponseBodyEmptySchema, "")

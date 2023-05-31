@@ -5,11 +5,11 @@ from .._shared.schema import (
 )
 
 
-class GetResultGradeSchema(colander.MappingSchema):
+class GetResultOptionSchema(colander.MappingSchema):
     id = colander.SchemaNode(colander.Integer())
 
 
-GetResultGradesSchema = GetCollectionBaseSchema(
+GetResultOptionsSchema = GetCollectionBaseSchema(
     sort_fields=["id", "test_id", "text", "sequential_number"],
     filter_fields=[
         ("id", colander.List),
@@ -20,34 +20,34 @@ GetResultGradesSchema = GetCollectionBaseSchema(
 )
 
 
-class CreateResultGradeSchema(colander.MappingSchema):
+class CreateResultOptionSchema(colander.MappingSchema):
     test_id = colander.SchemaNode(colander.Integer())
     text = colander.SchemaNode(colander.String())
     sequential_number = colander.SchemaNode(colander.Integer())
 
 
-class UpdateResultGradeBaseSchema(colander.MappingSchema):
+class UpdateResultOptionBaseSchema(colander.MappingSchema):
     text = colander.SchemaNode(colander.String())
     sequential_number = colander.SchemaNode(colander.Integer())
 
 
-class UpdateResultGradeSchema(colander.MappingSchema):
-    body = UpdateResultGradeBaseSchema()
-    path = GetResultGradeSchema()
+class UpdateResultOptionSchema(colander.MappingSchema):
+    body = UpdateResultOptionBaseSchema()
+    path = GetResultOptionSchema()
 
 
-class ResponseResultGradeBaseSchema(colander.MappingSchema):
+class ResponseResultOptionBaseSchema(colander.MappingSchema):
     id = colander.SchemaNode(colander.Integer())
     test_id = colander.SchemaNode(colander.Integer())
     sequential_number = colander.SchemaNode(colander.Integer())
     text = colander.SchemaNode(colander.String())
 
 
-class ResponseBodyResultGradeSchema(colander.MappingSchema):
-    body = ResponseResultGradeBaseSchema()
+class ResponseBodyResultOptionSchema(colander.MappingSchema):
+    body = ResponseResultOptionBaseSchema()
 
 
-class ResponseBodyResultGradesSchema(colander.MappingSchema):
+class ResponseBodyResultOptionsSchema(colander.MappingSchema):
     @colander.instantiate(name="body")
-    class BodyItemsResultGradeSchema(colander.SequenceSchema):
-        result_grade = ResponseResultGradeBaseSchema()
+    class BodyItemsResultOptionSchema(colander.SequenceSchema):
+        result_option = ResponseResultOptionBaseSchema()
