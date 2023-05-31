@@ -32,21 +32,22 @@ def schema_upgrades():
     op.alter_column('result_grade', 'result_category_id', nullable=False, new_column_name='question_category_id')
 
     op.drop_constraint('answer_option_result_category_id_fkey', 'answer_option', type_='foreignkey')
-    op.create_foreign_key(None, 'answer_option', 'question_category', ['question_category_id'], ['id'])
+    op.create_foreign_key("answer_option_question_category_id_fkey", 'answer_option', 'question_category', ['question_category_id'], ['id'])
 
     op.drop_constraint('result_grade_result_category_id_fkey', 'result_grade', type_='foreignkey')
-    op.create_foreign_key(None, 'result_grade', 'question_category', ['question_category_id'], ['id'])
+    op.create_foreign_key("result_grade_question_category_id_fkey", 'result_grade', 'question_category', ['question_category_id'], ['id'])
 
 def schema_downgrades():
     op.rename_table('question_category', 'result_category')
     op.alter_column('answer_option', 'question_category_id', nullable=False, new_column_name='result_category_id')
     op.alter_column('result_grade', 'question_category_id', nullable=False, new_column_name='result_category_id')
 
-    op.drop_constraint(None, 'result_grade', type_='foreignkey')
+    op.drop_constraint("answer_option_question_category_id_fkey", 'answer_option', type_='foreignkey')
+    op.create_foreign_key('answer_option_result_category_id_fkey', 'answer_option', 'result_category', ['result_category_id'], ['id'])
+
+    op.drop_constraint("result_grade_question_category_id_fkey", 'result_grade', type_='foreignkey')
     op.create_foreign_key('result_grade_result_category_id_fkey', 'result_grade', 'result_category', ['result_category_id'], ['id'])
 
-    op.drop_constraint(None, 'answer_option', type_='foreignkey')
-    op.create_foreign_key('answer_option_result_category_id_fkey', 'answer_option', 'result_category', ['result_category_id'], ['id'])
 
 
 def data_upgrades():
