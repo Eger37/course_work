@@ -10,11 +10,13 @@ class GetResultOptionSchema(colander.MappingSchema):
 
 
 GetResultOptionsSchema = GetCollectionBaseSchema(
-    sort_fields=["id", "test_id", "text", "sequential_number"],
+    sort_fields=["id", "test_id", "question_category_id", "min", "max", "text",],
     filter_fields=[
         ("id", colander.List),
         ("test_id", colander.Integer),
-        ("sequential_number", colander.Integer),
+        ("question_category_id", colander.Integer),
+        ("min", colander.Integer),
+        ("max", colander.Integer),
         "text",
     ],
 )
@@ -22,13 +24,17 @@ GetResultOptionsSchema = GetCollectionBaseSchema(
 
 class CreateResultOptionSchema(colander.MappingSchema):
     test_id = colander.SchemaNode(colander.Integer())
+    question_category_id = colander.SchemaNode(colander.Integer())
+    min = colander.SchemaNode(colander.Integer())
+    max = colander.SchemaNode(colander.Integer())
     text = colander.SchemaNode(colander.String())
-    sequential_number = colander.SchemaNode(colander.Integer())
 
 
 class UpdateResultOptionBaseSchema(colander.MappingSchema):
+    question_category_id = colander.SchemaNode(colander.Integer())
+    min = colander.SchemaNode(colander.Integer())
+    max = colander.SchemaNode(colander.Integer())
     text = colander.SchemaNode(colander.String())
-    sequential_number = colander.SchemaNode(colander.Integer())
 
 
 class UpdateResultOptionSchema(colander.MappingSchema):
@@ -39,7 +45,9 @@ class UpdateResultOptionSchema(colander.MappingSchema):
 class ResponseResultOptionBaseSchema(colander.MappingSchema):
     id = colander.SchemaNode(colander.Integer())
     test_id = colander.SchemaNode(colander.Integer())
-    sequential_number = colander.SchemaNode(colander.Integer())
+    question_category_id = colander.SchemaNode(colander.Integer())
+    min = colander.SchemaNode(colander.Integer())
+    max = colander.SchemaNode(colander.Integer())
     text = colander.SchemaNode(colander.String())
 
 
