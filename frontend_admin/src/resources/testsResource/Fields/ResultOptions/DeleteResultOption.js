@@ -15,7 +15,7 @@ export const DeleteResultOption = ({resultOption}) => {
 
     const [approve] = useMutation({
         type: 'delete',
-        resource: 'question-category',
+        resource: 'result-option',
         payload: {id: resultOption.id},
     }, {
         onSuccess: () => {

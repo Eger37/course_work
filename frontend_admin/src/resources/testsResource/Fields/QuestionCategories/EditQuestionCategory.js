@@ -27,7 +27,7 @@ export const EditQuestionCategory = ({ questionCategory }) => {
 
 	const [approve, { loading }] = useMutation({
         type: 'update',
-        resource: 'question',
+        resource: 'question-category',
         payload: { id: questionCategory.id },
     }, {
 		onSuccess: () => {
