@@ -7,8 +7,8 @@ import {TestCreateForm} from './CreateForm';
 
 
 export const TestCreate = (props) => (
-    <Create redirect={"show"} {...props}>
-        <SimpleForm submitOnEnter={false} toolbar={<SaveWithCancelToolbar/>} >
+    <Create {...props}>
+        <SimpleForm submitOnEnter={false} toolbar={<SaveWithCancelToolbar/>} redirect="show">
             <TestCreateForm/>
         </SimpleForm>
     </Create>
