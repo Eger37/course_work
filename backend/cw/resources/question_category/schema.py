@@ -27,8 +27,8 @@ class CreateQuestionCategorySchema(colander.MappingSchema):
 
 
 class UpdateQuestionCategoryBaseSchema(colander.MappingSchema):
-    text = colander.SchemaNode(colander.String())
-    sequential_number = colander.SchemaNode(colander.Integer())
+    name = colander.SchemaNode(colander.String(), required=True)
+    question_category_description = colander.SchemaNode(colander.String(), missing=None)
 
 
 class UpdateQuestionCategorySchema(colander.MappingSchema):

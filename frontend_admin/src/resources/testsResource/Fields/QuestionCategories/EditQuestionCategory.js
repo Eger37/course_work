@@ -62,7 +62,7 @@ export const EditQuestionCategory = ({ questionCategory }) => {
 						<React.Fragment>
 							<GridForm>
 								<GridInput xs={12} component={TextInput} source="name" label="Category name" multiline/>
-								<GridInput xs={12} component={TextInput} source="description" label="Description"
+								<GridInput xs={12} component={TextInput} source="question_category_description" label="Description"
 										   multiline/>
 							</GridForm>
 							<DialogActions>
