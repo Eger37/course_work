@@ -7,6 +7,8 @@ import {
     TopToolbar,
     EditButton,
     ShowButton,
+    TabbedShowLayout,
+    Tab,
 } from 'react-admin';
 
 
@@ -14,7 +16,9 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 
-import {TestFieldsCombine} from "../Fields/TestFieldsCombine";
+import {QuestionCategoriesField} from "../Fields/QuestionCategories";
+import {QuestionsField} from "../Fields/Questions";
+import {ResultOptionsField} from "../Fields/ResultOptions";
 
 export const ActionsWithBackButton = ({
                                           basePath,
@@ -52,11 +56,23 @@ export const TestShow = ({permissions, hasShow, ...props}) => {
     return (
         <Show actions={<ActionsWithBackButton hasEdit={true}/>} {...props}>
             <SimpleShowLayout style={{paddingBottom: 8}}>
-                <TextField source="title" label={"Title"}/>
-                <TextField source="subtitle" label={"Subtitle"}/>
-                <TextField source="description" label={"Description"}/>
-                <br/>
-                <TestFieldsCombine/>
+                <TabbedShowLayout>
+                    <Tab label="Test">
+                        <TextField source="title" label={"Title"}/>
+                        <TextField source="subtitle" label={"Subtitle"}/>
+                        <TextField source="description" label={"Description"}/>
+                    </Tab>
+
+                    <Tab label="Question categories"  path="question-categories">
+                        <QuestionCategoriesField addLabel={false} {...props}/>
+                    </Tab>
+                    <Tab label="Questions"  path="questions">
+                        <QuestionsField addLabel={false} {...props}/>
+                    </Tab>
+                    <Tab label="Result options"  path="result-options">
+                        <ResultOptionsField addLabel={false} {...props}/>
+                    </Tab>
+                </TabbedShowLayout>
             </SimpleShowLayout>
         </Show>
     );
