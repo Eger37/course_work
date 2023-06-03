@@ -23,7 +23,9 @@ from .schema import (
 )
 
 from .._shared.schema import (
-    map_data_to_body_schema
+    map_data_to_body_schema,
+    ResponseBodyEmptySchema,
+    GetItemByIdParamSchema
 )
 
 from .._shared.query import (
@@ -42,8 +44,8 @@ class TestResource(object):
 
     def __acl__(self):
         return [
-            (Allow, UserRole.admin, ("get", "create", "update",)),
-            (Allow, UserRole.psychologist, ("get", "create", "update",)),
+            (Allow, UserRole.admin, ("get", "create", "update", "delete")),
+            (Allow, UserRole.psychologist, ("get", "create", "update", "delete")),
             (Allow, Everyone, ("get",)),
         ]
 
@@ -130,3 +132,18 @@ class TestResource(object):
         self.request.db.add(test)
         self.request.db.flush()
         return map_data_to_body_schema(ResponseBodyTestSchema, dict(test))
+
+    @view(
+        schema=GetItemByIdParamSchema(),
+        validators=(colander_path_validator,),
+        response_schemas={
+            '200': ResponseBodyEmptySchema(description="Return OK response")
+        },
+        permission="delete",
+        content_type="text/plain"
+    )
+    def delete(self):
+        self.request.db.query(Test).filter(Test.id == self.request.validated["id"]).delete()
+        self.request.db.flush()
+
+        return map_data_to_body_schema(ResponseBodyEmptySchema, "")
