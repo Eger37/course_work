@@ -18,17 +18,18 @@ import { GridForm, GridInput } from '../../../../components/GridForm';
 
 
 import { useNotifyError } from '../../../../utils/notifiers/useNotifyError';
-import {ResultOptionsField} from "../AnswerOptions";
+import {QuestionCategoryAutocompleteInput} from "../QuestionCategoryAutocompleteInput";
 
 
 
-export const EditQuestion = ({ question, ...props }) => {
+export const EditAnswerOption = ({ answerOption, ...props}) => {
 	const { open, handleOpen, handleClose } = useSimpleModalToggle();
 	const notifyError = useNotifyError();
+
 	const [approve, { loading }] = useMutation({
         type: 'update',
-        resource: 'question',
-        payload: { id: question.id },
+        resource: 'answer-option',
+        payload: { id: answerOption.id },
     }, {
 		onSuccess: () => {
 			handleClose();
@@ -41,7 +42,7 @@ export const EditQuestion = ({ question, ...props }) => {
 	const handleSubmit = (values) => {
 		approve({
 			payload: {
-				id: question.id,
+				id: answerOption.id,
 				data: values,
 			}
 		})
@@ -49,24 +50,31 @@ export const EditQuestion = ({ question, ...props }) => {
 
 	return (
 		<div style={{ textAlign: "center" }}>
-			<IconButton aria-label="delete" size="small" color="default" onClick={handleOpen}>
+			<IconButton size="small" color="default" onClick={handleOpen}>
 				<EditIcon fontSize="inherit" />
 			</IconButton>
             {open && <Dialog open={open} onClose={handleClose} fullScreen={true}>
-                <DialogTitle>Edit question {question.id}</DialogTitle>
+                <DialogTitle>Edit question {answerOption.id}</DialogTitle>
 				<FormWithRedirect
-					record={question}
+					record={answerOption}
 					component={DialogContent}
 					save={handleSubmit}
 					render={({ handleSubmitWithRedirect }) => (
 						<React.Fragment>
-                            <GridForm>
-                                <GridInput xs={12} component={NumberInput} label="Sequential number"
-                                           source="sequential_number"/>
-                                <GridInput xs={12}  component={TextInput} label="Question" source="text"
-                                           multiline/>
+							<GridForm>
+								<GridInput xs={12} component={QuestionCategoryAutocompleteInput}
+										   source="question_category_id" label="Category"
+										   testId={props.test.id}/>
 
-                            </GridForm>
+								<GridInput xs={12} component={NumberInput} source="min"
+										   label="Minimum score"/>
+								<GridInput xs={12} component={NumberInput} source="max"
+										   label="Maximum score"/>
+								<GridInput xs={12} component={TextInput} source="text"
+										   label="Text"
+										   multiline/>
+							</GridForm>
+
 							<DialogActions>
 								<Button disabled={loading} onClick={handleClose} color="primary">
 									Cancel
@@ -75,8 +83,6 @@ export const EditQuestion = ({ question, ...props }) => {
 									Update
 								</Button>
 							</DialogActions>
-
-							<ResultOptionsField question={question} test={props.test}/>
 						</React.Fragment>
 					)}
 				/>

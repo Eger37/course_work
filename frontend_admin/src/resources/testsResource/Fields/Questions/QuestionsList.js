@@ -18,7 +18,8 @@ export const QuestionsDatagrid = (props) => {
             <h2 align={"center"}>Questions</h2>
             <ScrollingWrapperInCard>
                 <Datagrid {...props}>
-                    <FunctionField label={"Edit"} render={record => <EditQuestion question={record}/>}/>
+                    <FunctionField label={"Edit"} render={record => <EditQuestion question={record}
+                                                                                  test={props.test}/>}/>
                     <FunctionField label={"Delete"} render={record => <DeleteQuestion question={record}/>}/>
 
                     <TextField sortable={false} source="sequential_number" label="Sequential number"/>

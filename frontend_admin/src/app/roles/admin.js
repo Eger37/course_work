@@ -14,4 +14,5 @@ export const adminResources = [
     <Resource name="question-category" intent={"registration"}/>,
     <Resource name="question" intent={"registration"}/>,
     <Resource name="result-option" intent={"registration"}/>,
+    <Resource name="answer-option" intent={"registration"}/>,
 ];

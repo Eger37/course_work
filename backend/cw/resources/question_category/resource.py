@@ -117,7 +117,8 @@ class QuestionCategoryResource(object):
         path_data = self.request.validated["path"]
 
         question_category = self.request.db.query(QuestionCategory).get(path_data["id"])
-
+        description = body_data.pop("question_category_description")
+        body_data["description"] = description
         for key in body_data:
             if body_data[key] is None:
                 continue
