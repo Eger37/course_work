@@ -1,11 +1,13 @@
 import React from 'react';
 
 import {
-    useMutation, useRefresh,
+    useMutation,
     TextInput, FormWithRedirect, NumberInput,
 } from 'react-admin';
-import AddIcon from '@material-ui/icons/Add';
 
+import {Redirect} from "react-router-dom"
+
+import AddIcon from '@material-ui/icons/Add';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -18,17 +20,17 @@ import {useNotifyError} from '../../../../utils/notifiers/useNotifyError';
 
 
 export const AddQuestion = (props) => {
-    const refresh = useRefresh();
     const notifyError = useNotifyError();
     const {open, handleOpen, handleClose} = useSimpleModalToggle();
+    const [newQuestionId, setNewQuestionId] = React.useState(null);
 
     const [approve, {loading}] = useMutation({
         type: 'create',
         resource: 'question',
     }, {
-        onSuccess: () => {
+        onSuccess: (data) => {
             handleClose();
-            refresh();
+            setNewQuestionId(data.data.id);
         },
         onFailure: (error) => {
             notifyError(error);
@@ -43,11 +45,12 @@ export const AddQuestion = (props) => {
                     ...values,
                 },
             }
-        })
+        });
     }
 
     return (
         <div style={{textAlign: "center"}}>
+            {newQuestionId && <Redirect to={`/test/${props.test.id}/show/questions/${newQuestionId}`}/>}
             <Button size="small" color="primary" variant="contained" startIcon={<AddIcon/>}
                     onClick={handleOpen}>
                 Add question
