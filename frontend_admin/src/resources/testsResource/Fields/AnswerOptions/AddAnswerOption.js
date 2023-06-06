@@ -18,8 +18,7 @@ import {QuestionCategoryAutocompleteInput} from "../QuestionCategoryAutocomplete
 
 
 export const AddAnswerOption = (props) => {
-    console.log("question")
-    console.log(props.question)
+
     const refresh = useRefresh();
     const notifyError = useNotifyError();
     const {open, handleOpen, handleClose} = useSimpleModalToggle();

@@ -18,7 +18,7 @@ import { GridForm, GridInput } from '../../../../components/GridForm';
 
 
 import { useNotifyError } from '../../../../utils/notifiers/useNotifyError';
-import {ResultOptionsField} from "../AnswerOptions";
+import {AnswerOptionsField} from "../AnswerOptions";
 
 
 
@@ -76,7 +76,7 @@ export const EditQuestion = ({ question, ...props }) => {
 								</Button>
 							</DialogActions>
 
-							<ResultOptionsField question={question} test={props.test}/>
+							<AnswerOptionsField question={question} test={props.test}/>
 						</React.Fragment>
 					)}
 				/>

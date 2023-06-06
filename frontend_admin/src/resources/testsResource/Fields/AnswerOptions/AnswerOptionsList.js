@@ -46,7 +46,7 @@ export const ResultOptionsDatagrid = (props) => {
 }
 
 
-export const ResultOptionsField = (props) => {
+export const AnswerOptionsField = (props) => {
     return (
         <ReferenceManyField reference={"answer-option"} target="question_id"
                             sort={{field: "id", order: "ASC"}} {...props}>
@@ -56,7 +56,7 @@ export const ResultOptionsField = (props) => {
 };
 
 
-ResultOptionsField.defaultProps = {
+AnswerOptionsField.defaultProps = {
     addLabel: true,
     className: 'ra-field-datagrid'
 };
