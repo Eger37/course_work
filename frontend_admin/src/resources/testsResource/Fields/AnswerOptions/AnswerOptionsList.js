@@ -12,14 +12,14 @@ import {EditAnswerOption} from "./EditAnswerOption";
 import {DeleteAnswerOption} from "./DeleteAnswerOption";
 
 
-export const ResultOptionsDatagrid = (props) => {
+export const ResultOptionsDatagrid = ({testId, ...props}) => {
     return (
         <Paper variant="outlined">
             <h2 align={"center"}>Answer options</h2>
             <ScrollingWrapperInCard>
                 <Datagrid {...props}>
                     <FunctionField label={"Edit"} render={record => <EditAnswerOption answerOption={record}
-                                                                                      test={props.test}/>}
+                                                                                      testId={testId}/>}
                     />
                     <FunctionField label={"Delete"} render={record => <DeleteAnswerOption answerOption={record}/>}/>
 
@@ -37,7 +37,7 @@ export const ResultOptionsDatagrid = (props) => {
             <Box p={1} display="flex" alignItems="center" justifyContent="space-between" boxSizing="border-box">
                 <Box display="flex">
                     <Box display="flex" alignItems="flex-end">
-                        <AddAnswerOption question={props.question} test={props.test}/>
+                        <AddAnswerOption question={props.question} testId={testId}/>
                     </Box>
                 </Box>
             </Box>
@@ -46,11 +46,11 @@ export const ResultOptionsDatagrid = (props) => {
 }
 
 
-export const AnswerOptionsField = (props) => {
+export const AnswerOptionsField = ({testId, ...props}) => {
     return (
         <ReferenceManyField reference={"answer-option"} target="question_id"
                             sort={{field: "id", order: "ASC"}} {...props}>
-            <ResultOptionsDatagrid test={props.record} question={props.question}/>
+            <ResultOptionsDatagrid testId={testId} question={props.question}/>
         </ReferenceManyField>
     );
 };

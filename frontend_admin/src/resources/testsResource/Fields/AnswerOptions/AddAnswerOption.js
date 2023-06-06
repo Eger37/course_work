@@ -17,7 +17,7 @@ import {useNotifyError} from '../../../../utils/notifiers/useNotifyError';
 import {QuestionCategoryAutocompleteInput} from "../QuestionCategoryAutocompleteInput";
 
 
-export const AddAnswerOption = (props) => {
+export const AddAnswerOption = ({testId, ...props}) => {
 
     const refresh = useRefresh();
     const notifyError = useNotifyError();
@@ -60,7 +60,7 @@ export const AddAnswerOption = (props) => {
                         <GridForm>
                             <GridInput xs={12} component={QuestionCategoryAutocompleteInput}
                                        source="question_category_id" label="Category"
-                            testId={props.test.id}/>
+                            testId={testId}/>
 
                             <GridInput xs={12} component={TextInput} source="answer_option_text"
                                        label="Text"

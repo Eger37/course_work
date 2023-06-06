@@ -63,13 +63,13 @@ export const TestShow = ({permissions, hasShow, ...props}) => {
                         <TextField source="description" label={"Description"}/>
                     </Tab>
 
-                    <Tab label="Question categories"  path="question-categories">
+                    <Tab label="Question categories" path="question-categories">
                         <QuestionCategoriesField addLabel={false} {...props}/>
                     </Tab>
-                    <Tab label="Questions"  path="questions">
+                    <Tab label="Questions" path="questions">
                         <QuestionsField addLabel={false} {...props}/>
                     </Tab>
-                    <Tab label="Result options"  path="result-options">
+                    <Tab label="Result options" path="result-options">
                         <ResultOptionsField addLabel={false} {...props}/>
                     </Tab>
                 </TabbedShowLayout>

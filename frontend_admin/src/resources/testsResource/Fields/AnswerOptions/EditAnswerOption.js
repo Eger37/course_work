@@ -22,7 +22,7 @@ import {QuestionCategoryAutocompleteInput} from "../QuestionCategoryAutocomplete
 
 
 
-export const EditAnswerOption = ({ answerOption, ...props}) => {
+export const EditAnswerOption = ({ answerOption, testId, ...props}) => {
 	const { open, handleOpen, handleClose } = useSimpleModalToggle();
 	const notifyError = useNotifyError();
 
@@ -64,7 +64,7 @@ export const EditAnswerOption = ({ answerOption, ...props}) => {
 							<GridForm>
 								<GridInput xs={12} component={QuestionCategoryAutocompleteInput}
 										   source="question_category_id" label="Category"
-										   testId={props.test.id}/>
+										   testId={testId}/>
 
 								<GridInput xs={12} component={NumberInput} source="min"
 										   label="Minimum score"/>
