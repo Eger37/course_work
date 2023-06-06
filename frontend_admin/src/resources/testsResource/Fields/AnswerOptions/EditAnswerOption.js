@@ -66,13 +66,11 @@ export const EditAnswerOption = ({ answerOption, testId, ...props}) => {
 										   source="question_category_id" label="Category"
 										   testId={testId}/>
 
-								<GridInput xs={12} component={NumberInput} source="min"
-										   label="Minimum score"/>
-								<GridInput xs={12} component={NumberInput} source="max"
-										   label="Maximum score"/>
-								<GridInput xs={12} component={TextInput} source="text"
+								<GridInput xs={12} component={TextInput} source="answer_option_text"
 										   label="Text"
 										   multiline/>
+								<GridInput xs={12} component={NumberInput} source="score"
+										   label="Score"/>
 							</GridForm>
 
 							<DialogActions>
