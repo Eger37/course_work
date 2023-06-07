@@ -9,27 +9,18 @@ import {
     TextField,
     FunctionField,
     ReferenceManyField,
-    ResourceContextProvider,
-    List,
-    EditButton, ShowButton, DeleteButton, useRecordContext
 } from 'react-admin';
 
-import {useParams} from 'react-router-dom';
 
-import {ScrollingWrapper, ScrollingWrapperInCard} from '../../../../components/ScrollingWrapper';
+import {ScrollingWrapperInCard} from '../../../../components/ScrollingWrapper';
 
 import {AddQuestion} from './AddQuestion';
-import {EditQuestion} from "./EditQuestion";
 import {DeleteQuestion} from "./DeleteQuestion";
-import {Button} from "@material-ui/core";
 import EditIcon from '@material-ui/icons/EditOutlined';
 import IconButton from '@material-ui/core/IconButton';
 
 
 const QuestionEditButton = (props) => {
-    console.log(props)
-
-    // const record = useRecordContext();
     return (
         <IconButton
             component={Link}
@@ -70,31 +61,12 @@ export const QuestionsDatagrid = (props) => {
     );
 }
 
-// export const QuestionsList = props => {
-//     const {testId} = useParams();
-//     return (
-//         <List
-//             resource={"question"}
-//             sort={{field: "sequential_number", order: "ASC"}}
-//             // filter={{testId}}
-//             {...props}
-//         >
-//             <Datagrid {...props}>
-//                 <FunctionField label={"Edit"} render={record => <EditQuestion question={record}
-//                                                                               test={props.test}/>}/>
-//                 <FunctionField label={"Delete"} render={record => <DeleteQuestion question={record}/>}/>
-//
-//                 <TextField sortable={false} source="sequential_number" label="Sequential number"/>
-//                 <TextField sortable={false} source="text" label="Question"/>
-//             </Datagrid>
-//         </List>
-//     );
-// }
-
 export const QuestionsField = (props) => {
     return (
         <ReferenceManyField reference={"question"} target="test_id"
-                            sort={{field: "sequential_number", order: "ASC"}} {...props}>
+                            sort={{field: "sequential_number", order: "ASC"}}
+                            perPage={999}
+                            {...props}>
             <QuestionsDatagrid test={props.record}/>
         </ReferenceManyField>
     );
