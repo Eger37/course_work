@@ -74,7 +74,7 @@ class TestResource(object):
     def collection_get(self):
         data = self.request.validated['querystring']
         apply_range = True
-        if data["filter"].pop("no_range", None):
+        if data["filter"] and data["filter"].pop("no_range", None):
             apply_range = False
 
         tests_query = self.request.db.query(Test)
