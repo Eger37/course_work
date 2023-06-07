@@ -63,8 +63,11 @@ const TestsContent = () => {
     const [loading, setLoading] = React.useState(true);
     const fetchTests = async () => {
         const tests = await getTests().then(data => (data));
-        setTests(tests);
-        setLoading(false);
+
+        if (tests){
+            setTests(tests);
+            setLoading(false);
+        }
     };
 
     React.useEffect(() => {

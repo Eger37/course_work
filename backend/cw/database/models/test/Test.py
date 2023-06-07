@@ -15,4 +15,4 @@ class Test(BaseTest):
     created_at = Column(DateTime(timezone=False), nullable=False, default=datetime.utcnow)
 
     def __repr__(self):
-        return f"Test({self.id}, {self.test_id})"
+        return f"Test({self.id}, {self.title})"

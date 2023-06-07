@@ -1,17 +1,34 @@
 import React from "react";
 import TestInfo from "../../components/TestInfo";
 import {testsData} from "../../data/testsData";
-import {Route} from "react-router-dom";
-import CheckoutTest1 from "../../components/CheckoutTest1";
+import {getTest} from "../../api/testsProvider";
+import {useParams} from "react-router-dom";
 
 const TestPage = () => {
-    const testData = testsData[0]
+    const {testId} = useParams()
+    const [test, setTest] = React.useState({});
+    const [loading, setLoading] = React.useState(true);
+
+    const fetchTest = async () => {
+        const test = await getTest(testId).then(data => (data));
+        if (test){
+            setTest(test);
+            setLoading(false);
+        }
+
+    };
+
+    React.useEffect(() => {
+        fetchTest();
+    }, []);
+
+    if (loading){
+        return <TestInfo loading/>
+
+    }
     return (
         <main>
-            <Route exact={true} path={"/test/:TestId"}
-                   render={(props) => <TestInfo title={testData.title} about={testData.about}/>}
-            />
-            <CheckoutTest1/>
+            <TestInfo title={test.title} about={test.description}/>
         </main>
     )
 };

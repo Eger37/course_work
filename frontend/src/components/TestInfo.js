@@ -1,6 +1,6 @@
 import React from "react";
 import {makeStyles} from "@mui/styles"
-import {Paper, Container, Grid, Typography, Button} from "@mui/material"
+import {Paper, Container, Grid, Typography, Button, CircularProgress} from "@mui/material"
 import testImg from "../images/test.jpg";
 import {NavLink} from "react-router-dom";
 
@@ -23,7 +23,7 @@ const useStyles = makeStyles(() => ({
     }
 }))
 
-function TestInfo (props) {
+function TestInfo({title = "", about = "", loading}) {
     const classes = useStyles();
     return (
         <Paper className={classes.meinFeaturesPost}
@@ -34,16 +34,20 @@ function TestInfo (props) {
                     </Grid>
                     <Grid item md={6}>
                         <div className={classes.mainFeaturesPostContent}>
+                            {loading &&
+                                <center>
+                                    <CircularProgress/>
+                                </center>}
                             <Typography
                                 align={"center"}
                                 variant={"h5"}
                                 color="white">
-                                {props.title}
+                                {title}
                             </Typography>
                             <Typography
                                 variant={"h6"}
-                                color="grey">&nbsp;&nbsp;&nbsp;
-                                {props.about}
+                                color="white">&nbsp;&nbsp;&nbsp;
+                                {about}
                             </Typography>
                         </div>
                     </Grid>
@@ -55,7 +59,7 @@ function TestInfo (props) {
                           direction="column"
                           justifyContent="center">
                         <NavLink to={"/"}>
-                            <Button variant="contained"  size={"small"} color={"primary"}>
+                            <Button variant="contained" size={"small"} color={"primary"}>
                                 На головну сторінку
                             </Button>
                         </NavLink>
