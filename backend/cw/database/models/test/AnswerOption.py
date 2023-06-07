@@ -15,4 +15,4 @@ class AnswerOption(BaseTest):
     score = Column(Integer(), nullable=False)
 
     def __repr__(self):
-        return f"AnswerOption({self.id}, {self.test_id})"
+        return f"AnswerOption({self.id}, {self.text})"
