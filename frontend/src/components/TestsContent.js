@@ -1,6 +1,17 @@
 import React from "react";
 import {makeStyles} from "@mui/styles"
-import {Button, Card, CardActions, CardContent, CardMedia, Container, Grid, Typography} from "@mui/material"
+import {
+    Button,
+    Card,
+    CardActions,
+    CardContent,
+    CardMedia,
+    Container,
+    Grid,
+    Typography,
+    CircularProgress,
+    Box
+} from "@mui/material"
 import {NavLink} from "react-router-dom"
 
 // import {testsData} from "../data/testsData";
@@ -49,9 +60,11 @@ const TestsCard = ({test}) => {
 const TestsContent = () => {
     const classes = useStyles();
     const [tests, setTests] = React.useState([]);
+    const [loading, setLoading] = React.useState(true);
     const fetchTests = async () => {
         const tests = await getTests().then(data => (data));
-        setTests(tests)
+        setTests(tests);
+        setLoading(false);
     };
 
     React.useEffect(() => {
@@ -68,6 +81,14 @@ const TestsContent = () => {
             </div>
             <Container className={classes.cardGrid} maxWidth={"md"}>
                 <Grid container spacing={4}>
+                    {loading &&
+                        <Grid item xs={12} sm={12} md={12}>
+                            <center>
+                                <CircularProgress/>
+                            </center>
+                        </Grid>
+                    }
+
                     {tests.map((test) => (
                         <Grid item key={test.id} xs={12} sm={6} md={4}>
                             <TestsCard test={test}/>
