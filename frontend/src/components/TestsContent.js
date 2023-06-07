@@ -37,11 +37,11 @@ const TestsCard = ({test}) => {
                 </Typography>
             </CardContent>
             <CardActions>
-                {/*<NavLink to={card.page}>*/}
+                <NavLink to={`test/${test.id}`}>
                     <Button size={"small"} color={"primary"}>
                         Скласти тест
                     </Button>
-                {/*</NavLink>*/}
+                </NavLink>
             </CardActions>
         </Card>
     )
