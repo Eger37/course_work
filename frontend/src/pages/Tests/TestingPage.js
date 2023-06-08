@@ -29,7 +29,7 @@ const useStyles = makeStyles(() => ({
 const TestingPage = () => {
     const classes = useStyles();
 
-    const {testId} = useParams()
+    const {testId, testingId} = useParams()
     const [questions, setQuestions] = React.useState([]);
     const [loading, setLoading] = React.useState(true);
 
@@ -43,41 +43,22 @@ const TestingPage = () => {
         }
     };
 
-    // const createTesting = async () => {
-    //     const testing = await createOne("testing", {test_id: testId}).then(data => (data));
-    //     if (testing) {
-    //         // setTest(test);
-    //         setLoading(false);
-    //     }
-    //
-    // };
-
     React.useEffect(() => {
         fetchQuestions();
-        // createTesting();
     }, []);
 
-    // React.useEffect(() => {
-    //     fetchQuestions();
-    //     createTesting();
-    // }, []);
-
-    // if (loading){
-    //     return <TestInfo loading/>
-    //
-    // }
     return (
         <main>
             <Paper className={classes.meinFeaturesPost}
                    style={{backgroundImage: `url(${testImg}`,
                    height: "calc(100vh - 50px)"}}>
-                {questions}
+                {/*{questions}*/}
 
                 <Container fixed>
                     <Grid container>
-                        <Grid item md={3}>
+                        <Grid item md={1}>
                         </Grid>
-                        <Grid item md={6}>
+                        <Grid item md={10}>
                             <div className={classes.mainFeaturesPostContent}>
                                 {loading &&
                                     <center>
@@ -85,7 +66,7 @@ const TestingPage = () => {
                                     </center>}
                             </div>
                         </Grid>
-                        <Grid item md={3}/>
+                        <Grid item md={1}/>
 
                         <Grid item md={3}/>
                         <Grid item md={6}

@@ -48,6 +48,7 @@ class TestingResource(object):
         return [
             (Allow, UserRole.admin, ("get", "create", "update", "delete",)),
             (Allow, UserRole.psychologist, ("get", "create", "update", "delete",)),
+            (Allow, UserRole.client, ("get", "create")),
             (Allow, Everyone, ("get", "create")),
         ]
 
@@ -135,6 +136,12 @@ class TestingResource(object):
         data = {**self.request.validated}
         user_id = authenticated_userid(self.request)
         data["user_id"] = user_id
+        print("\n\n\n")
+        print("user_id")
+        print(user_id)
+        print("self.request")
+        print(self.request)
+        print("\n\n\n")
         testing = Testing(**data)
         self.request.db.add(testing)
         self.request.db.flush()

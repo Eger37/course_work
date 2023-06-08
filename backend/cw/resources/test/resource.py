@@ -46,6 +46,7 @@ class TestResource(object):
         return [
             (Allow, UserRole.admin, ("get", "create", "update", "delete")),
             (Allow, UserRole.psychologist, ("get", "create", "update", "delete")),
+            (Allow, UserRole.client, ("get",)),
             (Allow, Everyone, ("get",)),
         ]
 
