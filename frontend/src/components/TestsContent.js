@@ -15,7 +15,7 @@ import {
 import {NavLink} from "react-router-dom"
 
 // import {testsData} from "../data/testsData";
-import {getTests} from "../api/testsProvider"
+import {getTests} from "../api/testProvider"
 import testImg from "../images/test.jpg";
 
 const useStyles = makeStyles(() => ({

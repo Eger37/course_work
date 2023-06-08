@@ -1,7 +1,7 @@
 import React from "react";
 import TestInfo from "../../components/TestInfo";
 import {testsData} from "../../data/testsData";
-import {getTest} from "../../api/testsProvider";
+import {getTest} from "../../api/testProvider";
 import {useParams} from "react-router-dom";
 
 const TestPage = () => {

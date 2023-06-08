@@ -9,7 +9,7 @@ import {FormControlLabel, MobileStepper, RadioGroup, Radio} from "@mui/material"
 import {KeyboardArrowLeft, KeyboardArrowRight} from "@mui/icons-material";
 import {test1Data} from "../data/testsData"
 import Grid from "@mui/material/Grid";
-import {postTest1} from "../api/testsProvider";
+import {postTest1} from "../api/testProvider";
 import {_getPermissions} from "../api/authProvider";
 
 const steps = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
