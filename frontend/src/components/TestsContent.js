@@ -50,7 +50,7 @@ const TestsCard = ({test}) => {
             <CardActions>
                 <NavLink to={`test/${test.id}`}>
                     <Button size={"small"} color={"primary"}>
-                        Скласти тест
+                        Детальніше
                     </Button>
                 </NavLink>
             </CardActions>

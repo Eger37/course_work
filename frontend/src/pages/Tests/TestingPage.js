@@ -1,5 +1,4 @@
 import React from "react";
-import TestInfo from "../../components/TestInfo";
 import {createOne, getList} from "../../api/dataProvider";
 import {NavLink, useParams} from "react-router-dom";
 import {Button, CircularProgress, Container, Grid, Paper, Typography} from "@mui/material";
@@ -63,10 +62,10 @@ const TestingPage = () => {
     //     createTesting();
     // }, []);
 
-    if (loading){
-        return <TestInfo loading/>
-
-    }
+    // if (loading){
+    //     return <TestInfo loading/>
+    //
+    // }
     return (
         <main>
             <Paper className={classes.meinFeaturesPost}

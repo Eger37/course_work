@@ -15,7 +15,7 @@ const App = () => {
             <Route component={SignIn} path={"/sign-in"}/>
             <Route component={Test1} path={"/tests/1"}/>
             <Route component={TestPage} exact={true} path={"/test/:testId"}/>
-            <Route component={TestingPage} path={"/test/:testId/testing"}/>
+            <Route component={TestingPage} path={"/test/:testId/testing/:testingId"}/>
         </BrowserRouter>
     )
 };
