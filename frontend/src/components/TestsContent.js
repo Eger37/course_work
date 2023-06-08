@@ -15,7 +15,7 @@ import {
 import {NavLink} from "react-router-dom"
 
 // import {testsData} from "../data/testsData";
-import {getTests} from "../api/testProvider"
+import {getList} from "../api/dataProvider"
 import testImg from "../images/test.jpg";
 
 const useStyles = makeStyles(() => ({
@@ -62,7 +62,7 @@ const TestsContent = () => {
     const [tests, setTests] = React.useState([]);
     const [loading, setLoading] = React.useState(true);
     const fetchTests = async () => {
-        const tests = await getTests().then(data => (data));
+        const tests = await getList("test").then(data => (data));
 
         if (tests){
             setTests(tests);

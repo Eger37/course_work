@@ -1,7 +1,6 @@
 import React from "react";
 import TestInfo from "../../components/TestInfo";
-import {testsData} from "../../data/testsData";
-import {getTest} from "../../api/testProvider";
+import {getOne} from "../../api/dataProvider";
 import {useParams} from "react-router-dom";
 
 const TestPage = () => {
@@ -10,7 +9,7 @@ const TestPage = () => {
     const [loading, setLoading] = React.useState(true);
 
     const fetchTest = async () => {
-        const test = await getTest(testId).then(data => (data));
+        const test = await getOne(testId).then(data => (data));
         if (test){
             setTest(test);
             setLoading(false);
