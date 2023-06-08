@@ -23,7 +23,7 @@ const useStyles = makeStyles(() => ({
     }
 }))
 
-function TestInfo({title = "", about = "", loading}) {
+function TestInfo({title = "", about = "", testId=0,  loading}) {
     const classes = useStyles();
     return (
         <Paper className={classes.meinFeaturesPost}
@@ -57,12 +57,25 @@ function TestInfo({title = "", about = "", loading}) {
                           container
                           alignItems="center"
                           direction="column"
-                          justifyContent="center">
-                        <NavLink to={"/"}>
-                            <Button variant="contained" size={"small"} color={"primary"}>
-                                На головну сторінку
-                            </Button>
-                        </NavLink>
+                          justifyContent="center"
+                          rowSpacing={1}
+
+                    >
+                        <Grid item md={6}>
+                            <NavLink to={`/test/${testId}/testing`}>
+                                <Button variant="contained" size={"small"} color={"primary"}>
+                                    Скласти тест
+                                </Button>
+                            </NavLink>
+                        </Grid>
+
+                        <Grid item md={6}>
+                            <NavLink to={`/`}>
+                                <Button variant="contained" size={"small"} color={"primary"}>
+                                    На головну сторінку
+                                </Button>
+                            </NavLink>
+                        </Grid>
                     </Grid>
                 </Grid>
             </Container>
