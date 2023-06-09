@@ -10,11 +10,9 @@ import {
     Grid,
     Typography,
     CircularProgress,
-    Box
 } from "@mui/material"
 import {NavLink} from "react-router-dom"
 
-// import {testsData} from "../data/testsData";
 import {getList} from "../api/dataProvider"
 import testImg from "../images/test.jpg";
 

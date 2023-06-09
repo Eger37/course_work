@@ -1,52 +1,70 @@
 import React from "react";
 import {createOne, getList} from "../../api/dataProvider";
 import {NavLink, useParams} from "react-router-dom";
-import {Button, CircularProgress, Container, Grid, Paper, Typography, Box} from "@mui/material";
+import {Button, CircularProgress, Container, Grid, Paper, Typography,} from "@mui/material";
 import testImg from "../../images/test.jpg";
 import {makeStyles} from "@mui/styles";
 
 
-import CssBaseline from '@mui/material/CssBaseline';
-import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {FormControlLabel, MobileStepper, RadioGroup, Radio} from "@mui/material";
 import {KeyboardArrowLeft, KeyboardArrowRight} from "@mui/icons-material";
-// import {test1Data} from "../data/testsData"
-// import {postTest1} from "../api/dataProvider";
-// import {_getPermissions} from "../api/authProvider";
 
-function AnswerOptionsField(props) {
-    let [value, setValue] = React.useState(0);
+function AnswerOptionsField({question, testingId, answers, setAnswers, activeStep, ...props}) {
+    let [value, setValue] = React.useState(answers[activeStep] ? answers[activeStep] : null);
+
+    const [answerOptions, setAnswerOptions] = React.useState([]);
+    const [loading, setLoading] = React.useState(true);
+
+    const fetchAnswerOptions = async () => {
+        // const url = `/question?filter={"test_id":${10}}&range={0,999}&sort={"sequential_number":"ASC"}`
+        const url = `/answer-option?filter=%7B%22question_id%22%3A${question.id}%7D&range=%5B0%2C998%5D&sort=%5B%22id%22%2C%22ASC%22%5D`
+        const answerOptions = await getList(url).then(data => (data));
+        if (answerOptions) {
+            setAnswerOptions(answerOptions);
+            setLoading(false);
+        }
+    };
+
+    React.useEffect(() => {
+        fetchAnswerOptions();
+    }, []);
+
 
     const handleChange = (event) => {
-        const copiedArray = Array.from(props.answers);
-        copiedArray[props.activeStep] = event.target.value;
-        props.setAnswers(copiedArray)
+        const copiedArray = Array.from(answers);
+        copiedArray[activeStep] = event.target.value;
+        setAnswers(copiedArray)
         setValue(event.target.value);
     };
 
-    const FormControlLabelArray = [
-        <FormControlLabel value={7} control={<Radio/>} label="3" labelPlacement="bottom" key={0}/>,
-        <FormControlLabel value={6} control={<Radio/>} label="2" labelPlacement="bottom" key={1}/>,
-        <FormControlLabel value={5} control={<Radio/>} label="1" labelPlacement="bottom" key={2}/>,
-        <FormControlLabel value={4} control={<Radio/>} label="0" labelPlacement="bottom" key={3}/>,
-        <FormControlLabel value={3} control={<Radio/>} label="1" labelPlacement="bottom" key={4}/>,
-        <FormControlLabel value={2} control={<Radio/>} label="2" labelPlacement="bottom" key={5}/>,
-        <FormControlLabel value={1} control={<Radio/>} label="3" labelPlacement="bottom" key={6}/>
-    ]
+    if (loading) {
+        return (
+            <center>
+                <CircularProgress/>
+            </center>
+        );
+    }
     return (
-        <RadioGroup row
-                    name="use-radio-group" defaultValue={0}
+        <RadioGroup
+                    name="use-radio-group"
                     value={value}
                     onChange={handleChange}
         >
-            {props.reverse ? FormControlLabelArray.reverse() : FormControlLabelArray}
+
+            {answerOptions.map((answerOption) => (
+                <FormControlLabel key={answerOption.id}
+                                  value={answerOption.id}
+                                  control={<Radio/>}
+                                  label={answerOption.answer_option_text}
+                />
+
+            ))}
         </RadioGroup>
     )
 }
 
-const theme = createTheme();
 
-export function Testing({questions}) {
+export function Testing({questions, testingId}) {
     const [activeStep, setActiveStep] = React.useState(0);
     const maxSteps = questions.length;
     const [answers, setAnswers] = React.useState(new Array(maxSteps));
@@ -81,7 +99,7 @@ export function Testing({questions}) {
 
             <Paper variant="outlined"
                    sx={{
-                       my: {xs: 3, md: 6},
+                       my: {xs: 3, md: 3},
                        p: {xs: 2, md: 3},
                        // display: "flex",
                        // direction:"column",
@@ -89,38 +107,36 @@ export function Testing({questions}) {
                 <Grid container
                       direction="column"
                       justifyContent="space-between"
-                      minHeight={"calc(100vh - 273px)"}
-
+                      minHeight={"calc(100vh - 245px)"}
                 >
-                    <Grid item>
+                    <Grid item md={12}>
                         <Typography variant="h5" gutterBottom>
                             Питання:
                         </Typography>
                         <Typography variant="h6" gutterBottom>
                             {questions[activeStep].text}
                         </Typography>
+                        <h1>
+                            {/*Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aliquam amet animi aspernatur commodi cumque dolor dolore, dolores enim explicabo id illum modi nesciunt nihil, rem reprehenderit similique sunt, voluptatum.*/}
+                        </h1>
                     </Grid>
 
-                    <Grid item container
-                          justifyContent="center"
-                          direction="column"
+                    <Grid item md={12}
+                          container
+                        // alignItems="center"
+                        // direction="column"
+                        // justifyContent="center"
                     >
-                        <Grid item md={12}
-                              container
-                              alignItems="center"
-                              direction="column"
-                              justifyContent="center">
-                            <AnswerOptionsField
-                                question={questions[activeStep]}
-                                activeStep={activeStep}
-                                answers={answers}
-                                setAnswers={setAnswers}
-                                reverse={true}
-                                key={activeStep}
-                            />
-                        </Grid>
-
-
+                        <AnswerOptionsField
+                            question={questions[activeStep]}
+                            testingId={testingId}
+                            activeStep={activeStep}
+                            answers={answers}
+                            setAnswers={setAnswers}
+                            key={activeStep}
+                        />
+                    </Grid>
+                    <Grid item md={12}>
                         <MobileStepper
                             variant="text"
                             steps={maxSteps}
@@ -200,22 +216,22 @@ const TestingPage = () => {
                    style={{
                        backgroundImage: `url(${testImg}`,
                        minHeight: "calc(100vh - 50px)"
-                   }}>
-                <Container fixed>
+                   }}
+            >
+                <Container fixed maxWidth="md">
                     <Grid container>
-                        <Grid item md={12}>
+                        <Grid item xs={12} md={12}>
                             <div className={classes.mainFeaturesPostContent}>
                                 {loading ?
                                     <center>
                                         <CircularProgress/>
                                     </center> :
-                                    <Testing questions={questions}/>
+                                    <Testing questions={questions} testingId={testingId}/>
                                 }
                             </div>
                         </Grid>
 
-                        <Grid item md={3}/>
-                        <Grid item md={6}
+                        <Grid item md={12}
                               container
                               alignItems="center"
                               direction="column"
@@ -223,7 +239,7 @@ const TestingPage = () => {
                               rowSpacing={1}
 
                         >
-                            <Grid item md={6}>
+                            <Grid item md={12}>
                                 <NavLink to={`/`}>
                                     <Button variant="contained" size={"small"} color={"primary"}>
                                         На головну сторінку
