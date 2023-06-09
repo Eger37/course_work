@@ -62,13 +62,11 @@ const TestPage = () => {
             <Paper className={classes.meinFeaturesPost}
                    style={{
                        backgroundImage: `url(${testImg}`,
-                       height: "calc(100vh - 50px)"
+                       minHeight: "calc(100vh - 50px)"
                    }}>
                 <Container fixed>
                     <Grid container>
-                        <Grid item md={3}>
-                        </Grid>
-                        <Grid item md={6}>
+                        <Grid item md={12}>
                             <div className={classes.mainFeaturesPostContent}>
                                 {loading &&
                                     <center>
@@ -87,9 +85,7 @@ const TestPage = () => {
                                 </Typography>
                             </div>
                         </Grid>
-                        <Grid item md={3}/>
-                        <Grid item md={3}/>
-                        <Grid item md={6}
+                        <Grid item md={12}
                               container
                               alignItems="center"
                               direction="column"
@@ -98,12 +94,10 @@ const TestPage = () => {
 
                         >
                             <Grid item md={6}>
-                                {/*<NavLink to={`/test/${testId}/testing`}>*/}
                                 <Button variant="contained" size={"small"} color={"primary"}
                                         onClick={createTesting}>
                                     Скласти тест
                                 </Button>
-                                {/*</NavLink>*/}
                             </Grid>
 
                             <Grid item md={6}>
