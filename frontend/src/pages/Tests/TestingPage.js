@@ -11,7 +11,6 @@ import {KeyboardArrowLeft, KeyboardArrowRight} from "@mui/icons-material";
 
 function AnswerOptionsField({question, testingId, answers, setAnswers, activeStep, ...props}) {
     let [value, setValue] = React.useState(answers[activeStep] ? answers[activeStep] : null);
-
     const [answerOptions, setAnswerOptions] = React.useState([]);
     const [loading, setLoading] = React.useState(true);
 
@@ -26,15 +25,27 @@ function AnswerOptionsField({question, testingId, answers, setAnswers, activeSte
     };
 
     React.useEffect(() => {
-        fetchAnswerOptions();
+        void fetchAnswerOptions();
     }, []);
 
+    const createAnswer = async (answerOptionId) => {
+        // setLoading(true);
+        const answer = await createOne("/answer", {
+            testing_id: testingId,
+            question_id: question.id,
+            answer_option_id: answerOptionId
+        }).then(data => (data));
+        if (answer) {
+            const copiedArray = Array.from(answers);
+            copiedArray[activeStep] = answerOptionId;
+            setAnswers(copiedArray)
+            setValue(answerOptionId)
+        }
+    };
 
     const handleChange = (event) => {
-        const copiedArray = Array.from(answers);
-        copiedArray[activeStep] = event.target.value;
-        setAnswers(copiedArray)
-        setValue(event.target.value);
+        const answerOptionId = event.target.value;
+        void createAnswer(answerOptionId);
     };
 
     if (loading) {
@@ -46,9 +57,9 @@ function AnswerOptionsField({question, testingId, answers, setAnswers, activeSte
     }
     return (
         <RadioGroup
-                    name="use-radio-group"
-                    value={value}
-                    onChange={handleChange}
+            name="use-radio-group"
+            value={value}
+            onChange={handleChange}
         >
 
             {answerOptions.map((answerOption) => (

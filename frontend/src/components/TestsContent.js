@@ -69,7 +69,7 @@ const TestsContent = () => {
     };
 
     React.useEffect(() => {
-        fetchTests();
+        void fetchTests();
     }, []);
 
     return (<>

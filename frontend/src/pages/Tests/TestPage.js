@@ -43,7 +43,7 @@ const TestPage = () => {
     };
 
     React.useEffect(() => {
-        fetchTest();
+        void fetchTest();
     }, []);
 
     const createTesting = async () => {
