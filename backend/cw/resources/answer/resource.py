@@ -145,23 +145,13 @@ class AnswerResource(object):
                 Answer.question_id == data["question_id"],
                 Answer.testing_id == data["testing_id"])
         ).first()
-        print("\n\n\n")
-        print("answer")
-        print(answer)
-        print("\n\n\n")
         if answer:
             for key in data:
                 if data[key] is None:
                     continue
                 setattr(answer, key, data[key])
             self.request.db.flush()
-            print("\n\n\n")
-            print("update")
-            print("\n\n\n")
         else:
-            print("\n\n\n")
-            print("create")
-            print("\n\n\n")
             answer = Answer(**data)
             self.request.db.add(answer)
             self.request.db.flush()
