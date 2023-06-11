@@ -78,24 +78,24 @@ def get(request):
     #                for question_category, result_option, score in testing_result_list]
 
     # WORK
-    # testing_result_query = request.db.query(QuestionCategory, func.sum(AnswerOption.score)) \
-    #     .join(Test, QuestionCategory.test_id == Test.id) \
-    #     .join(AnswerOption, AnswerOption.question_category_id == QuestionCategory.id) \
-    #     .join(Answer, Answer.answer_option_id == AnswerOption.id) \
-    #     .filter(QuestionCategory.test_id == testing.test_id) \
-    #     .group_by(QuestionCategory.id) \
-    #     .order_by(func.sum(AnswerOption.score))
-    # testing_result_list = testing_result_query.all()
-    # print("\n\n\n")
-    # print("sum_res")
-    # for i in testing_result_list:
-    #     print(i)
-    # # print(sum_res)
-    # print("\n\n\n")
-    # print("\n\n\n")
-    # result_dict = [dict(
-    #     question_category=dict(question_category),
-    #     score=score
-    # ) for question_category, score in testing_result_list]
+    testing_result_query = request.db.query(QuestionCategory, func.sum(AnswerOption.score)) \
+        .join(Test, QuestionCategory.test_id == Test.id) \
+        .join(AnswerOption, AnswerOption.question_category_id == QuestionCategory.id) \
+        .join(Answer, Answer.answer_option_id == AnswerOption.id) \
+        .filter(QuestionCategory.test_id == testing.test_id) \
+        .group_by(QuestionCategory.id) \
+        .order_by(func.sum(AnswerOption.score))
+    testing_result_list = testing_result_query.all()
+    print("\n\n\n")
+    print("sum_res")
+    for i in testing_result_list:
+        print(i)
+    # print(sum_res)
+    print("\n\n\n")
+    print("\n\n\n")
+    result_dict = [dict(
+        question_category=dict(question_category),
+        score=score
+    ) for question_category, score in testing_result_list]
     return map_data_to_body_schema(ResponseBodyTestingResultSchema, result_dict)
 
