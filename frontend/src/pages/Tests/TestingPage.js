@@ -1,10 +1,10 @@
 import React from "react";
-import {createOne, getList} from "../../api/dataProvider";
+import {createOne, getList, getOne} from "../../api/dataProvider";
 import {NavLink, useParams} from "react-router-dom";
 import {Button, CircularProgress, Container, Grid, Paper, Typography,} from "@mui/material";
 import testImg from "../../images/test.jpg";
 import {makeStyles} from "@mui/styles";
-
+import Avatar from '@mui/material/Avatar';
 
 import {FormControlLabel, MobileStepper, RadioGroup, Radio} from "@mui/material";
 import {KeyboardArrowLeft, KeyboardArrowRight} from "@mui/icons-material";
@@ -75,15 +75,57 @@ function AnswerOptionsField({question, testingId, answers, setAnswers, activeSte
 }
 
 
+
+export function TestingResult({categoryResult}) {
+
+    return (
+            <Paper
+                sx={{
+                    my: 1,
+                    mx: 'auto',
+                    p: 2,
+                }}
+            >
+                <Grid container wrap="nowrap" spacing={2}>
+                    <Grid item>
+                        <Avatar>W</Avatar>
+                    </Grid>
+                    <Grid item xs zeroMinWidth>
+                        <Typography noWrap>{categoryResult.question_category.id}</Typography>
+                        <Typography noWrap>{categoryResult.question_category.name}</Typography>
+                        <Typography noWrap>{categoryResult.question_category.question_category_description}</Typography>
+                        <Typography noWrap>{categoryResult.score}</Typography>
+                    </Grid>
+                </Grid>
+            </Paper>
+    );
+}
+
 export function Testing({questions, testingId}) {
-    const [activeStep, setActiveStep] = React.useState(0);
+    const [activeStep, setActiveStep] = React.useState(3);
     const maxSteps = questions.length;
     const [answers, setAnswers] = React.useState(new Array(maxSteps));
+
+    const [testingResult, setTestingResult] = React.useState([]);
+    const [loading, setLoading] = React.useState(false);
+
+    const fetchTestingResult = async () => {
+        setLoading(true);
+
+        const testingResult = await getOne(`/testing-result/${testingId}`).then(data => (data));
+        if (testingResult) {
+            console.log("testingResult")
+            console.log(testingResult)
+            setTestingResult(testingResult);
+            setLoading(false);
+        }
+    };
 
     const handleNextFinish = () => {
         if (activeStep !== maxSteps - 1) {
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
         } else {
+            void fetchTestingResult()
             // postTest1({
             //     // userId: _getPermissions().id,
             //     test1Data: test1Data,
@@ -115,63 +157,88 @@ export function Testing({questions, testingId}) {
                        // display: "flex",
                        // direction:"column",
                    }}>
-                <Grid container
-                      direction="column"
-                      justifyContent="space-between"
-                      minHeight={"calc(100vh - 245px)"}
-                >
-                    <Grid item md={12}>
-                        <Typography variant="h5" gutterBottom>
-                            Питання:
-                        </Typography>
-                        <Typography variant="h6" gutterBottom>
-                            {questions[activeStep].text}
-                        </Typography>
-                        <h1>
-                            {/*Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aliquam amet animi aspernatur commodi cumque dolor dolore, dolores enim explicabo id illum modi nesciunt nihil, rem reprehenderit similique sunt, voluptatum.*/}
-                        </h1>
-                    </Grid>
 
-                    <Grid item md={12}
-                          container
-                        // alignItems="center"
-                        // direction="column"
-                        // justifyContent="center"
+                {loading ?
+                    <Grid container
+                          direction="column"
+                          justifyContent="center"
+                          minHeight={"calc(100vh - 245px)"}
                     >
-                        <AnswerOptionsField
-                            question={questions[activeStep]}
-                            testingId={testingId}
-                            activeStep={activeStep}
-                            answers={answers}
-                            setAnswers={setAnswers}
-                            key={activeStep}
-                        />
-                    </Grid>
-                    <Grid item md={12}>
-                        <MobileStepper
-                            variant="text"
-                            steps={maxSteps}
-                            position="static"
-                            activeStep={activeStep}
-                            nextButton={
-                                <Button
-                                    size="small"
-                                    onClick={handleNextFinish}
-                                    disabled={!answers[activeStep]}
-                                >
-                                    {(activeStep === maxSteps - 1) ? "Finish" : "Next"}
-                                    <KeyboardArrowRight/>
-                                </Button>
-                            }
-                            backButton={
-                                <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-                                    <KeyboardArrowLeft/>
-                                    Back
-                                </Button>
-                            }
-                        />
-                    </Grid>
-                </Grid>
+                        <center>
+                            <CircularProgress/>
+                        </center>
+                    </Grid> :
+                    testingResult[0] ?
+                        <Grid
+                              minHeight={"calc(100vh - 245px)"}
+                        >
+                            {testingResult.map((categoryResult) => (
+
+                                <Grid item key={categoryResult.question_category.id} sm={12}>
+                                    <TestingResult categoryResult={categoryResult}/>
+                                </Grid>
+                            ))}
+                        </Grid>
+                        :
+                        <Grid container
+                              direction="column"
+                              justifyContent="space-between"
+                              minHeight={"calc(100vh - 245px)"}
+                        >
+
+                            <Grid item md={12}>
+                                <Typography variant="h5" gutterBottom>
+                                    Питання:
+                                </Typography>
+                                <Typography variant="h6" gutterBottom>
+                                    {questions[activeStep].text}
+                                </Typography>
+                                <h1>
+                                    {/*Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aliquam amet animi aspernatur commodi cumque dolor dolore, dolores enim explicabo id illum modi nesciunt nihil, rem reprehenderit similique sunt, voluptatum.*/}
+                                </h1>
+                            </Grid>
+
+                            <Grid item md={12}
+                                  container
+                                // alignItems="center"
+                                // direction="column"
+                                // justifyContent="center"
+                            >
+                                <AnswerOptionsField
+                                    question={questions[activeStep]}
+                                    testingId={testingId}
+                                    activeStep={activeStep}
+                                    answers={answers}
+                                    setAnswers={setAnswers}
+                                    key={activeStep}
+                                />
+                            </Grid>
+                            <Grid item md={12}>
+                                <MobileStepper
+                                    variant="text"
+                                    steps={maxSteps}
+                                    position="static"
+                                    activeStep={activeStep}
+                                    nextButton={
+                                        <Button
+                                            size="small"
+                                            onClick={handleNextFinish}
+                                            disabled={!answers[activeStep]}
+                                        >
+                                            {(activeStep === maxSteps - 1) ? "Finish" : "Next"}
+                                            <KeyboardArrowRight/>
+                                        </Button>
+                                    }
+                                    backButton={
+                                        <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+                                            <KeyboardArrowLeft/>
+                                            Back
+                                        </Button>
+                                    }
+                                />
+                            </Grid>
+                        </Grid>
+                }
             </Paper>
         </Container>
     )
