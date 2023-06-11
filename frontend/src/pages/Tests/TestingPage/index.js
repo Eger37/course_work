@@ -1,13 +1,14 @@
 import React from "react";
-import {createOne, getList, getOne} from "../../api/dataProvider";
+import {createOne, getList, getOne} from "../../../api/dataProvider";
 import {NavLink, useParams} from "react-router-dom";
 import {Button, CircularProgress, Container, Grid, Paper, Typography,} from "@mui/material";
-import testImg from "../../images/test.jpg";
+import testImg from "../../../images/test.jpg";
 import {makeStyles} from "@mui/styles";
-import Avatar from '@mui/material/Avatar';
 
 import {FormControlLabel, MobileStepper, RadioGroup, Radio} from "@mui/material";
 import {KeyboardArrowLeft, KeyboardArrowRight} from "@mui/icons-material";
+import TestingResult from "./TestingResult";
+
 
 function AnswerOptionsField({question, testingId, answers, setAnswers, activeStep, ...props}) {
     let [value, setValue] = React.useState(answers[activeStep] ? answers[activeStep] : null);
@@ -74,32 +75,6 @@ function AnswerOptionsField({question, testingId, answers, setAnswers, activeSte
     )
 }
 
-
-
-export function TestingResult({categoryResult}) {
-
-    return (
-            <Paper
-                sx={{
-                    my: 1,
-                    mx: 'auto',
-                    p: 2,
-                }}
-            >
-                <Grid container wrap="nowrap" spacing={2}>
-                    <Grid item>
-                        <Avatar>W</Avatar>
-                    </Grid>
-                    <Grid item xs zeroMinWidth>
-                        <Typography noWrap>{categoryResult.question_category.id}</Typography>
-                        <Typography noWrap>{categoryResult.question_category.name}</Typography>
-                        <Typography noWrap>{categoryResult.question_category.question_category_description}</Typography>
-                        <Typography noWrap>{categoryResult.score}</Typography>
-                    </Grid>
-                </Grid>
-            </Paper>
-    );
-}
 
 export function Testing({questions, testingId}) {
     const [activeStep, setActiveStep] = React.useState(3);
@@ -169,16 +144,7 @@ export function Testing({questions, testingId}) {
                         </center>
                     </Grid> :
                     testingResult[0] ?
-                        <Grid
-                              minHeight={"calc(100vh - 245px)"}
-                        >
-                            {testingResult.map((categoryResult) => (
-
-                                <Grid item key={categoryResult.question_category.id} sm={12}>
-                                    <TestingResult categoryResult={categoryResult}/>
-                                </Grid>
-                            ))}
-                        </Grid>
+                        <TestingResult testingResult={testingResult}/>
                         :
                         <Grid container
                               direction="column"

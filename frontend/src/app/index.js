@@ -4,7 +4,7 @@ import SignIn from "../pages/SignIn";
 import Main from "../pages/Main";
 import {BrowserRouter, Route} from "react-router-dom"
 import TestPage from "../pages/Tests/TestPage";
-import TestingPage from "../pages/Tests/TestingPage";
+import TestingPage from "../pages/Tests/TestingPage/";
 
 const App = () => {
     return (
