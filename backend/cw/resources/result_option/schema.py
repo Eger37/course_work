@@ -41,7 +41,6 @@ class UpdateResultOptionSchema(colander.MappingSchema):
     body = UpdateResultOptionBaseSchema()
     path = GetResultOptionSchema()
 
-
 class ResponseResultOptionBaseSchema(colander.MappingSchema):
     id = colander.SchemaNode(colander.Integer())
     test_id = colander.SchemaNode(colander.Integer())

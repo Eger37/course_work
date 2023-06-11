@@ -3,6 +3,16 @@ import colander
 from .._shared.schema import (
     GetCollectionBaseSchema,
 )
+from .._shared.schema import (
+    GetCollectionBaseSchema,
+)
+
+from ..question_category.schema import (
+    ResponseQuestionCategoryBaseSchema
+)
+from ..result_option.schema import (
+    ResponseResultOptionBaseSchema
+)
 
 
 class GetTestingSchema(colander.MappingSchema):
@@ -48,3 +58,21 @@ class ResponseBodyTestingsSchema(colander.MappingSchema):
     @colander.instantiate(name="body")
     class BodyItemsTestingSchema(colander.SequenceSchema):
         testing = ResponseTestingBaseSchema()
+
+
+
+
+class ResponseTestingResultForCategoryBaseSchema(colander.MappingSchema):
+    question_category = ResponseQuestionCategoryBaseSchema()
+    result_option = ResponseResultOptionBaseSchema()
+    score = colander.SchemaNode(colander.Integer())
+
+class ResponseBodyTestingResultSchema(colander.MappingSchema):
+    @colander.instantiate(name="body")
+    class BodyItemsTestingSchema(colander.SequenceSchema):
+        testing_result_for_category = ResponseTestingResultForCategoryBaseSchema()
+
+# class ResponseBodyTestingResultsSchema(colander.MappingSchema):
+#     @colander.instantiate(name="body")
+#     class BodyItemsTestingSchema(colander.SequenceSchema):
+#         testing_result = ResponseBodyTestingResultSchema
