@@ -20,6 +20,17 @@ from .schema import (
     ResponseBodyTestingResultSchema,
 )
 
+def get_result_option_by_QuestionCategory_and_score(db, question_category, score):
+    result_option = db.query(ResultOption) \
+        .filter(ResultOption.min <= score) \
+        .filter(ResultOption.max > score) \
+        .filter(ResultOption.question_category_id == question_category.id) \
+        .first()
+    if result_option:
+        return result_option
+    else:
+        return dict()
+
 testing_result_view = Service(name="testing-result", description="testing-result", path="/testing-result/{id}",
                          tags=["testing-result"], **negotiation_params)
 
@@ -37,45 +48,6 @@ def get(request):
 
     if testing is None:
         raise HTTPNotFound(explanation="Testing not found!")
-    print("\n\n\n")
-    print("testing")
-    print(testing)
-    print("\n\n\n")
-
-    # testing_result_query = request.db.query(QuestionCategory, case((
-    #     and_(ResultOption.min <= func.sum(AnswerOption.score),
-    #          ResultOption.max > func.sum(AnswerOption.score)), ResultOption.text),
-    #     (func.count(ResultOption.id) == 0, None),
-    #     else_=None
-    # ), func.sum(AnswerOption.score)) \
-    #     .join(Test, QuestionCategory.test_id == Test.id) \
-    #     .join(AnswerOption, AnswerOption.question_category_id == QuestionCategory.id) \
-    #     .join(Answer, Answer.answer_option_id == AnswerOption.id) \
-    #     .outerjoin(ResultOption, QuestionCategory.id == ResultOption.question_category_id) \
-    #     .filter(QuestionCategory.test_id == testing.test_id) \
-    #     .group_by(QuestionCategory.id, ResultOption.id) \
-    #     .order_by(func.sum(AnswerOption.score)) \
-    #     .having(func.count(ResultOption.id) == 2)
-    #
-    #
-    # print("\n\n\n")
-    # print("sum_res")
-    # for i in testing_result_list:
-    #     print(i)
-    # # print(sum_res)
-    # print("\n\n\n")
-    # print("\n\n\n")
-    # # return map_data_to_body_schema(ResponseBodyTestingSchema, dict(testing))
-    # result_dict = [dict(
-    #     question_category=dict(question_category),
-    #     result_option= dict(result_option),
-    #     score=score
-    # ) if result_option else
-    #                dict(
-    #                    question_category=dict(question_category),
-    #                    score=score
-    #                )
-    #                for question_category, result_option, score in testing_result_list]
 
     # WORK
     testing_result_query = request.db.query(QuestionCategory, func.sum(AnswerOption.score)) \
@@ -86,15 +58,10 @@ def get(request):
         .group_by(QuestionCategory.id) \
         .order_by(func.sum(AnswerOption.score))
     testing_result_list = testing_result_query.all()
-    print("\n\n\n")
-    print("sum_res")
-    for i in testing_result_list:
-        print(i)
-    # print(sum_res)
-    print("\n\n\n")
-    print("\n\n\n")
+
     result_dict = [dict(
         question_category=dict(question_category),
+        result_option= get_result_option_by_QuestionCategory_and_score(request.db, question_category, score),
         score=score
     ) for question_category, score in testing_result_list]
     return map_data_to_body_schema(ResponseBodyTestingResultSchema, result_dict)
