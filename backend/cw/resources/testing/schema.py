@@ -62,8 +62,10 @@ class ResponseBodyTestingsSchema(colander.MappingSchema):
 
 
 
+class ResponseQuestionCategorySchema(ResponseQuestionCategoryBaseSchema):
+    description = colander.SchemaNode(colander.String())
 class ResponseTestingResultForCategoryBaseSchema(colander.MappingSchema):
-    question_category = ResponseQuestionCategoryBaseSchema()
+    question_category = ResponseQuestionCategorySchema()
     result_option = ResponseResultOptionBaseSchema()
     score = colander.SchemaNode(colander.Integer())
 

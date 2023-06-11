@@ -5,7 +5,7 @@ from cornice.validators import (
     colander_path_validator,
     colander_validator,
 )
-from sqlalchemy import func, and_, or_, case
+from sqlalchemy import func, desc, and_
 from pyramid.httpexceptions import HTTPNotFound
 
 from cw.modules.cornice import negotiation_params
@@ -20,6 +20,7 @@ from .schema import (
     ResponseBodyTestingResultSchema,
 )
 
+
 def get_result_option_by_QuestionCategory_and_score(db, question_category, score):
     result_option = db.query(ResultOption) \
         .filter(ResultOption.min <= score) \
@@ -31,8 +32,9 @@ def get_result_option_by_QuestionCategory_and_score(db, question_category, score
     else:
         return dict()
 
+
 testing_result_view = Service(name="testing-result", description="testing-result", path="/testing-result/{id}",
-                         tags=["testing-result"], **negotiation_params)
+                              tags=["testing-result"], **negotiation_params)
 
 
 @testing_result_view.get(
@@ -44,25 +46,34 @@ testing_result_view = Service(name="testing-result", description="testing-result
 )
 def get(request):
     path_data = request.validated
-    testing = request.db.query(Testing).get(path_data['id'])
+    testing_id = path_data['id']
+    testing = request.db.query(Testing).get(testing_id)
 
     if testing is None:
         raise HTTPNotFound(explanation="Testing not found!")
 
-    # WORK
-    testing_result_query = request.db.query(QuestionCategory, func.sum(AnswerOption.score)) \
-        .join(Test, QuestionCategory.test_id == Test.id) \
-        .join(AnswerOption, AnswerOption.question_category_id == QuestionCategory.id) \
-        .join(Answer, Answer.answer_option_id == AnswerOption.id) \
-        .filter(QuestionCategory.test_id == testing.test_id) \
-        .group_by(QuestionCategory.id) \
-        .order_by(func.sum(AnswerOption.score))
+    testing_result_query = request.db.query(Testing, QuestionCategory, func.sum(AnswerOption.score)) \
+        .filter(Testing.id == testing_id) \
+        .join(Test, Testing.test_id == Test.id) \
+        .join(QuestionCategory, QuestionCategory.test_id == Test.id) \
+        .join(Answer, Answer.testing_id == Testing.id) \
+        .join(AnswerOption, and_(Answer.answer_option_id == AnswerOption.id,
+                                 AnswerOption.question_category_id == QuestionCategory.id)) \
+        .group_by(Testing.id, QuestionCategory.id,) \
+        .order_by(desc(func.sum(AnswerOption.score)))
+
     testing_result_list = testing_result_query.all()
+
+    # print("\n\n\n")
+    # print("testing_result_list")
+    # for i in testing_result_list:
+    #     print(i)
+    #
+    # print("\n\n\n")
 
     result_dict = [dict(
         question_category=dict(question_category),
-        result_option= get_result_option_by_QuestionCategory_and_score(request.db, question_category, score),
+        result_option=get_result_option_by_QuestionCategory_and_score(request.db, question_category, score),
         score=score
-    ) for question_category, score in testing_result_list]
+    ) for _, question_category, score in testing_result_list]
     return map_data_to_body_schema(ResponseBodyTestingResultSchema, result_dict)
-
