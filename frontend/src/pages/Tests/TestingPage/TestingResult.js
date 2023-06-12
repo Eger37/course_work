@@ -13,14 +13,17 @@ export function CategoryResult({categoryResult}) {
             }}
         >
             <Grid container wrap="nowrap" spacing={2}>
-                <Grid item>
-                    <Avatar>W</Avatar>
-                </Grid>
                 <Grid item xs zeroMinWidth>
-                    <Typography noWrap>{categoryResult.question_category.id}</Typography>
-                    <Typography noWrap>{categoryResult.question_category.name}</Typography>
-                    <Typography noWrap>{categoryResult.question_category.description}</Typography>
-                    <Typography noWrap>{categoryResult.score}</Typography>
+                    <Typography variant="h5" gutterBottom>{categoryResult.question_category.name}</Typography>
+
+                    <Typography gutterBottom>{categoryResult.question_category.description}</Typography>
+                    <Typography gutterBottom sx={{fontWeight: 'bold'}}>
+                        Набрано балів у категорії: {categoryResult.score}
+                    </Typography>
+                    <Typography gutterBottom sx={{fontWeight: 'bold'}}>
+                        {categoryResult.result_option.text}
+                    </Typography>
+
                 </Grid>
             </Grid>
         </Paper>
@@ -34,6 +37,10 @@ export default function TestingResult({testingResult}) {
         <Grid
             minHeight={"calc(100vh - 245px)"}
         >
+            <center>
+                <Typography variant="h4" noWrap>Результат</Typography>
+            </center>
+
             {testingResult.map((categoryResult) => (
 
                 <Grid item key={categoryResult.question_category.id} sm={12}>
