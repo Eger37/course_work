@@ -9,6 +9,7 @@ import {
     ShowButton,
     TabbedShowLayout,
     Tab,
+    BooleanField,
 } from 'react-admin';
 
 
@@ -61,6 +62,7 @@ export const TestShow = ({permissions, hasShow, ...props}) => {
                         <TextField source="title" label={"Title"}/>
                         <TextField source="subtitle" label={"Subtitle"}/>
                         <TextField source="description" label={"Description"}/>
+                        <BooleanField source="activ" label={"Activ"}/>
                     </Tab>
 
                     <Tab label="Question categories" path="question-categories">

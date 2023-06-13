@@ -59,10 +59,11 @@ const TestsContent = () => {
     const classes = useStyles();
     const [tests, setTests] = React.useState([]);
     const [loading, setLoading] = React.useState(true);
-    const fetchTests = async () => {
-        const tests = await getList("test").then(data => (data));
 
-        if (tests){
+    const fetchTests = async () => {
+        const params = {filter: {'activ': true}}
+        const tests = await getList("test", params).then(data => (data));
+        if (tests) {
             setTests(tests);
             setLoading(false);
         }
@@ -72,7 +73,7 @@ const TestsContent = () => {
         void fetchTests();
     }, []);
 
-    return (<>
+    return (<React.Fragment>
             <div content={classes.mainContent}>
                 <Container maxWidth={"sm"}>
                     <Typography variant={"h3"} align={"center"} color={"textPrimary"}>
@@ -98,7 +99,7 @@ const TestsContent = () => {
                 </Grid>
             </Container>
 
-        </>
+        </React.Fragment>
     )
 };
 

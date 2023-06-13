@@ -1,5 +1,5 @@
 import React from "react";
-import {List, Datagrid, TextField, EditButton, ShowButton, DeleteButton} from 'react-admin';
+import {List, Datagrid, TextField, EditButton, ShowButton, DeleteButton, BooleanField } from 'react-admin';
 
 import {ScrollingWrapper} from '../../../components/ScrollingWrapper';
 
@@ -21,6 +21,7 @@ export const TestsList = props => {
                     <TextField source="title"/>
                     <TextField source="subtitle"/>
                     {/*<TextField source="description"/>*/}
+                    <BooleanField source="activ"/>
                     <TextField source="created_at"/>
                     <EditButton label=""/>
                     <ShowButton label=""/>
