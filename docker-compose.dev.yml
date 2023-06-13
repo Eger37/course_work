@@ -79,10 +79,10 @@ services:
   frontend:
     tty: true
     build:
-      context: ./frontend
+      context: ./frontend_client
       dockerfile: Dockerfile-dev
     volumes:
-      - ./frontend:/frontend:rw
+      - ./frontend_client:/frontend_client:rw
     ports:
       - "3001:3000"
 

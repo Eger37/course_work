@@ -1,7 +1,7 @@
 /.idea
 postgres-data
 /backend/venv
-/frontend/node_modules
+/frontend_client/node_modules
 /frontend_admin/node_modules
 /frontend/yarn-error.log
 /backend/cw/__pycache__/
