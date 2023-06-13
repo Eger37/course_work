@@ -16,9 +16,13 @@ function AnswerOptionsField({question, testingId, answers, setAnswers, activeSte
     const [loading, setLoading] = React.useState(true);
 
     const fetchAnswerOptions = async () => {
-        // const url = `/question?filter={"test_id":${10}}&range={0,999}&sort={"sequential_number":"ASC"}`
-        const url = `/answer-option?filter=%7B%22question_id%22%3A${question.id}%7D&range=%5B0%2C998%5D&sort=%5B%22id%22%2C%22ASC%22%5D`
-        const answerOptions = await getList(url).then(data => (data));
+        const params = {
+            filter: {'question_id': question.id},
+            range: [0, 998],
+            sort: ["id", "ASC"]
+        }
+        const url = `/answer-option`
+        const answerOptions = await getList(url, params).then(data => (data));
         if (answerOptions) {
             setAnswerOptions(answerOptions);
             setLoading(false);
@@ -241,9 +245,13 @@ const TestingPage = () => {
     const [loading, setLoading] = React.useState(true);
 
     const fetchQuestions = async () => {
-        // const url = `/question?filter={"test_id":${10}}&range={0,999}&sort={"sequential_number":"ASC"}`
-        const url = `/question?filter=%7B%22test_id%22%3A${testId}%7D&range=%5B0%2C998%5D&sort=%5B%22sequential_number%22%2C%22ASC%22%5D`
-        const questions = await getList(url).then(data => (data));
+        const params = {
+            filter: {'test_id': testId},
+            range: [0, 998],
+            sort: ["sequential_number", "ASC"]
+        }
+        const url = "/question"
+        const questions = await getList(url, params).then(data => (data));
         if (questions) {
             setQuestions(questions);
             setLoading(false);

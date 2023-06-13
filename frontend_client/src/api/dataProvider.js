@@ -27,7 +27,7 @@ export const getOne = (url) => {
 };
 
 
-export const getList = (url, params) => {
+export const getList = (url, params={}) => {
     return httpClient(`${url}?${prepareUrlParams(params)}`, {
         method: 'GET',
         headers: {
