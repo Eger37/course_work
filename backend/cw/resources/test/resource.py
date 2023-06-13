@@ -1,6 +1,7 @@
 from pyramid.security import (
     Allow,
-    Everyone
+    Everyone,
+    authenticated_userid
 )
 from sqlalchemy import func
 
@@ -129,7 +130,9 @@ class TestResource(object):
     )
     def collection_post(self):
         data = {**self.request.validated}
-        test = Test(**data)
+        test = Test(**data,
+                    created_by=authenticated_userid(self.request)
+                    )
         self.request.db.add(test)
         self.request.db.flush()
         return map_data_to_body_schema(ResponseBodyTestSchema, dict(test))

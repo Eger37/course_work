@@ -8,11 +8,12 @@ class Test(BaseTest):
     __tablename__ = "test"
 
     id = Column(Integer(), primary_key=True)
+    created_by = Column(Integer(), nullable=False)
+
     title = Column(String(128), nullable=False)
     subtitle = Column(String(256), nullable=False)
     description = Column(String(2048), nullable=False)
     activ = Column(Boolean, nullable=False, default=False)
-
     created_at = Column(DateTime(timezone=False), nullable=False, default=datetime.utcnow)
 
     def __repr__(self):
