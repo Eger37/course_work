@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "frontend_admin",
   "version": "0.1.1",
   "private": true,
   "proxy": "http://backend:8000",

@@ -62,7 +62,6 @@ services:
       - backend
     volumes:
       # - ./nginx/dev/html/index.html:/home/html/index.html:ro
-      - ./frontend/build:/home/html:ro
       - ./files:/home/files:ro
       - /home/ubuntu/certbot/www:/var/www/certbot/:ro
       - /etc/letsencrypt/:/etc/nginx/ssl/:ro
@@ -71,7 +70,7 @@ services:
   frontend:
     tty: true
     build:
-      context: ./frontend
+      context: ./frontend_client
       target: prod
     volumes:
       - frontend-client-dist:/frontend:rw

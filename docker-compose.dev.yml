@@ -73,14 +73,16 @@ services:
       - backend
     volumes:
       # - ./nginx/dev/html/index.html:/home/html/index.html:ro
-      - ./frontend/build:/home/html:ro
+      - ./frontend_client/build:/home/html:ro
       - ./files:/home/files:ro
 
-  frontend:
+
+  frontend_client:
     tty: true
     build:
       context: ./frontend_client
-      dockerfile: Dockerfile-dev
+      dockerfile: Dockerfile
+      target: dev
     volumes:
       - ./frontend_client:/frontend_client:rw
     ports:
@@ -90,7 +92,8 @@ services:
     tty: true
     build:
       context: ./frontend_admin
-      dockerfile: Dockerfile-dev
+      dockerfile: Dockerfile
+      target: dev
     volumes:
       - ./frontend_admin:/frontend_admin:rw
     ports:
