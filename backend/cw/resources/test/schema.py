@@ -10,11 +10,12 @@ class GetTestSchema(colander.MappingSchema):
 
 
 GetTestsSchema = GetCollectionBaseSchema(
-    sort_fields=["id", "title", "subtitle", "description", "created_at"],
+    sort_fields=["id", "title", "subtitle", "description", "activ", "created_at"],
     filter_fields=[
         ("id", colander.List),
         "title", "subtitle", "description",
         ("created_at", colander.DateTime),
+        ("activ", colander.Boolean),
     ],
 )
 
@@ -23,12 +24,14 @@ class CreateTestSchema(colander.MappingSchema):
     title = colander.SchemaNode(colander.String())
     subtitle = colander.SchemaNode(colander.String())
     description = colander.SchemaNode(colander.String())
+    activ = colander.SchemaNode(colander.Boolean())
 
 
 class UpdateTestBaseSchema(colander.MappingSchema):
     title = colander.SchemaNode(colander.String())
     subtitle = colander.SchemaNode(colander.String())
     description = colander.SchemaNode(colander.String())
+    activ = colander.SchemaNode(colander.Boolean())
 
 
 class UpdateTestSchema(colander.MappingSchema):
@@ -41,6 +44,7 @@ class ResponseTestBaseSchema(colander.MappingSchema):
     title = colander.SchemaNode(colander.String())
     subtitle = colander.SchemaNode(colander.String())
     description = colander.SchemaNode(colander.String())
+    activ = colander.SchemaNode(colander.Boolean())
     created_at = colander.SchemaNode(colander.DateTime())
 
 
