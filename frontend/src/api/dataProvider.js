@@ -1,8 +1,12 @@
 import {httpClient} from "./httpClient";
 
+export const prepareUrlParams = (params) => {
+    const prepareUrlParam = (param) => (`${param[0]}=${JSON.stringify(param[1])}`)
+    return Object.entries(params).map(prepareUrlParam).join('&');
+}
 
 export const getOne = (url) => {
-    return httpClient( url,{
+    return httpClient(url, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -23,8 +27,8 @@ export const getOne = (url) => {
 };
 
 
-export const getList = (url) => {
-    return httpClient(url, {
+export const getList = (url, params) => {
+    return httpClient(`${url}?${prepareUrlParams(params)}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
