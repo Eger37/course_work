@@ -19,6 +19,10 @@ RUN pip --no-cache-dir install -q -r requirements.txt
 
 EXPOSE 8000
 
+FROM base as prod
+COPY ./ /app/
+RUN pip --no-cache-dir install -q -e .
+CMD pserve production.ini
 
 FROM base as dev
 ADD . /app
