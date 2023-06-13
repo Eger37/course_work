@@ -3,7 +3,8 @@ postgres-data
 /backend/venv
 /frontend_client/node_modules
 /frontend_admin/node_modules
-/frontend/yarn-error.log
+/frontend_client/yarn-error.log
+/frontend_admin/yarn-error.log
 /backend/cw/__pycache__/
 /backend/cw/database/__pycache__/
 /backend/cw/database/models/__pycache__/
