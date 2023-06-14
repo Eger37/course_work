@@ -87,6 +87,7 @@ services:
       - ./frontend_client:/frontend_client:rw
     ports:
       - "3001:3000"
+    env_file: .env.dev
 
   frontend_admin:
     tty: true
@@ -98,3 +99,4 @@ services:
       - ./frontend_admin:/frontend_admin:rw
     ports:
       - "3002:3000"
+    env_file: .env.dev
