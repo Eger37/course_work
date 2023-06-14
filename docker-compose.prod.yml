@@ -65,25 +65,27 @@ services:
       - ./files:/home/files:ro
       - /home/ubuntu/certbot/www:/var/www/certbot/:ro
       - /etc/letsencrypt/:/etc/nginx/ssl/:ro
-      - frontend-admin-dist:/home/html:ro
+#      - frontend-admin-dist:/home/html:ro
       - frontend-client-dist:/home/html:ro
-  frontend:
+
+  frontend_client:
     tty: true
     build:
       context: ./frontend_client
       target: prod
     volumes:
-      - frontend-client-dist:/frontend:rw
-
+      - frontend-client-dist:/frontend_client:rw
     ports:
       - "3001:3000"
+    env_file: .env.dev
 
-  frontend_admin:
-    tty: true
-    build:
-      context: ./frontend_admin
-      target: prod
-    volumes:
-      - frontend-admin-dist:/frontend:rw
-    ports:
-      - "3002:3000"
+#  frontend_admin:
+#    tty: true
+#    build:
+#      context: ./frontend_admin
+#      target: prod
+#    volumes:
+#      - frontend-admin-dist:/frontend-dist:rw
+#    ports:
+#      - "3002:3000"
+#    env_file: .env.dev
