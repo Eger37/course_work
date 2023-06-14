@@ -60,6 +60,7 @@ services:
         max-file: "10"
     depends_on:
       - backend
+      - frontend_client
     volumes:
       # - ./nginx/dev/html/index.html:/home/html/index.html:ro
       - ./files:/home/files:ro
@@ -80,7 +81,7 @@ services:
       - frontend-client-dist:/frontend_client:rw
     ports:
       - "3001:3000"
-    env_file: .env.dev
+    env_file: .env.prod
 
 #  frontend_admin:
 #    tty: true
@@ -91,4 +92,4 @@ services:
 #      - frontend-admin-dist:/frontend-dist:rw
 #    ports:
 #      - "3002:3000"
-#    env_file: .env.dev
+#    env_file: .env.prod
