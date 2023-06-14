@@ -67,6 +67,9 @@ services:
       - /etc/letsencrypt/:/etc/nginx/ssl/:ro
 #      - frontend-admin-dist:/home/html:ro
       - frontend-client-dist:/home/html:ro
+      - /etc/letsencrypt/live/certs/fullchain.pem:/certs/fullchain.pem:ro
+      - /etc/letsencrypt/live/certs/privkey.pem:/certs/privkey.pem:ro
+
 
   frontend_client:
     tty: true
