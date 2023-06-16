@@ -99,6 +99,7 @@ services:
 
 volumes:
   frontend-client-dist:
-    -
+    name: frontend-client-dist
   frontend-admin-dist:
+    name: frontend-admin-dist
 
