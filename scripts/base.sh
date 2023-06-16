@@ -131,11 +131,11 @@ function prod_stop() {
 	docker_compose down --volumes --remove-orphans
 }
 function prod_start() {
-	prod_build
 	docker_compose up -d
 }
 function prod_restart() {
 	prod_stop
+	prod_build
 	prod_start
 	docker image prune --force
 }
