@@ -36,15 +36,15 @@ services:
       - ./backend/development.ini:/app/development.ini
       - ./files:/app/files
 
-  celery_worker:
-    image: "${PROJECT_NAME}-backend"
-    command: celery -A cw.celery worker --loglevel=info --autoscale=1
-    env_file: .env.prod
-    depends_on:
-      - backend
-    links:
-      - backend
-      - redis
+#  celery_worker:
+#    image: "${PROJECT_NAME}-backend"
+#    command: celery -A cw.celery worker --loglevel=info --autoscale=1
+#    env_file: .env.prod
+#    depends_on:
+#      - backend
+#    links:
+#      - backend
+#      - redis
 
 
 
