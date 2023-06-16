@@ -15,5 +15,5 @@ WORKDIR /frontend_admin
 COPY package.json ./
 COPY yarn.lock ./
 
-RUN yarn install
-CMD yarn start
+CMD ./dev-entrypoint.sh
+
