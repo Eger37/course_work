@@ -60,16 +60,16 @@ services:
       - "3001:3000"
     env_file: .env.prod
 
-#  frontend_admin:
-#    tty: true
-#    build:
-#      context: ./frontend_admin
-#      target: prod
-#    volumes:
-#      - frontend-admin-dist:/frontend-dist:rw
-#    ports:
-#      - "3002:3000"
-#    env_file: .env.prod
+  frontend_admin:
+    tty: true
+    build:
+      context: ./frontend_admin
+      target: prod
+    volumes:
+      - frontend-admin-dist:/frontend_admin-dist:rw
+    ports:
+      - "3002:3000"
+    env_file: .env.prod
 
   nginx:
     build:
@@ -86,12 +86,13 @@ services:
     depends_on:
       - backend
       - frontend_client
+      - frontend_admin
     volumes:
       # - ./nginx/dev/html/index.html:/home/html/index.html:ro
       - ./files:/home/files:ro
       - /home/ubuntu/certbot/www:/var/www/certbot/:ro
       - /etc/letsencrypt/:/etc/nginx/ssl/:ro
-      #      - frontend-admin-dist:/home/html:ro
+      - frontend-admin-dist:/home/admin/html:ro
       - frontend-client-dist:/home/html:ro
       - /etc/letsencrypt/live/certs/fullchain.pem:/certs/fullchain.pem:ro
       - /etc/letsencrypt/live/certs/privkey.pem:/certs/privkey.pem:ro
