@@ -47,6 +47,16 @@ services:
 #      - redis
 
 
+  frontend_admin:
+    tty: true
+    build:
+      context: ./frontend_admin
+      target: prod
+    volumes:
+      - frontend-admin-dist:/frontend_admin:rw
+    ports:
+      - "3002:3000"
+    env_file: .env.prod
 
 
   frontend_client:
@@ -60,23 +70,13 @@ services:
       - "3001:3000"
     env_file: .env.prod
 
-  frontend_admin:
-    tty: true
-    build:
-      context: ./frontend_admin
-      target: prod
-    volumes:
-      - frontend-admin-dist:/frontend_admin-dist:rw
-    ports:
-      - "3002:3000"
-    env_file: .env.prod
 
   nginx:
     build:
       context: ./nginx
-      target: dev
+      target: prod
     ports:
-      - "80:8000"
+      - "80:80"
       - "443:443"
     logging:
       driver: "local"
@@ -98,8 +98,9 @@ services:
       - /etc/letsencrypt/live/certs/privkey.pem:/certs/privkey.pem:ro
 
 volumes:
-  frontend-client-dist:
-    name: frontend-client-dist
   frontend-admin-dist:
     name: frontend-admin-dist
+  frontend-client-dist:
+    name: frontend-client-dist
+
 
