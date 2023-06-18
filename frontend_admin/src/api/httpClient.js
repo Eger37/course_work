@@ -11,8 +11,13 @@ const getOptions = (options = {}) => {
 }
 
 export const httpClient = (url, options = {}) => {
+    const currentHost = `${window.location.protocol}//${window.location.hostname}:${window.location.port}/`;
     const _options = getOptions(options);
-    return fetchUtils.fetchJson(url, _options);
+
+    return fetchUtils.fetchJson(currentHost + url, _options);
+    // } else {
+    //     return fetchUtils.fetchJson(url, _options);
+    // }
 }
 
 export const httpClientRaw = (url, options = {}) => {
