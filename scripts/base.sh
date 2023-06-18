@@ -124,8 +124,8 @@ function restart_frontend() {
 }
 
 function prod_build() {
-	docker_compose build --no-cache backend
-	docker_compose build --no-cache
+	docker_compose build backend
+	docker_compose build
 }
 function prod_stop() {
 	docker_compose down --volumes --remove-orphans
@@ -138,6 +138,41 @@ function prod_restart() {
 	prod_build
 	prod_start
 	docker image prune --force
+}
+
+
+function prod() {
+	function build() {
+		docker_compose build $@
+	}
+
+	function stop() {
+		docker_compose down $@
+	}
+
+	function rebuild() {
+		build backend
+		build $@
+	}
+
+	function restart() {
+		docker_compose down --volumes --remove-orphans
+		docker image prune --force
+		docker_compose up -d
+	}
+
+	function renew_certs() {
+		stop
+		sudo certbot renew
+		restart
+	}
+
+	commands=(build stop rebuild restart renew_certs)
+	if [[ $# -gt 0 ]] && [[ "${commands[@]}" =~ "$1" ]]; then
+		$@;
+	else
+		show_commands prod "$commands"
+	fi
 }
 
 function translate() {
