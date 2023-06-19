@@ -8,7 +8,7 @@ import TestingPage from "../pages/Tests/TestingPage/";
 
 const App = () => {
     return (
-        <BrowserRouter>
+        <BrowserRouter basename={"/"}>
             <Route component={Main} exact={true} path={"/"}/>
             <Route component={SignUp} path={"/sign-up"}/>
             <Route component={SignIn} path={"/sign-in"}/>

@@ -1,5 +1,6 @@
 // import {fetchUtils} from 'react-admin';
 
+const API_PREFIX = "/api/"
 
 const getOptions = (options = {}) => {
     if (!options.headers) {
@@ -17,5 +18,5 @@ const getOptions = (options = {}) => {
 
 export const httpClient = (url, options = {}) => {
     const _options = getOptions(options);
-    return fetch(url, _options);
+    return fetch(API_PREFIX + url, _options);
 }
