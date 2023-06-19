@@ -81,7 +81,7 @@ function AnswerOptionsField({question, testingId, answers, setAnswers, activeSte
 
 
 export function Testing({questions, testingId}) {
-    const [activeStep, setActiveStep] = React.useState(3);
+    const [activeStep, setActiveStep] = React.useState(0);
     const maxSteps = questions.length;
     const [answers, setAnswers] = React.useState(new Array(maxSteps));
 
