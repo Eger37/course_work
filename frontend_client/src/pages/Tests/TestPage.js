@@ -34,7 +34,7 @@ const TestPage = () => {
     const [loading, setLoading] = React.useState(true);
 
     const fetchTest = async () => {
-        const test = await getOne(testId).then(data => (data));
+        const test = await getOne(`/test/${testId}`).then(data => (data));
         if (test) {
             setTest(test);
             setLoading(false);
