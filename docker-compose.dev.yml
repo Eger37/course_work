@@ -71,9 +71,10 @@ services:
         max-file: "10"
     depends_on:
       - backend
+      - frontend_admin
     volumes:
       # - ./nginx/dev/html/index.html:/home/html/index.html:ro
-      - ./frontend_client/build:/home/html:ro
+      - ./frontend_admin/build:/home/html:ro
       - ./files:/home/files:ro
 
 
