@@ -3,7 +3,7 @@ import React from 'react';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 
-import {Datagrid, TextField, FunctionField, ReferenceManyField,} from 'react-admin';
+import {Datagrid, TextField, FunctionField, ReferenceManyField, ReferenceField,} from 'react-admin';
 
 import {ScrollingWrapperInCard} from '../../../../components/ScrollingWrapper';
 
@@ -23,8 +23,9 @@ export const ResultOptionsDatagrid = (props) => {
                     />
                     <FunctionField label={"Delete"} render={record => <DeleteResultOption resultOption={record}/>}/>
 
-                    <TextField sortable={false} source="question_category_id"
-                               label="Category"/>
+                    <ReferenceField label="Category" source="question_category_id" reference="question-category">
+                        <TextField source="name" />
+                    </ReferenceField>
                     <TextField sortable={false} source="min"
                                label="Minimum score"/>
                     <TextField sortable={false} source="max"
