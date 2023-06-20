@@ -9,7 +9,7 @@ import {
     ShowButton,
 } from 'react-admin';
 
-import {TestsField} from './Tests';
+import {TestingsField} from './TestingsField';
 
 
 import Box from '@material-ui/core/Box';
@@ -52,8 +52,8 @@ export const ClientsShow = ({permissions, hasShow, ...props}) => {
     return (
         <Show actions={<ActionsWithBackButton hasEdit={true}/>} {...props}>
             <SimpleShowLayout style={{paddingBottom: 8}}>
-                    <TextField source="anamnesisFromPsychologist" label={"Анамнез"}/>
-                <TestsField label="Tests" reference="testing" target="user_id"/>
+                <TextField source="anamnesisFromPsychologist" label={"Анамнез"}/>
+                <TestingsField label="Tests" reference="testing" target="user_id"/>
             </SimpleShowLayout>
         </Show>
     );

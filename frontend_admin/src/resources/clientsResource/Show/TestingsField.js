@@ -7,7 +7,7 @@ import Paper from '@material-ui/core/Paper';
 
 import {ScrollingWrapperInCard} from '../../../components/ScrollingWrapper';
 
-export const TestsDatagrid = (props) => {
+export const TestingsDatagrid = (props) => {
     return (
         <Paper variant="outlined">
             <ScrollingWrapperInCard>
@@ -25,14 +25,14 @@ export const TestsDatagrid = (props) => {
 }
 
 
-export const TestsField = (props) => (
+export const TestingsField = (props) => (
     <ReferenceManyField {...props} perPage={-1}>
-        <TestsDatagrid/>
+        <TestingsDatagrid/>
     </ReferenceManyField>
 );
 
 
-TestsField.defaultProps = {
+TestingsField.defaultProps = {
     addLabel: true,
     className: "ra-field-datagrid",
 }
