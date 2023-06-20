@@ -1,6 +1,5 @@
 from pyramid.security import (
-    Allow,
-    Everyone
+    Allow
 )
 from sqlalchemy import and_
 from pyramid.httpexceptions import HTTPNotFound

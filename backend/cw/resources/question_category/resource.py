@@ -1,6 +1,5 @@
 from pyramid.security import (
-    Allow,
-    Everyone
+    Allow
 )
 from sqlalchemy import func
 from pyramid.httpexceptions import HTTPNotFound
@@ -47,7 +46,6 @@ class QuestionCategoryResource(object):
         return [
             (Allow, UserRole.admin, ("get", "create", "update", "delete",)),
             (Allow, UserRole.psychologist, ("get", "create", "update", "delete",)),
-            (Allow, Everyone, ("get",)),
         ]
 
     @view(
