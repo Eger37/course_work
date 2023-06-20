@@ -35,14 +35,13 @@ class CreateTestingSchema(colander.MappingSchema):
     test_id = colander.SchemaNode(colander.Integer())
 
 
-# class UpdateTestingBaseSchema(colander.MappingSchema):
-#     text = colander.SchemaNode(colander.String())
-#     sequential_number = colander.SchemaNode(colander.Integer())
+class UpdateTestingBaseSchema(colander.MappingSchema):
+    note = colander.SchemaNode(colander.String())
 
 
-# class UpdateTestingSchema(colander.MappingSchema):
-#     body = UpdateTestingBaseSchema()
-#     path = GetTestingSchema()
+class UpdateTestingSchema(colander.MappingSchema):
+    body = UpdateTestingBaseSchema()
+    path = GetTestingSchema()
 
 
 class ResponseTestingBaseSchema(colander.MappingSchema):
@@ -50,6 +49,7 @@ class ResponseTestingBaseSchema(colander.MappingSchema):
     test_id = colander.SchemaNode(colander.Integer())
     user_id = colander.SchemaNode(colander.Integer())
     created_at = colander.SchemaNode(colander.DateTime())
+    note = colander.SchemaNode(colander.String())
 
 
 

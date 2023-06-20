@@ -20,7 +20,7 @@ from .schema import (
     ResponseBodyTestingSchema,
     GetTestingsSchema,
     ResponseBodyTestingsSchema,
-    # UpdateTestingSchema,
+    UpdateTestingSchema,
     CreateTestingSchema
 )
 
@@ -101,28 +101,28 @@ class TestingResource(object):
 
         return map_data_to_body_schema(ResponseBodyTestingsSchema, testings)
 
-    # @view(
-    #     schema=UpdateTestingSchema(),
-    #     validators=(colander_validator,),
-    #     response_schemas={
-    #         '200': ResponseBodyTestingSchema(description="return OK response")
-    #     },
-    #     permission="update",
-    # )
-    # def put(self):
-    #     body_data = self.request.validated["body"]
-    #     path_data = self.request.validated["path"]
-    #
-    #     testing = self.request.db.query(Testing).get(path_data["id"])
-    #
-    #     for key in body_data:
-    #         if body_data[key] is None:
-    #             continue
-    #         setattr(testing, key, body_data[key])
-    #
-    #     self.request.db.flush()
-    #
-    #     return map_data_to_body_schema(ResponseBodyTestingSchema, dict(testing))
+    @view(
+        schema=UpdateTestingSchema(),
+        validators=(colander_validator,),
+        response_schemas={
+            '200': ResponseBodyTestingSchema(description="return OK response")
+        },
+        permission="update",
+    )
+    def put(self):
+        body_data = self.request.validated["body"]
+        path_data = self.request.validated["path"]
+
+        testing = self.request.db.query(Testing).get(path_data["id"])
+
+        for key in body_data:
+            if body_data[key] is None:
+                continue
+            setattr(testing, key, body_data[key])
+
+        self.request.db.flush()
+
+        return map_data_to_body_schema(ResponseBodyTestingSchema, dict(testing))
 
     @view(
         schema=CreateTestingSchema(),

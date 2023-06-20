@@ -12,12 +12,14 @@ import {authProvider, dataProvider} from '../api/';
 import {resourcesByPermissions} from './roles';
 import {EditQuestion} from "../resources/testsResource/Fields/Questions/EditQuestion";
 import {QuestionsField} from "../resources/testsResource/Fields/Questions";
+import {EditTesting} from "../resources/clientsResource/Show/EditTesting";
 
 
 
 const customRoutes = [
     <Route exact path="/settings" component={Settings}/>,
     <Route path="/test/:testId/show/questions/:questionId" exact={true} component={() => (<EditQuestion/>)} />,
+    <Route path="/client/:clientId/show/testings/:testingId" exact={true} component={() => (<EditTesting/>)} />,
     <Route path="/test/:testId/question" exact={true} component={() => (<QuestionsField/>)} />,
 ];
 
