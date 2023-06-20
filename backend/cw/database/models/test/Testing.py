@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, ForeignKey, DateTime
+from sqlalchemy import Column, Integer, ForeignKey, DateTime, String
 from datetime import datetime
 
 from .meta import BaseTest
@@ -11,7 +11,7 @@ class Testing(BaseTest):
     id = Column(Integer(), primary_key=True)
     test_id = Column(Integer, ForeignKey(Test.id), nullable=False)
     user_id = Column(Integer, ForeignKey(User.id), nullable=False)
-
+    note = Column(String, nullable=True)
 
     created_at = Column(DateTime(timezone=False), nullable=False, default=datetime.utcnow)
 
