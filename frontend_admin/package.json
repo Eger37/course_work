@@ -2,7 +2,7 @@
   "name": "frontend_admin",
   "version": "0.1.1",
   "private": true,
-  "proxy": "http://backend:8000",
+  "proxy": "http://nginx:8000",
   "homepage": "/admin",
   "dependencies": {
     "@material-ui/lab": "^4.0.0-alpha.56",

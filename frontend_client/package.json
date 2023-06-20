@@ -2,7 +2,7 @@
   "name": "frontend_client",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://backend:8000",
+  "proxy": "http://nginx:8000",
   "homepage": "./",
   "dependencies": {
     "@emotion/react": "^11.9.0",
