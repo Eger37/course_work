@@ -16,6 +16,18 @@ window.addEventListener('storage', (e) => {
     }
 });
 
+
+function parseJwt(token) {
+    let base64Url = token.split('.')[1];
+    let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    let jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+}
+
+
 export const authProvider = {
     login: ({email, password}) => {
         return httpClient("login", {
@@ -32,6 +44,15 @@ export const authProvider = {
                 return Promise.reject(res.status !== 200)
             } else {
                 res.json().then((data) => {
+                    console.log("data");
+                    console.log(data);
+                    console.log("parseJwt(data.token)");
+                    console.log(parseJwt(data.token));
+                    // const exp = parseJwt(data.token).exp;
+                    // const expirationTime = (exp * 1000);
+                    // if (Date.now() >= expirationTime) {
+                    //     this.logout()
+                    // }
                     localStorage.setItem("token", data.token);
                     setPermissions(data.permissions);
                     window.location.replace("/");
@@ -66,12 +87,34 @@ export const authProvider = {
             console.log("error");
         });
     },
+    logoutIfExpired: (token) => {
+        const exp = parseJwt(token).exp;
+        const expirationTime = (exp * 1000);
+        if (Date.now() >= expirationTime) {
+            authProvider.logout()
+        }
+    },
     logout: (params, ...rest) => {
         localStorage.removeItem("token");
         window.location.replace("/");
     },
     checkAuth: (params) => {
-        return localStorage.getItem('token');
+        const token = localStorage.getItem('token')
+        if (token) {
+            const exp = parseJwt(token).exp;
+            const expirationTime = (exp * 1000);
+            if (Date.now() >= expirationTime) {
+                authProvider.logout()
+                return false
+            } else {
+                setTimeout(authProvider.checkAuth, expirationTime)
+                return true
+            }
+        } else {
+            return false
+        }
+
+
     },
     checkError: (error) => {
         if (error.status === 401) {
