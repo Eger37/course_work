@@ -72,10 +72,6 @@ export const EditQuestion = () => {
         }
     });
 
-    React.useEffect(() => {
-
-    }, [])
-
 
     const handleSubmit = (values) => {
         approve({
@@ -91,7 +87,7 @@ export const EditQuestion = () => {
     if (!loaded) { return <Loading />; }
     if (error) { return <Error />; }
     return (
-        <Paper evaluation={3} padding>
+        <Paper evaluation={3}>
             <Box  sx={{ p: 2 }}>
                 {redirect && <Redirect to={`/test/${testId}/show/questions/`}/>}
                 <h1>Edit question {questionId}</h1>

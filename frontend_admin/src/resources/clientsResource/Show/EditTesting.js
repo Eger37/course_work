@@ -66,10 +66,6 @@ export const EditTesting = () => {
         }
     });
 
-    React.useEffect(() => {
-
-    }, [])
-
 
     const handleSubmit = (values) => {
         console.log("values")
@@ -87,7 +83,7 @@ export const EditTesting = () => {
     if (!loaded) { return <Loading />; }
     if (error) { return <Error />; }
     return (
-        <Paper evaluation={3} padding>
+        <Paper evaluation={3}>
             <Box  sx={{ p: 2 }}>
                 {redirect && <Redirect to={`/client/${clientId}/show/`}/>}
                 <h1>Edit testing {testingId}</h1>

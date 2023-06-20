@@ -20,7 +20,7 @@ class GetTestingSchema(colander.MappingSchema):
 
 
 GetTestingsSchema = GetCollectionBaseSchema(
-    sort_fields=["id", "test_id", "user_id", "created_at",],
+    sort_fields=["id", "test_id", "user_id", "created_at", ],
     filter_fields=[
         ("id", colander.List),
         ("test_id", colander.Integer),
@@ -52,7 +52,6 @@ class ResponseTestingBaseSchema(colander.MappingSchema):
     note = colander.SchemaNode(colander.String())
 
 
-
 class ResponseBodyTestingSchema(colander.MappingSchema):
     body = ResponseTestingBaseSchema()
 
@@ -63,19 +62,25 @@ class ResponseBodyTestingsSchema(colander.MappingSchema):
         testing = ResponseTestingBaseSchema()
 
 
-
-
 class ResponseQuestionCategorySchema(ResponseQuestionCategoryBaseSchema):
     description = colander.SchemaNode(colander.String())
+
+
 class ResponseTestingResultForCategoryBaseSchema(colander.MappingSchema):
     question_category = ResponseQuestionCategorySchema()
     result_option = ResponseResultOptionBaseSchema()
     score = colander.SchemaNode(colander.Integer())
 
+
+class BodyItemsTestingSchema(colander.SequenceSchema):
+    item = ResponseTestingResultForCategoryBaseSchema()
+
+
 class ResponseBodyTestingResultSchema(colander.MappingSchema):
     @colander.instantiate(name="body")
-    class BodyItemsTestingSchema(colander.SequenceSchema):
-        testing_result_for_category = ResponseTestingResultForCategoryBaseSchema()
+    class BodyItemsTestingSchema(colander.MappingSchema):
+        id = colander.SchemaNode(colander.Integer())
+        testing_result_for_category = BodyItemsTestingSchema()
 
 # class ResponseBodyTestingResultsSchema(colander.MappingSchema):
 #     @colander.instantiate(name="body")

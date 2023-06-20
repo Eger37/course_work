@@ -147,7 +147,7 @@ export function Testing({questions, testingId}) {
                             <CircularProgress/>
                         </center>
                     </Grid> :
-                    testingResult[0] ?
+                    testingResult.id ?
                         <TestingResult testingResult={testingResult}/>
                         :
                         <Grid container

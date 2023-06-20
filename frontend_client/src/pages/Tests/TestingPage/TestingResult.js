@@ -31,8 +31,6 @@ export function CategoryResult({categoryResult}) {
 }
 
 export default function TestingResult({testingResult}) {
-    console.log("testingResult in TestingResult")
-    console.log(testingResult)
     return (
         <Grid
             minHeight={"calc(100vh - 245px)"}
@@ -41,7 +39,7 @@ export default function TestingResult({testingResult}) {
                 <Typography variant="h4" noWrap>Результат</Typography>
             </center>
 
-            {testingResult.map((categoryResult) => (
+            {testingResult.testing_result_for_category.map((categoryResult) => (
 
                 <Grid item key={categoryResult.question_category.id} sm={12}>
                     <CategoryResult categoryResult={categoryResult}/>

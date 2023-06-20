@@ -71,9 +71,14 @@ def get(request):
     #
     # print("\n\n\n")
 
-    result_dict = [dict(
+    testing_result_for_category = [dict(
         question_category=dict(question_category),
         result_option=get_result_option_by_QuestionCategory_and_score(request.db, question_category, score),
         score=score
     ) for _, question_category, score in testing_result_list]
+
+    result_dict = dict(
+        id=testing_id,
+        testing_result_for_category=testing_result_for_category
+    )
     return map_data_to_body_schema(ResponseBodyTestingResultSchema, result_dict)

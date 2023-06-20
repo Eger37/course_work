@@ -8,10 +8,9 @@ import Paper from '@material-ui/core/Paper';
 import {Link} from 'react-router-dom';
 import IconButton from "@material-ui/core/IconButton";
 import EditIcon from "@material-ui/icons/EditOutlined";
+import SubjectIcon from '@material-ui/icons/Subject';
 
 import {ScrollingWrapperInCard} from '../../../components/ScrollingWrapper';
-import {DeleteTesting} from "./DeleteTesting";
-
 
 const TestingEditButton = (props) => {
     return (
@@ -29,14 +28,30 @@ const TestingEditButton = (props) => {
         </IconButton>
     );
 };
+const ShowTestingResultButton = (props) => {
+    return (
+        <IconButton
+            component={Link}
+            to={{
+                pathname: `/client/${props.record.user_id}/show/testings/${props.record.id}/testing-result`,
+                // state: {question: props.record}
+            }}
+            size="small"
+            color="default"
+        >
+            <SubjectIcon fontSize="inherit"/>
+            result
+        </IconButton>
+    );
+};
 
 export const TestingsDatagrid = ({userId, ...props}) => {
     return (
         <Paper variant="outlined">
             <ScrollingWrapperInCard>
                 <Datagrid {...props}>
+                    <ShowTestingResultButton label={"Result"}/>
                     <TestingEditButton label={"Edit"}/>
-                    <DeleteButton label="" redirect={`/client/${userId}/show/`}/>
 
                     <TextField source="id" label="id"/>
                     <DateField source="created_at" showTime={true}/>
@@ -44,6 +59,7 @@ export const TestingsDatagrid = ({userId, ...props}) => {
                         <TextField source="title"/>
                     </ReferenceField>
                     <TextField source="note" label="Note"/>
+                    <DeleteButton label="" redirect={`/client/${userId}/show/`}/>
 
                 </Datagrid>
             </ScrollingWrapperInCard>
