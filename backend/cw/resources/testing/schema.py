@@ -20,11 +20,13 @@ class GetTestingSchema(colander.MappingSchema):
 
 
 GetTestingsSchema = GetCollectionBaseSchema(
-    sort_fields=["id", "test_id", "user_id",],
+    sort_fields=["id", "test_id", "user_id", "created_at",],
     filter_fields=[
         ("id", colander.List),
         ("test_id", colander.Integer),
         ("user_id", colander.Integer),
+        ("created_at", colander.DateTime),
+
     ],
 )
 
@@ -47,6 +49,7 @@ class ResponseTestingBaseSchema(colander.MappingSchema):
     id = colander.SchemaNode(colander.Integer())
     test_id = colander.SchemaNode(colander.Integer())
     user_id = colander.SchemaNode(colander.Integer())
+    created_at = colander.SchemaNode(colander.DateTime())
 
 
 

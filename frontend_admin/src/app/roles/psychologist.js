@@ -13,5 +13,6 @@ export const psychologistResources = [
     <Resource name="question" intent={"registration"}/>,
     <Resource name="result-option" intent={"registration"}/>,
     <Resource name="answer-option" intent={"registration"}/>,
+    <Resource name="testing" intent={"registration"}/>,
 
 ];

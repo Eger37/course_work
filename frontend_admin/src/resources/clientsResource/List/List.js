@@ -22,7 +22,7 @@ export const ClientList = props => {
                     <TextField source="last_name"/>
                     <EmailField source="email"/>
                     <EditButton label=""/>
-                    <ShowButton label="show tests"/>
+                    <ShowButton label="show testings"/>
                 </Datagrid>
             </ScrollingWrapper>
         </List>

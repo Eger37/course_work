@@ -12,14 +12,16 @@ export const TestsDatagrid = (props) => {
         <Paper variant="outlined">
             <ScrollingWrapperInCard>
                 <Datagrid {...props}>
-                    <DateField source="created_at" />
+                    <TextField source="id" label="id"/>
+                    <DateField source="created_at" showTime={true}/>
                     <FunctionField source="test_type_id" label="назва тесту"
                                    render={record => {
                                        if (record.test_type_id === 1){
                                        return "САН (Самопочуття. Активність. Настрій)"}
-                                   }}/>
+                                   }}
+                                   sortable={false}/>
 
-                    <TextField source="result" label="результат"/>
+                    <TextField source="result" label="результат" sortable={false}/>
 
                 </Datagrid>
             </ScrollingWrapperInCard>

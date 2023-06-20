@@ -53,7 +53,7 @@ export const ClientsShow = ({permissions, hasShow, ...props}) => {
         <Show actions={<ActionsWithBackButton hasEdit={true}/>} {...props}>
             <SimpleShowLayout style={{paddingBottom: 8}}>
                     <TextField source="anamnesisFromPsychologist" label={"Анамнез"}/>
-                <TestsField label="Tests" reference="user_tests" target="user_id"/>
+                <TestsField label="Tests" reference="testing" target="user_id"/>
             </SimpleShowLayout>
         </Show>
     );
