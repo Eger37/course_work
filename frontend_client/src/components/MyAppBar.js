@@ -31,11 +31,11 @@ const MyAppBar = () => {
                         :
                         <>
                             <Box mr={3}>
-                                <NavLink style={{color: 'white'}} to={"sign-in"}>
+                                <NavLink style={{color: 'white'}} to={"/sign-in"}>
                                     <Button color={"inherit"} variant={"outlined"}>Увійти</Button>
                                 </NavLink>
                             </Box>
-                            <NavLink to={"sign-up"}>
+                            <NavLink to={"/sign-up"}>
                                 <Button color={"secondary"} variant={"contained"}>Зареєструватися</Button>
                             </NavLink>
                         </>

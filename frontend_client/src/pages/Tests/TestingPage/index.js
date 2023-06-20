@@ -141,7 +141,7 @@ export function Testing({questions, testingId}) {
                     <Grid container
                           direction="column"
                           justifyContent="center"
-                          minHeight={"calc(100vh - 245px)"}
+                          minHeight={"calc(100vh - 315px)"}
                     >
                         <center>
                             <CircularProgress/>
@@ -153,7 +153,7 @@ export function Testing({questions, testingId}) {
                         <Grid container
                               direction="column"
                               justifyContent="space-between"
-                              minHeight={"calc(100vh - 245px)"}
+                              minHeight={"calc(100vh - 315px)"}
                         >
 
                             <Grid item md={12}>
@@ -223,7 +223,7 @@ const useStyles = makeStyles(() => ({
         padding: 8,
         marginTop: 16,
         marginBottom: 16,
-        minHeight: "calc(100vh - 150px)"
+        minHeight: "calc(100vh - 220px)"
 
     },
     meinFeaturesPost: {
@@ -267,7 +267,7 @@ const TestingPage = () => {
             <Paper className={classes.meinFeaturesPost}
                    style={{
                        backgroundImage: `url(${testImg}`,
-                       minHeight: "calc(100vh - 50px)"
+                       minHeight: "calc(100vh - 120px)"
                    }}
             >
                 <Container fixed maxWidth="md">

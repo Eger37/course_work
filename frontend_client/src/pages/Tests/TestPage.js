@@ -64,7 +64,7 @@ const TestPage = () => {
             <Paper className={classes.meinFeaturesPost}
                    style={{
                        backgroundImage: `url(${testImg}`,
-                       minHeight: "calc(100vh - 50px)"
+                       minHeight: "calc(100vh - 120px)"
                    }}>
                 <Container fixed>
                     <Grid container>

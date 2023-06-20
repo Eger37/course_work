@@ -9,11 +9,9 @@ import TestingPage from "../pages/Tests/TestingPage/";
 const App = () => {
     return (
         <BrowserRouter basename={"/"}>
-            <Route component={Main} exact={true} path={"/"}/>
+            <Route component={Main}  path={"/"}/>
             <Route component={SignUp} path={"/sign-up"}/>
             <Route component={SignIn} path={"/sign-in"}/>
-            <Route component={TestPage} exact={true} path={"/test/:testId"}/>
-            <Route component={TestingPage} path={"/test/:testId/testing/:testingId"}/>
         </BrowserRouter>
     )
 };
