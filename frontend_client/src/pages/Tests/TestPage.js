@@ -5,6 +5,7 @@ import {makeStyles} from "@mui/styles";
 
 import {getOne, createOne} from "../../api/dataProvider";
 import testImg from "../../images/test.jpg";
+import {authProvider} from "../../api/authProvider";
 
 const useStyles = makeStyles(() => ({
     mainFeaturesPostContent: {
@@ -27,6 +28,7 @@ const useStyles = makeStyles(() => ({
 
 const TestPage = () => {
     const classes = useStyles();
+    const ifAuth = authProvider.checkAuth()
 
     const {testId} = useParams()
     const [test, setTest] = React.useState({});
@@ -44,7 +46,7 @@ const TestPage = () => {
 
     React.useEffect(() => {
         void fetchTest();
-    }, []);
+    }, [])
 
     const createTesting = async () => {
         setLoading(true);
@@ -93,14 +95,26 @@ const TestPage = () => {
                               rowSpacing={1}
 
                         >
-                            <Grid item md={6}>
+                            <Grid item md={3}>
                                 <Button variant="contained" size={"small"} color={"primary"}
+                                        disabled={!ifAuth}
                                         onClick={createTesting}>
                                     Скласти тест
                                 </Button>
                             </Grid>
+                            {!ifAuth &&
+                                <Grid item md={3}>
 
-                            <Grid item md={6}>
+                                    <Typography
+                                        align={"center"}
+                                        variant={"h5"}
+                                        color="orangered">
+                                        {"Потрібно увійти увійти до облікового запису, щоб пройти тест"}
+                                    </Typography>
+                                </Grid>
+                            }
+
+                            <Grid item md={3}>
                                 <NavLink to={`/`}>
                                     <Button variant="contained" size={"small"} color={"primary"}>
                                         На головну сторінку
