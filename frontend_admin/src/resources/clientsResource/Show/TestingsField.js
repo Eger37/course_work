@@ -36,7 +36,7 @@ export const TestingsDatagrid = (props) => {
             <ScrollingWrapperInCard>
                 <Datagrid {...props}>
                     <TestingEditButton label={"Edit"}/>
-                    {/*<FunctionField label={"Delete"} render={record => <DeleteTesting testing={record}/>}/>*/}
+                    <FunctionField label={"Delete"} render={record => <DeleteTesting testing={record}/>}/>
 
                     <TextField source="id" label="id"/>
                     <DateField source="created_at" showTime={true}/>

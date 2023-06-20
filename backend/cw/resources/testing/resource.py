@@ -13,7 +13,7 @@ from cornice.validators import (
     colander_validator
 )
 
-from cw.database import UserRole, Testing
+from cw.database import UserRole, Testing, Answer
 
 from .schema import (
     GetTestingSchema,
@@ -153,6 +153,7 @@ class TestingResource(object):
         content_type="text/plain"
     )
     def delete(self):
+        self.request.db.query(Answer).filter(Answer.testing_id == self.request.validated["id"]).delete()
         self.request.db.query(Testing).filter(Testing.id == self.request.validated["id"]).delete()
         self.request.db.flush()
 
