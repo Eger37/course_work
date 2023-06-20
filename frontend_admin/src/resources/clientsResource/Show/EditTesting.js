@@ -89,7 +89,7 @@ export const EditTesting = () => {
     return (
         <Paper evaluation={3} padding>
             <Box  sx={{ p: 2 }}>
-                {redirect && <Redirect to={`/clients/${clientId}/show/testings/`}/>}
+                {redirect && <Redirect to={`/client/${clientId}/show/`}/>}
                 <h1>Edit testing {testingId}</h1>
                 <EditTestingForm handleSubmit={handleSubmit}
                                   handleClose={handleClose}
