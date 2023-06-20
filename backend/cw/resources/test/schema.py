@@ -21,7 +21,6 @@ GetTestsSchema = GetCollectionBaseSchema(
 
 
 class CreateTestSchema(colander.MappingSchema):
-    created_by = colander.SchemaNode(colander.Integer())
     title = colander.SchemaNode(colander.String())
     subtitle = colander.SchemaNode(colander.String())
     description = colander.SchemaNode(colander.String())
