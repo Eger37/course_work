@@ -1,7 +1,7 @@
 import React from 'react';
 import {
     Datagrid, TextField, FunctionField,
-    ReferenceManyField, DateField, ReferenceField
+    ReferenceManyField, DateField, ReferenceField, DeleteButton
 } from 'react-admin';
 import Paper from '@material-ui/core/Paper';
 
@@ -30,13 +30,13 @@ const TestingEditButton = (props) => {
     );
 };
 
-export const TestingsDatagrid = (props) => {
+export const TestingsDatagrid = ({userId, ...props}) => {
     return (
         <Paper variant="outlined">
             <ScrollingWrapperInCard>
                 <Datagrid {...props}>
                     <TestingEditButton label={"Edit"}/>
-                    <FunctionField label={"Delete"} render={record => <DeleteTesting testing={record}/>}/>
+                    <DeleteButton label="" redirect={`/client/${userId}/show/`}/>
 
                     <TextField source="id" label="id"/>
                     <DateField source="created_at" showTime={true}/>
@@ -54,7 +54,7 @@ export const TestingsDatagrid = (props) => {
 
 export const TestingsField = (props) => (
     <ReferenceManyField {...props} perPage={-1}>
-        <TestingsDatagrid/>
+        <TestingsDatagrid userId={props.record.id}/>
     </ReferenceManyField>
 );
 
