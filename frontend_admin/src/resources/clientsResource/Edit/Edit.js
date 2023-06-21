@@ -8,8 +8,9 @@ import {SaveWithCancelToolbar} from "../../../components/toolbars/SaveWithCancel
 
 
 export const ClientEdit = (props) => (
-    <Edit {...props}>
-        <SimpleForm submitOnEnter={false} toolbar={<SaveWithCancelToolbar/>}>
+    <Edit {...props} >
+        <SimpleForm submitOnEnter={false} toolbar={<SaveWithCancelToolbar/>}
+                    redirect={`/client/${props.id}/show/`}>
             <ClientEditForm/>
         </SimpleForm>
     </Edit>

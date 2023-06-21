@@ -2,7 +2,7 @@ import React from 'react';
 import {
     Show,
     SimpleShowLayout,
-    TextField,
+    RichTextField,
     useRedirect,
     TopToolbar,
     EditButton,
@@ -32,7 +32,7 @@ export const ActionsWithBackButton = ({
                         variant="contained"
                         color="primary"
                         size="small"
-                        onClick={e => redirect(basePath)}>
+                        onClick={() => redirect(basePath)}>
                     {"back"}
                 </Button>
             </Box>}
@@ -52,7 +52,7 @@ export const ClientsShow = ({permissions, hasShow, ...props}) => {
     return (
         <Show actions={<ActionsWithBackButton hasEdit={true}/>} {...props}>
             <SimpleShowLayout style={{paddingBottom: 8}}>
-                <TextField source="anamnesisFromPsychologist" label={"Анамнез"}/>
+                <RichTextField source="anamnesisFromPsychologist" label={"Анамнез"}/>
                 <TestingsField label="Tests" reference="testing" target="user_id"/>
             </SimpleShowLayout>
         </Show>

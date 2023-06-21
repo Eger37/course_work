@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    Datagrid, TextField, FunctionField,
+    Datagrid, TextField,
     ReferenceManyField, DateField, ReferenceField, DeleteButton
 } from 'react-admin';
 import Paper from '@material-ui/core/Paper';
@@ -51,7 +51,7 @@ export const TestingsDatagrid = ({userId, ...props}) => {
             <ScrollingWrapperInCard>
                 <Datagrid {...props}>
                     <ShowTestingResultButton label={"Result"}/>
-                    <TestingEditButton label={"Edit"}/>
+                    <TestingEditButton label={"Edit note"}/>
 
                     <TextField source="id" label="id"/>
                     <DateField source="created_at" showTime={true}/>

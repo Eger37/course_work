@@ -1,5 +1,4 @@
 import {Grid, Paper, Typography} from "@mui/material";
-import Avatar from "@mui/material/Avatar";
 import React from "react";
 
 export function CategoryResult({categoryResult}) {
